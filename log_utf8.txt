@@ -1,0 +1,560 @@
+﻿commit c2b3a59ae7a2b8ca6edfab1e6bc8cd2393e5683d
+Author: unknown <jismbs@gmail.com>
+Date:   Wed Feb 18 19:44:01 2026 +0100
+
+    cambios en demo con Readme con instrucciones
+
+ .gitignore | 35 ++++++++++++++++++++++++++++++++---
+ 1 file changed, 32 insertions(+), 3 deletions(-)
+
+commit 1a9047e1c7ec09c870913af49ea3fcd2b2820551
+Author: unknown <jismbs@gmail.com>
+Date:   Wed Feb 18 19:37:17 2026 +0100
+
+    cambios en demo con Readme con instrucciones
+
+ .../Deep-EIoU/checkpoints/best_ckpt.pth.tar         | Bin 792835731 -> 0 bytes
+ .../Deep-EIoU/checkpoints/model_myDataset.pth.tar-1 | Bin 26716766 -> 0 bytes
+ code/gta-link - TFG/video2.mp4                      | Bin 24672819 -> 0 bytes
+ 3 files changed, 0 insertions(+), 0 deletions(-)
+
+commit 93154f5e509cf2643a0f4a30cdcc44c206bacfa5
+Author: unknown <jismbs@gmail.com>
+Date:   Wed Feb 18 19:35:25 2026 +0100
+
+    cambios en demo con Readme con instrucciones
+
+ .gitignore                                 |   4 +++-
+ code/Deep-EIoU/output_video_bundesliga.mp4 | Bin 17401010 -> 0 bytes
+ 2 files changed, 3 insertions(+), 1 deletion(-)
+
+commit 6f8172fd0dac08873cc968cdf0b2d798bed4aac7
+Author: unknown <jismbs@gmail.com>
+Date:   Wed Feb 18 19:30:45 2026 +0100
+
+    cambios en demo con Readme con instrucciones
+
+ .gitignore | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+commit c17014cdb4070f31a057ef38a51034ed537f14dd
+Author: unknown <jismbs@gmail.com>
+Date:   Wed Feb 18 19:29:05 2026 +0100
+
+    cambios en demo con Readme con instrucciones
+
+ code/.gitignore => .gitignore | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+commit 019b4c7b313deef7a2bf2c17b9dddcebe7461638
+Author: unknown <jismbs@gmail.com>
+Date:   Wed Feb 18 19:23:48 2026 +0100
+
+    cambios en demo con Readme con instrucciones
+
+ results/gta-link - TFG/output_video.mp4 | Bin 102865480 -> 0 bytes
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit 03444642953431116d1a5a1d5fdc46ffeb2b1e80
+Author: unknown <jismbs@gmail.com>
+Date:   Wed Feb 18 19:22:25 2026 +0100
+
+    cambios en demo con Readme con instrucciones
+
+ .../Documento Pr\303\241cticas/MAIN-blx.bib"       |   0
+ .../Documento Pr\303\241cticas/MAIN.aux"           |   0
+ .../Documento Pr\303\241cticas/MAIN.bbl"           |   0
+ .../Documento Pr\303\241cticas/MAIN.blg"           |   0
+ .../Documento Pr\303\241cticas/MAIN.log"           |   0
+ .../Documento Pr\303\241cticas/MAIN.out"           |   0
+ .../Documento Pr\303\241cticas/MAIN.pdf"           |   0
+ .../Documento Pr\303\241cticas/MAIN.run.xml"       |   0
+ .../Documento Pr\303\241cticas/MAIN.synctex.gz"    | Bin
+ .../Documento Pr\303\241cticas/MAIN.tex"           |   0
+ .../Documento Pr\303\241cticas/MAIN.toc"           |   0
+ .../Documento Pr\303\241cticas/backcover.pdf"      | Bin
+ .../bibliography/references.bib"                   |   0
+ .../Documento Pr\303\241cticas/cover.pdf"          | Bin
+ .../image/Centrarse.PNG"                           | Bin
+ .../image/Flowcharts.png"                          | Bin
+ .../Documento Pr\303\241cticas/image/deepEIoU.PNG" | Bin
+ .../image/dif_de_clases.png"                       | Bin
+ .../Documento Pr\303\241cticas/image/dir_reid.png" | Bin
+ .../image/entr_reid.png"                           | Bin
+ .../image/entr_yolo.png"                           | Bin
+ .../image/gestion_id.png"                          | Bin
+ .../image/longomatch.png"                          | Bin
+ .../image/metricasBeta.PNG"                        | Bin
+ .../metricas_mot_deepEIoU_osnet_soccernet.PNG"     | Bin
+ .../metricas_mot_deepEIoU_osnet_sportmot.PNG"      | Bin
+ .../image/metricas_mot_yolo10.PNG"                 | Bin
+ .../image/metricas_reid_yolo10.PNG"                | Bin
+ .../image/model.osnet.pth.tar-10_soccernet.PNG"    | Bin
+ .../image/model.resnet50.pth.tar-20_soccernet.PNG" | Bin
+ .../resultado_entrenamiento_reid_myData_osnet.PNG" | Bin
+ .../image/sports_model.pth.tar-60_sportsmot.PNG"   | Bin
+ .../Documento Pr\303\241cticas/image/tracab.png"   | Bin
+ .../Documento Pr\303\241cticas/image/tracab2.png"  | Bin
+ .../image/tracking_id.png"                         | Bin
+ .../Documento Pr\303\241cticas/image/yolodec1.jpg" | Bin
+ .../Documento Pr\303\241cticas/image/yolodec2.jpg" | Bin
+ .../Documento Pr\303\241cticas/image/yolodec3.jpg" | Bin
+ .../Documento Pr\303\241cticas/image/yolodec4.jpg" | Bin
+ .../Documento Pr\303\241cticas/image/yolodec5.jpg" | Bin
+ .../Documento Pr\303\241cticas/references.bib"     |   0
+ .../Documento Pr\303\241cticas/title.pdf"          | Bin
+ doc/TFG - avances_notas/apuntes_trackers.md        |  82 +++++++++++++++++++++
+ .../Balonmano - first tryout.mp4                   | Bin 94586867 -> 0 bytes
+ .../confusionmatrix_tryout1.png                    | Bin 89855 -> 0 bytes
+ .../first tryout with YOLO/performance_tryout1.png | Bin 346308 -> 0 bytes
+ 46 files changed, 82 insertions(+)
+
+commit b8e8b4267d847e0ce41be13e7bba5e3f9314cd85
+Author: unknown <jismbs@gmail.com>
+Date:   Wed Feb 18 19:19:10 2026 +0100
+
+    cambios en demo con Readme con instrucciones
+
+ code/{gta-link - TFG => }/.gitignore | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit a1be1daf6526754037bac545b9736bb48df9439b
+Author: unknown <jismbs@gmail.com>
+Date:   Wed Feb 18 19:17:02 2026 +0100
+
+    cambios en demo con Readme con instrucciones
+
+ .../track_vis/2026_02_18_19_08_14.txt}             |    0
+ .../output_video_bundesliga.mp4}                   |    0
+ .../output_video_bundesliga.mp4                    |  Bin 0 -> 1310764 bytes
+ .../yolox/_C.cpython-37m-x86_64-linux-gnu.so       |  Bin
+ .../build/temp.linux-x86_64-cpython-37/.ninja_deps |  Bin
+ .../build/temp.linux-x86_64-cpython-37/.ninja_log  |    0
+ .../build/temp.linux-x86_64-cpython-37/build.ninja |    0
+ .../Deep-EIoU/checkpoints}/.gitignore              |    0
+ .../Deep-EIoU/checkpoints/best_ckpt.pth.tar        |  Bin 0 -> 792835731 bytes
+ .../checkpoints/model_myDataset.pth.tar-1          |  Bin 0 -> 26716766 bytes
+ .../Deep-EIoU/reid/.flake8                         |    0
+ .../Deep-EIoU/reid/.isort.cfg                      |    0
+ .../Deep-EIoU/reid/.style.yapf                     |    0
+ .../Deep-EIoU/reid/Dockerfile                      |    0
+ .../Deep-EIoU/reid/LICENSE                         |    0
+ .../Deep-EIoU/reid/Makefile                        |    0
+ .../Deep-EIoU/reid/README.rst                      |    0
+ .../rank_cy.cpython-37m-x86_64-linux-gnu.so        |  Bin
+ .../torchreid/metrics/rank_cylib/rank_cy.o         |  Bin
+ ...et_ain_x1_0_softmax_256x128_amsgrad_cosine.yaml |    0
+ .../im_osnet_ibn_x1_0_softmax_256x128_amsgrad.yaml |    0
+ .../im_osnet_x0_25_softmax_256x128_amsgrad.yaml    |    0
+ .../im_osnet_x0_5_softmax_256x128_amsgrad.yaml     |    0
+ .../im_osnet_x0_75_softmax_256x128_amsgrad.yaml    |    0
+ .../im_osnet_x1_0_softmax_256x128_amsgrad.yaml     |    0
+ ..._osnet_x1_0_softmax_256x128_amsgrad_cosine.yaml |    0
+ .../configs/im_r50_softmax_256x128_amsgrad.yaml    |    0
+ .../im_r50fc512_softmax_256x128_amsgrad.yaml       |    0
+ .../Deep-EIoU/reid/docs/AWESOME_REID.md            |    0
+ .../Deep-EIoU/reid/docs/MODEL_ZOO.md               |    0
+ .../Deep-EIoU/reid/docs/Makefile                   |    0
+ .../Deep-EIoU/reid/docs/conf.py                    |    0
+ .../Deep-EIoU/reid/docs/datasets.rst               |    0
+ .../Deep-EIoU/reid/docs/evaluation.rst             |    0
+ .../Deep-EIoU/reid/docs/figures/actmap.jpg         |  Bin
+ .../reid/docs/figures/ranking_results.jpg          |  Bin
+ .../Deep-EIoU/reid/docs/index.rst                  |    0
+ .../Deep-EIoU/reid/docs/pkg/data.rst               |    0
+ .../Deep-EIoU/reid/docs/pkg/engine.rst             |    0
+ .../Deep-EIoU/reid/docs/pkg/losses.rst             |    0
+ .../Deep-EIoU/reid/docs/pkg/metrics.rst            |    0
+ .../Deep-EIoU/reid/docs/pkg/models.rst             |    0
+ .../Deep-EIoU/reid/docs/pkg/optim.rst              |    0
+ .../Deep-EIoU/reid/docs/pkg/utils.rst              |    0
+ .../Deep-EIoU/reid/docs/requirements.txt           |    0
+ .../Deep-EIoU/reid/docs/user_guide.rst             |    0
+ .../Deep-EIoU/reid/linter.sh                       |    0
+ .../Deep-EIoU/reid/projects/DML/README.md          |    0
+ .../Deep-EIoU/reid/projects/DML/default_config.py  |    0
+ .../Deep-EIoU/reid/projects/DML/dml.py             |    0
+ .../im_osnet_x1_0_dml_256x128_amsgrad_cosine.yaml  |    0
+ .../Deep-EIoU/reid/projects/DML/main.py            |    0
+ .../Deep-EIoU/reid/projects/OSNet_AIN/README.md    |    0
+ .../reid/projects/OSNet_AIN/default_config.py      |    0
+ .../Deep-EIoU/reid/projects/OSNet_AIN/main.py      |    0
+ .../Deep-EIoU/reid/projects/OSNet_AIN/nas.yaml     |    0
+ .../reid/projects/OSNet_AIN/osnet_child.py         |    0
+ .../reid/projects/OSNet_AIN/osnet_search.py        |    0
+ .../reid/projects/OSNet_AIN/softmax_nas.py         |    0
+ .../Deep-EIoU/reid/projects/README.md              |    0
+ .../reid/projects/attribute_recognition/README.md  |    0
+ .../attribute_recognition/datasets/__init__.py     |    0
+ .../attribute_recognition/datasets/dataset.py      |    0
+ .../attribute_recognition/datasets/pa100k.py       |    0
+ .../attribute_recognition/default_parser.py        |    0
+ .../reid/projects/attribute_recognition/main.py    |    0
+ .../attribute_recognition/models/__init__.py       |    0
+ .../projects/attribute_recognition/models/osnet.py |    0
+ .../reid/projects/attribute_recognition/train.sh   |    0
+ .../Deep-EIoU/reid/requirements.txt                |    0
+ .../Deep-EIoU/reid/scripts/default_config.py       |    0
+ .../Deep-EIoU/reid/scripts/main.py                 |    0
+ .../Deep-EIoU/reid/setup.py                        |    0
+ .../Deep-EIoU/reid/tools/compute_mean_std.py       |    0
+ .../Deep-EIoU/reid/tools/export.py                 |    0
+ .../Deep-EIoU/reid/tools/parse_test_res.py         |    0
+ .../Deep-EIoU/reid/tools/visualize_actmap.py       |    0
+ .../Deep-EIoU/reid/torchreid.egg-info/PKG-INFO     |    0
+ .../Deep-EIoU/reid/torchreid.egg-info/SOURCES.txt  |    0
+ .../reid/torchreid.egg-info/dependency_links.txt   |    0
+ .../Deep-EIoU/reid/torchreid.egg-info/requires.txt |    0
+ .../reid/torchreid.egg-info/top_level.txt          |    0
+ .../Deep-EIoU/reid/torchreid/__init__.py           |    0
+ .../torchreid/__pycache__/__init__.cpython-37.pyc  |  Bin
+ .../torchreid/__pycache__/__init__.cpython-38.pyc  |  Bin
+ .../Deep-EIoU/reid/torchreid/data/__init__.py      |    0
+ .../data/__pycache__/__init__.cpython-37.pyc       |  Bin
+ .../data/__pycache__/datamanager.cpython-37.pyc    |  Bin
+ .../data/__pycache__/sampler.cpython-37.pyc        |  Bin
+ .../data/__pycache__/transforms.cpython-37.pyc     |  Bin
+ .../Deep-EIoU/reid/torchreid/data/datamanager.py   |    0
+ .../reid/torchreid/data/datasets/__init__.py       |    0
+ .../datasets/__pycache__/__init__.cpython-37.pyc   |  Bin
+ .../datasets/__pycache__/dataset.cpython-37.pyc    |  Bin
+ .../reid/torchreid/data/datasets/dataset.py        |    0
+ .../reid/torchreid/data/datasets/image/__init__.py |    0
+ .../image/__pycache__/__init__.cpython-37.pyc      |  Bin
+ .../image/__pycache__/cuhk01.cpython-37.pyc        |  Bin
+ .../image/__pycache__/cuhk02.cpython-37.pyc        |  Bin
+ .../image/__pycache__/cuhk03.cpython-37.pyc        |  Bin
+ .../image/__pycache__/cuhksysu.cpython-37.pyc      |  Bin
+ .../image/__pycache__/dukemtmcreid.cpython-37.pyc  |  Bin
+ .../datasets/image/__pycache__/grid.cpython-37.pyc |  Bin
+ .../image/__pycache__/ilids.cpython-37.pyc         |  Bin
+ .../image/__pycache__/market1501.cpython-37.pyc    |  Bin
+ .../image/__pycache__/msmt17.cpython-37.pyc        |  Bin
+ .../datasets/image/__pycache__/prid.cpython-37.pyc |  Bin
+ .../image/__pycache__/sensereid.cpython-37.pyc     |  Bin
+ .../__pycache__/university1652.cpython-37.pyc      |  Bin
+ .../image/__pycache__/viper.cpython-37.pyc         |  Bin
+ .../reid/torchreid/data/datasets/image/cuhk01.py   |    0
+ .../reid/torchreid/data/datasets/image/cuhk02.py   |    0
+ .../reid/torchreid/data/datasets/image/cuhk03.py   |    0
+ .../reid/torchreid/data/datasets/image/cuhksysu.py |    0
+ .../torchreid/data/datasets/image/dukemtmcreid.py  |    0
+ .../reid/torchreid/data/datasets/image/grid.py     |    0
+ .../reid/torchreid/data/datasets/image/ilids.py    |    0
+ .../torchreid/data/datasets/image/market1501.py    |    0
+ .../reid/torchreid/data/datasets/image/msmt17.py   |    0
+ .../reid/torchreid/data/datasets/image/prid.py     |    0
+ .../torchreid/data/datasets/image/sensereid.py     |    0
+ .../data/datasets/image/university1652.py          |    0
+ .../reid/torchreid/data/datasets/image/viper.py    |    0
+ .../reid/torchreid/data/datasets/video/__init__.py |    0
+ .../video/__pycache__/__init__.cpython-37.pyc      |  Bin
+ .../__pycache__/dukemtmcvidreid.cpython-37.pyc     |  Bin
+ .../video/__pycache__/ilidsvid.cpython-37.pyc      |  Bin
+ .../datasets/video/__pycache__/mars.cpython-37.pyc |  Bin
+ .../video/__pycache__/prid2011.cpython-37.pyc      |  Bin
+ .../data/datasets/video/dukemtmcvidreid.py         |    0
+ .../reid/torchreid/data/datasets/video/ilidsvid.py |    0
+ .../reid/torchreid/data/datasets/video/mars.py     |    0
+ .../reid/torchreid/data/datasets/video/prid2011.py |    0
+ .../Deep-EIoU/reid/torchreid/data/sampler.py       |    0
+ .../Deep-EIoU/reid/torchreid/data/transforms.py    |    0
+ .../Deep-EIoU/reid/torchreid/engine/__init__.py    |    0
+ .../engine/__pycache__/__init__.cpython-37.pyc     |  Bin
+ .../engine/__pycache__/engine.cpython-37.pyc       |  Bin
+ .../Deep-EIoU/reid/torchreid/engine/engine.py      |    0
+ .../reid/torchreid/engine/image/__init__.py        |    0
+ .../image/__pycache__/__init__.cpython-37.pyc      |  Bin
+ .../image/__pycache__/softmax.cpython-37.pyc       |  Bin
+ .../image/__pycache__/triplet.cpython-37.pyc       |  Bin
+ .../reid/torchreid/engine/image/softmax.py         |    0
+ .../reid/torchreid/engine/image/triplet.py         |    0
+ .../reid/torchreid/engine/video/__init__.py        |    0
+ .../video/__pycache__/__init__.cpython-37.pyc      |  Bin
+ .../video/__pycache__/softmax.cpython-37.pyc       |  Bin
+ .../video/__pycache__/triplet.cpython-37.pyc       |  Bin
+ .../reid/torchreid/engine/video/softmax.py         |    0
+ .../reid/torchreid/engine/video/triplet.py         |    0
+ .../Deep-EIoU/reid/torchreid/losses/__init__.py    |    0
+ .../losses/__pycache__/__init__.cpython-37.pyc     |  Bin
+ .../__pycache__/cross_entropy_loss.cpython-37.pyc  |  Bin
+ .../hard_mine_triplet_loss.cpython-37.pyc          |  Bin
+ .../reid/torchreid/losses/cross_entropy_loss.py    |    0
+ .../torchreid/losses/hard_mine_triplet_loss.py     |    0
+ .../Deep-EIoU/reid/torchreid/metrics/__init__.py   |    0
+ .../metrics/__pycache__/__init__.cpython-37.pyc    |  Bin
+ .../metrics/__pycache__/accuracy.cpython-37.pyc    |  Bin
+ .../metrics/__pycache__/distance.cpython-37.pyc    |  Bin
+ .../metrics/__pycache__/rank.cpython-37.pyc        |  Bin
+ .../Deep-EIoU/reid/torchreid/metrics/accuracy.py   |    0
+ .../Deep-EIoU/reid/torchreid/metrics/distance.py   |    0
+ .../Deep-EIoU/reid/torchreid/metrics/rank.py       |    0
+ .../reid/torchreid/metrics/rank_cylib/Makefile     |    0
+ .../reid/torchreid/metrics/rank_cylib/__init__.py} |    0
+ .../rank_cylib/__pycache__/__init__.cpython-37.pyc |  Bin
+ .../reid/torchreid/metrics/rank_cylib/rank_cy.c    |    0
+ .../rank_cy.cpython-37m-x86_64-linux-gnu.so        |  Bin
+ .../reid/torchreid/metrics/rank_cylib/rank_cy.pyx  |    0
+ .../reid/torchreid/metrics/rank_cylib/setup.py     |    0
+ .../torchreid/metrics/rank_cylib/test_cython.py    |    0
+ .../Deep-EIoU/reid/torchreid/models/__init__.py    |    0
+ .../models/__pycache__/__init__.cpython-37.pyc     |  Bin
+ .../models/__pycache__/densenet.cpython-37.pyc     |  Bin
+ .../models/__pycache__/hacnn.cpython-37.pyc        |  Bin
+ .../__pycache__/inceptionresnetv2.cpython-37.pyc   |  Bin
+ .../models/__pycache__/inceptionv4.cpython-37.pyc  |  Bin
+ .../models/__pycache__/mlfn.cpython-37.pyc         |  Bin
+ .../models/__pycache__/mobilenetv2.cpython-37.pyc  |  Bin
+ .../models/__pycache__/mudeep.cpython-37.pyc       |  Bin
+ .../models/__pycache__/nasnet.cpython-37.pyc       |  Bin
+ .../models/__pycache__/osnet.cpython-37.pyc        |  Bin
+ .../models/__pycache__/osnet_ain.cpython-37.pyc    |  Bin
+ .../models/__pycache__/pcb.cpython-37.pyc          |  Bin
+ .../models/__pycache__/resnet.cpython-37.pyc       |  Bin
+ .../models/__pycache__/resnet_ibn_a.cpython-37.pyc |  Bin
+ .../models/__pycache__/resnet_ibn_b.cpython-37.pyc |  Bin
+ .../models/__pycache__/resnetmid.cpython-37.pyc    |  Bin
+ .../models/__pycache__/senet.cpython-37.pyc        |  Bin
+ .../models/__pycache__/shufflenet.cpython-37.pyc   |  Bin
+ .../models/__pycache__/shufflenetv2.cpython-37.pyc |  Bin
+ .../models/__pycache__/squeezenet.cpython-37.pyc   |  Bin
+ .../models/__pycache__/xception.cpython-37.pyc     |  Bin
+ .../Deep-EIoU/reid/torchreid/models/densenet.py    |    0
+ .../Deep-EIoU/reid/torchreid/models/hacnn.py       |    0
+ .../reid/torchreid/models/inceptionresnetv2.py     |    0
+ .../Deep-EIoU/reid/torchreid/models/inceptionv4.py |    0
+ .../Deep-EIoU/reid/torchreid/models/mlfn.py        |    0
+ .../Deep-EIoU/reid/torchreid/models/mobilenetv2.py |    0
+ .../Deep-EIoU/reid/torchreid/models/mudeep.py      |    0
+ .../Deep-EIoU/reid/torchreid/models/nasnet.py      |    0
+ .../Deep-EIoU/reid/torchreid/models/osnet.py       |    0
+ .../Deep-EIoU/reid/torchreid/models/osnet_ain.py   |    0
+ .../Deep-EIoU/reid/torchreid/models/pcb.py         |    0
+ .../Deep-EIoU/reid/torchreid/models/resnet.py      |    0
+ .../reid/torchreid/models/resnet_ibn_a.py          |    0
+ .../reid/torchreid/models/resnet_ibn_b.py          |    0
+ .../Deep-EIoU/reid/torchreid/models/resnetmid.py   |    0
+ .../Deep-EIoU/reid/torchreid/models/senet.py       |    0
+ .../Deep-EIoU/reid/torchreid/models/shufflenet.py  |    0
+ .../reid/torchreid/models/shufflenetv2.py          |    0
+ .../Deep-EIoU/reid/torchreid/models/squeezenet.py  |    0
+ .../Deep-EIoU/reid/torchreid/models/xception.py    |    0
+ .../Deep-EIoU/reid/torchreid/optim/__init__.py     |    0
+ .../optim/__pycache__/__init__.cpython-37.pyc      |  Bin
+ .../optim/__pycache__/lr_scheduler.cpython-37.pyc  |  Bin
+ .../optim/__pycache__/optimizer.cpython-37.pyc     |  Bin
+ .../optim/__pycache__/radam.cpython-37.pyc         |  Bin
+ .../Deep-EIoU/reid/torchreid/optim/lr_scheduler.py |    0
+ .../Deep-EIoU/reid/torchreid/optim/optimizer.py    |    0
+ .../Deep-EIoU/reid/torchreid/optim/radam.py        |    0
+ .../Deep-EIoU/reid/torchreid/sport_extract.py      |    0
+ .../reid/torchreid/utils/GPU-Re-Ranking/README.md  |    0
+ .../adjacency_matrix/build_adjacency_matrix.cpp    |    0
+ .../build_adjacency_matrix_kernel.cu               |    0
+ .../extension/adjacency_matrix/setup.py            |    0
+ .../utils/GPU-Re-Ranking/extension/make.sh         |    0
+ .../extension/propagation/gnn_propagate.cpp        |    0
+ .../extension/propagation/gnn_propagate_kernel.cu  |    0
+ .../GPU-Re-Ranking/extension/propagation/setup.py  |    0
+ .../utils/GPU-Re-Ranking/gnn_reranking.py          |    0
+ .../reid/torchreid/utils/GPU-Re-Ranking/main.py    |    0
+ .../reid/torchreid/utils/GPU-Re-Ranking/utils.py   |    0
+ .../Deep-EIoU/reid/torchreid/utils/__init__.py     |    0
+ .../utils/__pycache__/__init__.cpython-37.pyc      |  Bin
+ .../utils/__pycache__/avgmeter.cpython-37.pyc      |  Bin
+ .../__pycache__/feature_extractor.cpython-37.pyc   |  Bin
+ .../utils/__pycache__/loggers.cpython-37.pyc       |  Bin
+ .../__pycache__/model_complexity.cpython-37.pyc    |  Bin
+ .../utils/__pycache__/reidtools.cpython-37.pyc     |  Bin
+ .../utils/__pycache__/rerank.cpython-37.pyc        |  Bin
+ .../utils/__pycache__/tools.cpython-37.pyc         |  Bin
+ .../utils/__pycache__/torchtools.cpython-37.pyc    |  Bin
+ .../Deep-EIoU/reid/torchreid/utils/avgmeter.py     |    0
+ .../reid/torchreid/utils/feature_extractor.py      |    0
+ .../Deep-EIoU/reid/torchreid/utils/loggers.py      |    0
+ .../reid/torchreid/utils/model_complexity.py       |    0
+ .../Deep-EIoU/reid/torchreid/utils/reidtools.py    |    0
+ .../Deep-EIoU/reid/torchreid/utils/rerank.py       |    0
+ .../Deep-EIoU/reid/torchreid/utils/tools.py        |    0
+ .../Deep-EIoU/reid/torchreid/utils/torchtools.py   |    0
+ code/{Deep-EIoU1 => Deep-EIoU}/Deep-EIoU/setup.cfg |    0
+ code/{Deep-EIoU1 => Deep-EIoU}/Deep-EIoU/setup.py  |    0
+ .../tools/datasets/convert_cityperson_to_coco.py   |    0
+ .../tools/datasets/convert_crowdhuman_to_coco.py   |    0
+ .../tools/datasets/convert_ethz_to_coco.py         |    0
+ .../tools/datasets/convert_mot17_to_coco.py        |    0
+ .../tools/datasets/convert_mot20_to_coco.py        |    0
+ .../Deep-EIoU/tools/datasets/mix_data_ablation.py  |    0
+ .../tools/datasets/mix_data_test_mot17.py          |    0
+ .../tools/datasets/mix_data_test_mot20.py          |    0
+ .../Deep-EIoU/tools/demo.py                        |   18 +-
+ .../Deep-EIoU/tools/sport_interpolation.py         |    0
+ .../Deep-EIoU/tools/sport_track.py                 |    0
+ .../Deep-EIoU/tracker/Deep_EIoU.py                 |    0
+ .../tracker/__pycache__/Deep_EIoU.cpython-311.pyc  |  Bin 0 -> 25403 bytes
+ .../tracker/__pycache__/basetrack.cpython-311.pyc  |  Bin 0 -> 2911 bytes
+ .../__pycache__/kalman_filter.cpython-311.pyc      |  Bin 0 -> 11997 bytes
+ .../tracker/__pycache__/matching.cpython-311.pyc   |  Bin 0 -> 16151 bytes
+ .../Deep-EIoU/tracker/basetrack.py                 |    0
+ .../Deep-EIoU/tracker/kalman_filter.py             |    0
+ .../Deep-EIoU/tracker/matching.py                  |    0
+ .../Deep-EIoU/tracker/tracking_utils/evaluation.py |    0
+ .../Deep-EIoU/tracker/tracking_utils/io.py         |    0
+ .../Deep-EIoU/tracker/tracking_utils/timer.py      |    0
+ .../yolox_x_ch_sportsmot.cpython-311.pyc           |  Bin 0 -> 5468 bytes
+ .../Deep-EIoU/yolox/data/__init__.py               |    0
+ .../data/__pycache__/__init__.cpython-311.pyc      |  Bin 0 -> 604 bytes
+ .../data/__pycache__/data_augment.cpython-311.pyc  |  Bin 0 -> 15399 bytes
+ .../__pycache__/data_prefetcher.cpython-311.pyc    |  Bin 0 -> 4660 bytes
+ .../data/__pycache__/dataloading.cpython-311.pyc   |  Bin 0 -> 7330 bytes
+ .../data/__pycache__/samplers.cpython-311.pyc      |  Bin 0 -> 5882 bytes
+ .../Deep-EIoU/yolox/data/data_augment.py           |    0
+ .../Deep-EIoU/yolox/data/data_prefetcher.py        |    0
+ .../Deep-EIoU/yolox/data/dataloading.py            |    0
+ .../Deep-EIoU/yolox/data/datasets/__init__.py      |    0
+ .../datasets/__pycache__/__init__.cpython-311.pyc  |  Bin 0 -> 472 bytes
+ .../__pycache__/datasets_wrapper.cpython-311.pyc   |  Bin 0 -> 6590 bytes
+ .../__pycache__/mosaicdetection.cpython-311.pyc    |  Bin 0 -> 13067 bytes
+ .../data/datasets/__pycache__/mot.cpython-311.pyc  |  Bin 0 -> 7613 bytes
+ .../yolox/data/datasets/datasets_wrapper.py        |    0
+ .../yolox/data/datasets/mosaicdetection.py         |    0
+ .../Deep-EIoU/yolox/data/datasets/mot.py           |    0
+ .../Deep-EIoU/yolox/data/samplers.py               |    0
+ .../Deep-EIoU/yolox/exp/__init__.py                |    0
+ .../yolox/exp/__pycache__/__init__.cpython-311.pyc |  Bin 0 -> 372 bytes
+ .../yolox/exp/__pycache__/base_exp.cpython-311.pyc |  Bin 0 -> 4307 bytes
+ .../yolox/exp/__pycache__/build.cpython-311.pyc    |  Bin 0 -> 2504 bytes
+ .../exp/__pycache__/yolox_base.cpython-311.pyc     |  Bin 0 -> 10604 bytes
+ .../Deep-EIoU/yolox/exp/base_exp.py                |    0
+ .../Deep-EIoU/yolox/exp/build.py                   |    0
+ .../Deep-EIoU/yolox/exp/yolox_base.py              |    0
+ .../Deep-EIoU/yolox/models/__init__.py             |    0
+ .../models/__pycache__/__init__.cpython-311.pyc    |  Bin 0 -> 574 bytes
+ .../models/__pycache__/darknet.cpython-311.pyc     |  Bin 0 -> 8197 bytes
+ .../models/__pycache__/losses.cpython-311.pyc      |  Bin 0 -> 5192 bytes
+ .../__pycache__/network_blocks.cpython-311.pyc     |  Bin 0 -> 11921 bytes
+ .../models/__pycache__/yolo_fpn.cpython-311.pyc    |  Bin 0 -> 4687 bytes
+ .../models/__pycache__/yolo_head.cpython-311.pyc   |  Bin 0 -> 28970 bytes
+ .../models/__pycache__/yolo_pafpn.cpython-311.pyc  |  Bin 0 -> 5356 bytes
+ .../yolox/models/__pycache__/yolox.cpython-311.pyc |  Bin 0 -> 1950 bytes
+ .../Deep-EIoU/yolox/models/darknet.py              |    0
+ .../Deep-EIoU/yolox/models/losses.py               |    0
+ .../Deep-EIoU/yolox/models/network_blocks.py       |    0
+ .../Deep-EIoU/yolox/models/yolo_fpn.py             |    0
+ .../Deep-EIoU/yolox/models/yolo_head.py            |    0
+ .../Deep-EIoU/yolox/models/yolo_pafpn.py           |    0
+ .../Deep-EIoU/yolox/models/yolox.py                |    0
+ .../__pycache__/timer.cpython-311.pyc              |  Bin 0 -> 1805 bytes
+ .../Deep-EIoU/yolox/tracking_utils/evaluation.py   |    0
+ .../Deep-EIoU/yolox/tracking_utils/io.py           |    0
+ .../Deep-EIoU/yolox/tracking_utils/timer.py        |    0
+ .../Deep-EIoU/yolox/utils/__init__.py              |    0
+ .../utils/__pycache__/__init__.cpython-311.pyc     |  Bin 0 -> 727 bytes
+ .../__pycache__/allreduce_norm.cpython-311.pyc     |  Bin 0 -> 5822 bytes
+ .../yolox/utils/__pycache__/boxes.cpython-311.pyc  |  Bin 0 -> 8294 bytes
+ .../utils/__pycache__/checkpoint.cpython-311.pyc   |  Bin 0 -> 2131 bytes
+ .../utils/__pycache__/demo_utils.cpython-311.pyc   |  Bin 0 -> 5358 bytes
+ .../yolox/utils/__pycache__/dist.cpython-311.pyc   |  Bin 0 -> 11319 bytes
+ .../yolox/utils/__pycache__/ema.cpython-311.pyc    |  Bin 0 -> 4450 bytes
+ .../yolox/utils/__pycache__/logger.cpython-311.pyc |  Bin 0 -> 4347 bytes
+ .../utils/__pycache__/lr_scheduler.cpython-311.pyc |  Bin 0 -> 6809 bytes
+ .../yolox/utils/__pycache__/metric.cpython-311.pyc |  Bin 0 -> 7370 bytes
+ .../utils/__pycache__/model_utils.cpython-311.pyc  |  Bin 0 -> 5119 bytes
+ .../utils/__pycache__/setup_env.cpython-311.pyc    |  Bin 0 -> 2079 bytes
+ .../utils/__pycache__/visualize.cpython-311.pyc    |  Bin 0 -> 6344 bytes
+ .../Deep-EIoU/yolox/utils/allreduce_norm.py        |    0
+ .../Deep-EIoU/yolox/utils/boxes.py                 |    0
+ .../Deep-EIoU/yolox/utils/checkpoint.py            |    0
+ .../Deep-EIoU/yolox/utils/demo_utils.py            |    0
+ .../Deep-EIoU/yolox/utils/dist.py                  |    0
+ .../Deep-EIoU/yolox/utils/ema.py                   |    0
+ .../Deep-EIoU/yolox/utils/logger.py                |    0
+ .../Deep-EIoU/yolox/utils/lr_scheduler.py          |    0
+ .../Deep-EIoU/yolox/utils/metric.py                |    0
+ .../Deep-EIoU/yolox/utils/model_utils.py           |    0
+ .../Deep-EIoU/yolox/utils/setup_env.py             |    0
+ .../Deep-EIoU/yolox/utils/visualize.py             |    0
+ .../Deep-EIoU/yolox/yolox/__init__.py              |    0
+ .../Deep-EIoU/yolox/yolox/core/__init__.py         |    0
+ .../Deep-EIoU/yolox/yolox/core/launch.py           |    0
+ .../Deep-EIoU/yolox/yolox/core/trainer.py          |    0
+ .../Deep-EIoU/yolox/yolox/data/__init__.py         |    0
+ .../Deep-EIoU/yolox/yolox/data/data_augment.py     |    0
+ .../Deep-EIoU/yolox/yolox/data/data_prefetcher.py  |    0
+ .../Deep-EIoU/yolox/yolox/data/dataloading.py      |    0
+ .../yolox/yolox/data/datasets/__init__.py          |    0
+ .../yolox/yolox/data/datasets/datasets_wrapper.py  |    0
+ .../yolox/yolox/data/datasets/mosaicdetection.py   |    0
+ .../Deep-EIoU/yolox/yolox/data/datasets/mot.py     |    0
+ .../Deep-EIoU/yolox/yolox/data/samplers.py         |    0
+ .../yolox/yolox/deepsort_tracker/deepsort.py       |    0
+ .../yolox/yolox/deepsort_tracker/detection.py      |    0
+ .../yolox/yolox/deepsort_tracker/iou_matching.py   |    0
+ .../yolox/yolox/deepsort_tracker/kalman_filter.py  |    0
+ .../yolox/deepsort_tracker/linear_assignment.py    |    0
+ .../yolox/yolox/deepsort_tracker/reid_model.py     |    0
+ .../yolox/yolox/deepsort_tracker/track.py          |    0
+ .../Deep-EIoU/yolox/yolox/evaluators/__init__.py   |    0
+ .../yolox/yolox/evaluators/coco_evaluator.py       |    0
+ .../Deep-EIoU/yolox/yolox/evaluators/evaluation.py |    0
+ .../yolox/yolox/evaluators/mot_evaluator.py        |    0
+ .../Deep-EIoU/yolox/yolox/exp/__init__.py          |    0
+ .../Deep-EIoU/yolox/yolox/exp/base_exp.py          |    0
+ .../Deep-EIoU/yolox/yolox/exp/build.py             |    0
+ .../Deep-EIoU/yolox/yolox/exp/yolox_base.py        |    0
+ .../Deep-EIoU/yolox/yolox/layers/__init__.py       |    0
+ .../yolox/yolox/layers/csrc/cocoeval/cocoeval.cpp  |    0
+ .../yolox/yolox/layers/csrc/cocoeval/cocoeval.h    |    0
+ .../Deep-EIoU/yolox/yolox/layers/csrc/vision.cpp   |    0
+ .../yolox/yolox/layers/fast_coco_eval_api.py       |    0
+ .../Deep-EIoU/yolox/yolox/models/__init__.py       |    0
+ .../Deep-EIoU/yolox/yolox/models/darknet.py        |    0
+ .../Deep-EIoU/yolox/yolox/models/losses.py         |    0
+ .../Deep-EIoU/yolox/yolox/models/network_blocks.py |    0
+ .../Deep-EIoU/yolox/yolox/models/yolo_fpn.py       |    0
+ .../Deep-EIoU/yolox/yolox/models/yolo_head.py      |    0
+ .../Deep-EIoU/yolox/yolox/models/yolo_pafpn.py     |    0
+ .../Deep-EIoU/yolox/yolox/models/yolox.py          |    0
+ .../yolox/yolox/motdt_tracker/basetrack.py         |    0
+ .../yolox/yolox/motdt_tracker/kalman_filter.py     |    0
+ .../yolox/yolox/motdt_tracker/matching.py          |    0
+ .../yolox/yolox/motdt_tracker/motdt_tracker.py     |    0
+ .../yolox/yolox/motdt_tracker/reid_model.py        |    0
+ .../Deep-EIoU/yolox/yolox/sort_tracker/sort.py     |    0
+ .../Deep-EIoU/yolox/yolox/tracker/basetrack.py     |    0
+ .../Deep-EIoU/yolox/yolox/tracker/byte_tracker.py  |    0
+ .../Deep-EIoU/yolox/yolox/tracker/kalman_filter.py |    0
+ .../Deep-EIoU/yolox/yolox/tracker/matching.py      |    0
+ .../yolox/yolox/tracking_utils/evaluation.py       |    0
+ .../Deep-EIoU/yolox/yolox/tracking_utils/io.py     |    0
+ .../Deep-EIoU/yolox/yolox/tracking_utils/timer.py  |    0
+ .../Deep-EIoU/yolox/yolox/utils/__init__.py        |    0
+ .../Deep-EIoU/yolox/yolox/utils/allreduce_norm.py  |    0
+ .../Deep-EIoU/yolox/yolox/utils/boxes.py           |    0
+ .../Deep-EIoU/yolox/yolox/utils/checkpoint.py      |    0
+ .../Deep-EIoU/yolox/yolox/utils/demo_utils.py      |    0
+ .../Deep-EIoU/yolox/yolox/utils/dist.py            |    0
+ .../Deep-EIoU/yolox/yolox/utils/ema.py             |    0
+ .../Deep-EIoU/yolox/yolox/utils/logger.py          |    0
+ .../Deep-EIoU/yolox/yolox/utils/lr_scheduler.py    |    0
+ .../Deep-EIoU/yolox/yolox/utils/metric.py          |    0
+ .../Deep-EIoU/yolox/yolox/utils/model_utils.py     |    0
+ .../Deep-EIoU/yolox/yolox/utils/setup_env.py       |    0
+ .../Deep-EIoU/yolox/yolox/utils/visualize.py       |    0
+ .../Deep-EIoU/yolox/yolox_x_ch_sportsmot.py        |    0
+ code/Deep-EIoU/Readme.md                           |   13 +
+ code/Deep-EIoU/detection/.gitignore                |    0
+ code/Deep-EIoU/embedding/.gitignore                |    0
+ .../evaluacion_yolov10.ipynb                       |    0
+ code/Deep-EIoU/output_video_bundesliga.mp4         |  Bin 0 -> 17401010 bytes
+ code/Deep-EIoU1/Readme.md                          |   94 -
+ .../__pycache__/sportsreid_dataset.cpython-311.pyc |  Bin 0 -> 4365 bytes
+ code/entrenamientoReID/eval.py                     |   25 +-
+ code/entrenamientoReID/gallery_queryMaker.py       |  151 +
+ code/first tryout with YOLO/TFG_balonmano.ipynb    |  202 -
+ code/gta-link - TFG/.gitignore                     |    4 +-
+ .../video1.txt                                     | 6050 ++++++++++++++++++++
+ code/gta-link - TFG/mot_eval.py                    |   96 +
+ code/gta-link - TFG/videomakerByFrame.py           |    2 +-
+ code/gta-link - TFG/visualizacion_por_mot.py       |  104 +
+ 433 files changed, 6443 insertions(+), 316 deletions(-)

@@ -1,0 +1,45 @@
+# General exclusions
+_temp
+**/__pycache__/
+*.pyc
+tools/__pycache__/*
+reid/*
+reid/
+
+# Large Files & Data
+*.jpg
+*.npy
+*.pkl
+
+# Video Files
+*.mp4
+*.MP4
+*.avi
+*.mov
+*.mkv
+*.flv
+*.wmv
+*.webm
+*.mpg
+*.mpeg
+*.3gp
+
+# Model Checkpoints & Weights
+*.pth
+*.pth.tar
+*.weights
+*.caffemodel
+*.h5
+*.hdf5
+*.keras
+*.onnx
+*.t7
+*.joblib
+*.pt
+*.ckpt
+*.pb
+
+# Specific Directories
+code/gta-link - TFG/reid_checkpoints/
+code/entrenamiento_ReID/logs/
+code/Deep-EIoU/Deep-EIoU/checkpoints

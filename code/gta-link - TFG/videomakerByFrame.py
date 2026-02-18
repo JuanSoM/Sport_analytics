@@ -3,7 +3,7 @@ import os
 from tqdm import tqdm  # Importar tqdm para la barra de progreso
 
 # Ruta a la carpeta con las imágenes procesadas
-img_folder = r"C:\Users\jismbs\Documents\path\to\SoccerNet\tracking\test\tracked_output"
+img_folder = r"C:\Users\Soriano\OneDrive\Documentos\Bundesliga\bundesliga reid osnet con entrenado con dataset amateur\video1\img1"
 
 # Ruta de salida para el video
 output_video = os.path.join(img_folder, "output_video.mp4")
