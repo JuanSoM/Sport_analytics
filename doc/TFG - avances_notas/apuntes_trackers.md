@@ -15,22 +15,22 @@
 
 ## Trackers para las Pruebas
 ### Trackers evaluados en el paper SportsMOT
-- CenterTrack
-- FairMOT
-- QDTrack *(Tracking-by-detection)*
-- TransTrack
-- GTR
-- ByteTrack *(Tracking-by-detection)*
-- OC-SORT *(Tracking-by-detection)*
+- [CenterTrack](https://github.com/xingyizhou/CenterTrack)
+- [FairMOT](https://github.com/ifzhang/FairMOT)
+- [QDTrack *(Tracking-by-detection)*](https://github.com/SysCV/qdtrack)
+- [TransTrack](https://github.com/PeizeSun/TransTrack)
+- [GTR](https://github.com/xingyizhou/GTR)
+- [ByteTrack *(Tracking-by-detection)*](https://github.com/FoundationVision/ByteTrack)
+- [OC-SORT *(Tracking-by-detection)*](https://github.com/noahcao/OC_SORT)
 - MixSort-Byte
 - MixSort-OC
 
 ###  Nuevos Trackers a considerar
-- **MOTIP (2025):** - Destaca por su alta popularidad reciente (472 estrellas en su repositorio). 
+- **[MOTIP (2025)](https://github.com/MCG-NJU/MOTIP):** - Destaca por su alta popularidad reciente (472 estrellas en su repositorio). 
   - **Justificación:** Es interesante probar un tracker reciente y funcional, especialmente porque se ha demostrado que se puede aplicar a otros dominios más allá del fútbol.
 
 ###  Tracker de las prácticas
-- DeepEIoU
+- [DeepEIoU](https://github.com/hsiangwei0903/Deep-EIoU)
 ---
 
 ## Clasificación de Trackers según el uso de modelos ReID (Re-Identificación)
