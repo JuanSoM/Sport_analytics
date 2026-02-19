@@ -316,7 +316,7 @@ def main(exp, args):
     extractor = FeatureExtractor(
         model_name='osnet_x1_0',
         model_path = 'checkpoints/model_myDataset.pth.tar-1',
-        device='cpu'
+        device=str(args.device)
     )   
 
     imageflow_demo(predictor, extractor, vis_folder, current_time, args)
