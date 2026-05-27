@@ -34,7 +34,7 @@ def make_parser():
     parser.add_argument("-n", "--name", type=str, default=None, help="model name")
 
     parser.add_argument(
-        "--path", default="../output_video_bundesliga.mp4", help="path to images or video"
+        "--path", default="../output_video_soccernet.mp4", help="path to images or video"
     )
     parser.add_argument(
         "--save_result",
@@ -315,7 +315,7 @@ def main(exp, args):
     
     extractor = FeatureExtractor(
         model_name='osnet_x1_0',
-        model_path = 'checkpoints/model_myDataset.pth.tar-1',
+        model_path = 'checkpoints/sports_model.pth.tar-60',
         device=str(args.device)
     )   
 

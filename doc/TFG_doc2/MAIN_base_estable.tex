@@ -1,0 +1,430 @@
+\documentclass[12pt, a4paper, twoside]{article}
+\ifdefined\pdfminorversion
+\pdfminorversion=7
+\fi
+
+%% =========================
+%% PREAMBLE
+%% =========================
+
+\usepackage{pdfpages}           % Para incluir PDFs
+\usepackage{graphicx}           % Para gráficos
+\usepackage{subfiles}           % Para manejar subarchivos
+\usepackage{hyperref}           % Para enlaces
+\usepackage{listings}           % Para código fuente
+\usepackage{verbatim}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage[backend=bibtex,style=numeric]{biblatex} % Para citas numéricas
+\addbibresource{references.bib} % Cargar archivo .bib
+\usepackage{url}
+\usepackage{xcolor}
+\usepackage{geometry}           % Para ajustar márgenes
+\usepackage[spanish,es-tabla]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{csquotes}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{setspace}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage[most]{tcolorbox}
+
+%% =========================
+%% CONFIGURACIÓN GENERAL
+%% =========================
+
+\geometry{
+	left=3cm,
+	right=3cm,
+	top=2.5cm,
+	bottom=2.5cm,
+	headheight=15pt,
+	twoside
+}
+
+\graphicspath{{images/}{../images/}}
+
+\onehalfspacing
+\setlength{\parskip}{0.5em}
+\setlength{\parindent}{0pt}
+
+\hypersetup{
+	colorlinks=true,
+	linkcolor=blue,
+	citecolor=blue,
+	urlcolor=blue,
+	pdftitle={Memoria TFG},
+	pdfauthor={Juan Ignacio Soriano Muñoz}
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE,RO]{\thepage}
+\fancyhead[RE]{\nouppercase{\leftmark}}
+\fancyhead[LO]{TFG — Tracking multiobjeto en fútbol}
+
+%% =========================
+%% ESTILO PARA PYTHON
+%% =========================
+
+\lstdefinestyle{pythonstyle}{
+	language=Python,
+	backgroundcolor=\color{white},
+	basicstyle=\ttfamily\small,
+	breaklines=true,
+	frame=single,
+	captionpos=b,
+	numbers=none,
+	keywordstyle=\color{blue}\bfseries,
+	commentstyle=\color{green!50!black},
+	stringstyle=\color{red},
+	tabsize=2,
+	showstringspaces=false,
+	xleftmargin=0pt,
+	xrightmargin=0pt,
+	aboveskip=0pt,
+	belowskip=0pt
+}
+
+%% =========================
+%% CAJA PARA PLANTILLA FIJA
+%% =========================
+
+\newtcolorbox{chaptertemplatebox}{
+	enhanced,
+	breakable,
+	colback=gray!5,
+	colframe=black!50,
+	title=Plantilla fija para capítulos experimentales,
+	fonttitle=\bfseries
+}
+
+% Campos reutilizables de la plantilla experimental.
+% Evita usar texto que empiece por [ justo después de \\, porque LaTeX
+% interpreta esos corchetes como argumento opcional del salto de línea.
+\newcommand{\templatefield}[2]{%
+	\textbf{#1}\par
+	{\color{gray!70!black}\emph{#2}}\par\vspace{0.5em}%
+}
+
+\newcommand{\experimentchaptertemplate}{%
+	\begin{chaptertemplatebox}
+		\templatefield{Objetivo del experimento}{Escribir aquí qué pregunta responde este bloque.}
+		\templatefield{Material usado}{Informes, tablas, vídeos, scripts, datasets.}
+		\templatefield{Configuración}{Modelo, tracker, parámetros, secuencias, motor de evaluación.}
+		\templatefield{Resultados principales}{Métricas y observaciones clave.}
+		\templatefield{Interpretación}{Qué significan esos resultados.}
+		\templatefield{Limitaciones}{Qué no demuestra todavía este bloque.}
+		\templatefield{Conclusión parcial}{Qué decisión o conclusión deja cerrada antes del siguiente capítulo.}
+	\end{chaptertemplatebox}%
+}
+
+%% =========================
+%% DATOS DEL TRABAJO
+%% =========================
+
+\title{Estudio comparativo y desarrollo de un pipeline de tracking multiobjeto con ReID y tracklet linking aplicado a fútbol amateur y profesional}
+\author{Juan Ignacio Soriano Muñoz}
+\date{Curso 2025--2026}
+
+\begin{document}
+	
+	%% Cover
+	\includepdf[noautoscale=true, width=\paperwidth]{cover.pdf}
+	
+	%% Title
+	\clearpage
+	\setcounter{page}{1}
+	\includepdf[noautoscale=true, width=\paperwidth]{title.pdf}
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	%% Índice automático
+	\tableofcontents
+	\newpage
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%% 1. INTRODUCCIÓN
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	\section{Introducción}
+	% Materiales base:
+	% - Anteproyecto
+	% - Conversaciones con tutores sobre objetivos y alcance
+	
+	\subsection{Contexto del problema}
+	\subsection{Motivación}
+	\subsection{Objetivos del TFG}
+	\subsection{Alcance y limitaciones}
+	\subsection{Estructura de la memoria}
+	
+	\newpage
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%% 2. ESTADO DEL ARTE
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	\section{Estado del arte}
+	% Materiales base:
+	% - apuntes_trackers.md
+	% - papers y repositorios recopilados al inicio
+	
+	\subsection{Multi-Object Tracking}
+	\subsection{Re-Identification}
+	\subsection{Paradigmas: tracking-by-detection frente a métodos end-to-end}
+	\subsection{Seguimiento de jugadores en deporte y fútbol}
+	\subsection{Métricas de evaluación}
+	
+	\newpage
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%% 3. PLANTEAMIENTO DEL PROBLEMA
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	\section{Planteamiento del problema}
+	% Materiales base:
+	% - Anteproyecto
+	% - Conversaciones con tutores
+	% - Diagnóstico inicial de fallos
+	
+	\subsection{Dificultades específicas del dominio amateur}
+	\subsection{Oclusiones, cruces, paneos y salidas de escena}
+	\subsection{Coherencia de identidad y coherencia geométrica}
+	\subsection{Preguntas de investigación}
+	\subsection{Hipótesis de trabajo}
+	
+	\newpage
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%% 4. DATOS, MATERIALES Y ENTORNO EXPERIMENTAL
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	\section{Datos, materiales y entorno experimental}
+	% Materiales base:
+	% - Anteproyecto
+	% - phase2_results_complete.html
+	% - scripts correctores
+	% - app Gradio
+	
+	\subsection{Datasets utilizados}
+	\subsection{Secuencias profesionales y amateur}
+	\subsection{Ground truth y pseudo-ground-truth}
+	\subsection{Entorno tecnológico}
+	\subsection{Organización reproducible de experimentos}
+	
+	\newpage
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%% 5. METODOLOGÍA GENERAL
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	\section{Metodología general}
+	% Materiales base:
+	% - propuesta1.pdf
+	% - plan_de_accion_tracking.md
+	% - reporte.md
+	% - conversaciones con tutores
+	
+	\subsection{Diseño iterativo del trabajo}
+	\subsection{Flujo general del pipeline}
+	\subsection{Protocolo de evaluación cuantitativa}
+	\subsection{Protocolo de evaluación cualitativa}
+	\subsection{Jerarquía de resultados: definitivos frente a exploratorios}
+	
+	\newpage
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%% 6. COMPARATIVA INICIAL DE TRACKERS
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	\section{Comparativa inicial de trackers}
+	% Materiales base:
+	% - evaluation_results.md
+	% - evaluation_results_2.md
+	
+	\experimentchaptertemplate
+	
+	\subsection{Selección de trackers candidatos}
+	\subsection{ByteTrack}
+	\subsection{DeepEIoU}
+	\subsection{MOTIP}
+	\subsection{Resultados iniciales y selección del tracker base}
+	
+	\newpage
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%% 7. DIAGNÓSTICO DEL PROBLEMA DE IDENTIDAD
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	\section{Diagnóstico del problema de identidad}
+	% Materiales base:
+	% - analisis_bytetrack_motip.md
+	% - PDFs visuales de ByteTrack y MOTIP
+	% - conclusiones_fase2.md
+	
+	\experimentchaptertemplate
+	
+	\subsection{Análisis visual de fallos en ByteTrack}
+	\subsection{Casos críticos: oclusiones, jugador caído y teletransportación}
+	\subsection{Influencia del \texttt{track\_buffer}}
+	\subsection{Heurísticas tempranas y sus limitaciones}
+	\subsection{Conclusión del diagnóstico}
+	
+	\newpage
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%% 8. ANÁLISIS DEL MÓDULO REID
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	\section{Análisis del módulo ReID}
+	% Materiales base:
+	% - verify_results.txt
+	% - informe_reid_tutores.html
+	
+	\experimentchaptertemplate
+	
+	\subsection{Modelo OSNet y embeddings}
+	\subsection{Verificación inicial del extractor ReID}
+	\subsection{Análisis experimental de embeddings}
+	\subsection{Separabilidad por identidad y por equipo}
+	\subsection{Discusión: problema del embedding frente a problema de integración}
+	
+	\newpage
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%% 9. INTEGRACIÓN ONLINE DE REID EN BYTETRACK
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	\section{Integración online de ReID en ByteTrack}
+	% Materiales base:
+	% - informe_recalibracion.html
+	% - informe_v1_cualitativo_embedded.html
+	
+	\experimentchaptertemplate
+	
+	\subsection{Configuración base v1}
+	\subsection{Recalibración de la fusión IoU--ReID}
+	\subsection{Experimentos v0, v1, v2 y v3}
+	\subsection{Evaluación cualitativa de v1}
+	\subsection{Trade-offs del enfoque online}
+	
+	\newpage
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%% 10. POSTPROCESADO OFFLINE MEDIANTE TRACKLET LINKING
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	\section{Postprocesado offline mediante tracklet linking}
+	% Materiales base:
+	% - informe_experimentos_1.html
+	% - informe_unificado_v1_linking.html
+	% - resultados_generalizacion.md
+	
+	\experimentchaptertemplate
+	
+	\subsection{Motivación del tracklet linking}
+	\subsection{Construcción y análisis de tracklets}
+	\subsection{Linking geométrico y criterios de fusión}
+	\subsection{Experimentos principales sobre v0}
+	\subsection{Aplicación sobre v1}
+	\subsection{Generalización a múltiples secuencias}
+	\subsection{Discusión: online frente a offline}
+	
+	\newpage
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%% 11. ADAPTACIÓN DEL REID AL DOMINIO
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	\section{Adaptación del ReID al dominio}
+	% Materiales base:
+	% - phase2_results_complete.html [definitivo]
+	% - linking_on_best_models.html [definitivo]
+	
+	\experimentchaptertemplate
+	
+	\subsection{Modelo baseline SportsMOT}
+	\subsection{Entrenamiento específico en fútbol profesional}
+	\subsection{Entrenamiento específico en fútbol amateur}
+	\subsection{Curvas de aprendizaje y selección de checkpoints}
+	\subsection{Comparación entre modelos genéricos y específicos}
+	\subsection{Aplicación de tracklet linking sobre los mejores modelos}
+	
+	\newpage
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%% 12. CURACIÓN MANUAL Y HERRAMIENTA DE APOYO
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	\section{Curación manual de resultados y herramienta de apoyo}
+	% Materiales base:
+	% - annotate_review.py
+	% - annotate_review_precise.py
+	% - app Gradio
+	
+	\subsection{Necesidad de corrección manual en salidas MOT}
+	\subsection{Script \texttt{annotate\_review.py}}
+	\subsection{Script \texttt{annotate\_review\_precise.py}}
+	\subsection{Aplicación web Gradio del pipeline completo}
+	\subsection{Utilidad práctica dentro del flujo experimental}
+	\subsection{Limitaciones actuales de la herramienta}
+	
+	\newpage
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%% 13. RESULTADOS GLOBALES Y SELECCIÓN DEL SISTEMA FINAL
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	\section{Resultados globales y selección del sistema final}
+	% Materiales base:
+	% - phase2_results_complete.html [definitivo]
+	% - linking_on_best_models.html [definitivo]
+	% - informe_unificado_v1_linking.html
+	% - informe_v1_cualitativo_embedded.html
+	% - Pipeline final: SportsMOT + v1 + linking sin split
+	
+	\experimentchaptertemplate
+	
+	\subsection{Megatabla de configuraciones}
+	\subsection{Comparación global de enfoques}
+	\subsection{Criterios de selección del sistema final}
+	\subsection{Pipeline final elegido y justificación}
+	\subsection{Discusión sobre trade-offs}
+	
+	\newpage
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%% 14. CONCLUSIONES
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	\section{Conclusiones}
+	% Materiales base:
+	% - Anteproyecto
+	% - resultados definitivos
+	
+	\subsection{Respuesta a los objetivos del anteproyecto}
+	\subsection{Principales hallazgos}
+	\subsection{Aportaciones del trabajo}
+	\subsection{Limitaciones}
+	\subsection{Trabajo futuro}
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%% BIBLIOGRAFÍA
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	\printbibliography
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%% BACK COVER
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	\includepdf[noautoscale=true, width=\paperwidth]{backcover.pdf}
+	
+\end{document}

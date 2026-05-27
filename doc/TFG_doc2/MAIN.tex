@@ -1,0 +1,185 @@
+\documentclass[12pt, a4paper, twoside]{article}
+\ifdefined\pdfminorversion
+\pdfminorversion=7
+\fi
+
+%% =========================
+%% PREAMBLE
+%% =========================
+
+\usepackage{pdfpages}           % Para incluir PDFs
+\usepackage{graphicx}           % Para gráficos
+\usepackage{subfiles}           % Para manejar subarchivos
+\usepackage{hyperref}           % Para enlaces
+\usepackage{listings}           % Para código fuente
+\usepackage{verbatim}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage[backend=bibtex,style=numeric]{biblatex} % Para citas numéricas
+\addbibresource{references.bib} % Cargar archivo .bib
+\usepackage{url}
+\usepackage{xcolor}
+\usepackage{geometry}           % Para ajustar márgenes
+\usepackage[spanish,es-tabla]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{csquotes}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{setspace}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage[most]{tcolorbox}
+
+%% =========================
+%% CONFIGURACIÓN GENERAL
+%% =========================
+
+\geometry{
+	left=3cm,
+	right=3cm,
+	top=2.5cm,
+	bottom=2.5cm,
+	headheight=15pt,
+	twoside
+}
+
+\graphicspath{{images/}{../images/}}
+
+\onehalfspacing
+\setlength{\parskip}{0.5em}
+\setlength{\parindent}{0pt}
+
+\hypersetup{
+	colorlinks=true,
+	linkcolor=blue,
+	citecolor=blue,
+	urlcolor=blue,
+	pdftitle={Memoria TFG},
+	pdfauthor={Juan Ignacio Soriano Muñoz}
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE,RO]{\thepage}
+\fancyhead[RE]{\nouppercase{\leftmark}}
+\fancyhead[LO]{TFG — Tracking multiobjeto en fútbol}
+
+%% =========================
+%% ESTILO PARA PYTHON
+%% =========================
+
+\lstdefinestyle{pythonstyle}{
+	language=Python,
+	backgroundcolor=\color{white},
+	basicstyle=\ttfamily\small,
+	breaklines=true,
+	frame=single,
+	captionpos=b,
+	numbers=none,
+	keywordstyle=\color{blue}\bfseries,
+	commentstyle=\color{green!50!black},
+	stringstyle=\color{red},
+	tabsize=2,
+	showstringspaces=false,
+	xleftmargin=0pt,
+	xrightmargin=0pt,
+	aboveskip=0pt,
+	belowskip=0pt
+}
+
+%% =========================
+%% CAJA PARA PLANTILLA FIJA
+%% =========================
+
+\newtcolorbox{chaptertemplatebox}{
+	enhanced,
+	breakable,
+	colback=gray!5,
+	colframe=black!50,
+	title=Plantilla fija para capítulos experimentales,
+	fonttitle=\bfseries
+}
+
+% Campos reutilizables de la plantilla experimental.
+% Evita usar texto que empiece por [ justo después de \\, porque LaTeX
+% interpreta esos corchetes como argumento opcional del salto de línea.
+\newcommand{\templatefield}[2]{%
+	\textbf{#1}\par
+	{\color{gray!70!black}\emph{#2}}\par\vspace{0.5em}%
+}
+
+\newcommand{\experimentchaptertemplate}{%
+	\begin{chaptertemplatebox}
+		\templatefield{Objetivo del experimento}{Escribir aquí qué pregunta responde este bloque.}
+		\templatefield{Material usado}{Informes, tablas, vídeos, scripts, datasets.}
+		\templatefield{Configuración}{Modelo, tracker, parámetros, secuencias, motor de evaluación.}
+		\templatefield{Resultados principales}{Métricas y observaciones clave.}
+		\templatefield{Interpretación}{Qué significan esos resultados.}
+		\templatefield{Limitaciones}{Qué no demuestra todavía este bloque.}
+		\templatefield{Conclusión parcial}{Qué decisión o conclusión deja cerrada antes del siguiente capítulo.}
+	\end{chaptertemplatebox}%
+}
+
+%% =========================
+%% DATOS DEL TRABAJO
+%% =========================
+
+\title{Estudio comparativo y desarrollo de un pipeline de tracking multiobjeto con ReID y tracklet linking aplicado a fútbol amateur y profesional}
+\author{Juan Ignacio Soriano Muñoz}
+\date{Curso 2025--2026}
+
+
+\begin{document}
+	
+	%% Cover
+	\includepdf[noautoscale=true, width=\paperwidth]{cover.pdf}
+	
+	%% Title
+	\clearpage
+	\setcounter{page}{1}
+	\includepdf[noautoscale=true, width=\paperwidth]{title.pdf}
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	%% Índice automático
+	\tableofcontents
+	\newpage
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%% CAPÍTULOS
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	\subfile{sections/01_introduccion}
+	\subfile{sections/02_estado_arte}
+	\subfile{sections/03_planteamiento_problema}
+	\subfile{sections/04_datos_materiales_entorno}
+	\subfile{sections/05_metodologia_general}
+	\subfile{sections/06_comparativa_inicial_trackers}
+	\subfile{sections/07_diagnostico_identidad}
+	\subfile{sections/08_analisis_reid}
+	\subfile{sections/09_integracion_online_reid}
+	\subfile{sections/10_tracklet_linking}
+	\subfile{sections/11_adaptacion_reid_dominio}
+	\subfile{sections/12_curacion_manual_herramienta}
+	\subfile{sections/13_resultados_globales}
+	\subfile{sections/14_conclusiones}
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%% BIBLIOGRAFÍA
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	\printbibliography
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%% BACK COVER
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	\includepdf[noautoscale=true, width=\paperwidth]{backcover.pdf}
+	
+\end{document}

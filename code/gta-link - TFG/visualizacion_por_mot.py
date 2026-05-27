@@ -7,13 +7,15 @@ from tqdm import tqdm
 # CONFIGURACIÓN (Pon tus rutas aquí)
 # ==========================================
 # Carpeta donde tienes las fotos originales (000001.jpg, 000002.jpg...)
-FRAMES_DIR = r"C:\Users\Soriano\OneDrive\Documentos\Bundesliga\bundesliga reid osnet con entrenado con dataset amateur\video1\img1" 
+# SPORTMOT -> FRAMES_DIR = r"C:\Users\Soriano\OneDrive\Documentos\Bundesliga\bundesliga reid osnet con entrenado con dataset amateur\video1\img1" 
+FRAMES_DIR = r"D:\SoccerNet_Dataset\tracking\train\train\SNMOT-060\img1" #SOCCERNET
 
 # El archivo .txt que quieres visualizar (tu resultado de GTA-Link o el GT perfecto)
-MOT_FILE = r"C:\Users\Soriano\OneDrive\Documentos\Sport_analytics\code\gta-link - TFG\DeepEIoU_Bundesliga_Split+Connect_eps0.6_minSamples10_K3_mergeDist0.4_spatial1.0\video1.txt" 
+#MOT_FILE = r"C:\Users\Soriano\OneDrive\Documentos\Sport_analytics\code\gta-link - TFG\DeepEIoU_Bundesliga_Split+Connect_eps0.6_minSamples10_K3_mergeDist0.4_spatial1.0\video1.txt" 
+MOT_FILE = r"C:\Users\Soriano\OneDrive\Documentos\Resultados_Soccernet\ByteTrack\2026_03_08_01_21_51_ByteTrack_SportMotReID_trackbuffer_200_Soccernet_H_MTB_Fine_Tune_15ma_final_heuristics.txt" 
 
 # Dónde quieres guardar el vídeo resultante y cómo se llamará
-OUTPUT_VIDEO = r"C:\Users\Soriano\OneDrive\Documentos\Sport_analytics\code\gta-link - TFG\video_etiquetado_DeepEIoU_miModelo_gta_link.mp4"
+OUTPUT_VIDEO = r"C:\Users\Soriano\OneDrive\Documentos\Sport_analytics\code\gta-link - TFG\ByteTrack_trackbuffer_200_Soccernet_H_MTB_Fine_Tune_15ma_final_heuristics.mp4"
 
 # A cuántos FPS quieres que vaya el vídeo (suele ser 25 o 30)
 FPS = 25
