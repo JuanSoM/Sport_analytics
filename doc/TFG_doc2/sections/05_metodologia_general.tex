@@ -8,23 +8,75 @@
 
 \section{Metodología general}
 
-% Materiales:
+% Materiales base:
 % - propuesta1.pdf
 % - plan_de_accion_tracking.md
 % - reporte.md
-% - Conversaciones con tutores
-%
-% Estado del bloque: Estructural / puente hacia experimentos
-%
-% Guía de redacción:
-% - Explica el diseño iterativo, el pipeline general y los protocolos de evaluación.
-% - Debe dejar clara la jerarquía entre resultados definitivos y exploratorios.
+% - conversaciones con tutores
+% - anteproyecto
+% - phase2_results_complete.html
+% - CONCLUSIONES_EXPERIMENTOS.html [solo como exploratorio]
 
 \subsection{Diseño iterativo del trabajo}
+
+El desarrollo del TFG se ha basado en una metodología iterativa, en línea con lo ya planteado en el anteproyecto. En lugar de fijar desde el inicio un único pipeline cerrado, el trabajo se estructuró como una secuencia de ciclos de diagnóstico, modificación, evaluación y revisión. Este enfoque resultaba especialmente adecuado para un problema como el seguimiento multiobjeto en fútbol, donde una parte relevante de las dificultades no se conoce con precisión hasta observar el comportamiento real de los modelos sobre secuencias concretas de vídeo.
+
+La idea central de esta metodología fue avanzar desde niveles bajos de análisis hacia niveles más altos de integración. En una primera fase se compararon varios trackers y se identificaron sus fallos más evidentes. A continuación, se profundizó en el problema de identidad, primero mediante análisis visual y cuantitativo de trayectorias, y después mediante el estudio del módulo ReID de forma aislada. Sobre esa base, se plantearon dos líneas complementarias de mejora: la recalibración online de la asociación en ByteTrack y el postprocesado offline mediante \textit{tracklet linking}. Finalmente, el trabajo se extendió al entrenamiento de modelos ReID específicos de dominio y a la construcción de una herramienta de apoyo para ejecutar el pipeline completo.
+
+Este diseño iterativo también permitió incorporar de forma natural el feedback de las tutorías. A lo largo del proyecto, distintas decisiones metodológicas fueron reformuladas a partir de resultados intermedios: por ejemplo, la ampliación de métricas más allá de MOTA e IDF1, la revisión del papel del \texttt{track\_buffer}, la necesidad de introducir análisis cualitativo para detectar incoherencias geométricas o el cambio de foco desde ajustes puramente online hacia el estudio del \textit{tracklet linking} offline. En consecuencia, la metodología del trabajo no debe entenderse como una sucesión rígida de experimentos independientes, sino como un proceso acumulativo de validación y refinamiento.
+
 \subsection{Flujo general del pipeline}
+
+El pipeline general del TFG se articula en torno a una arquitectura modular, formada por cuatro grandes bloques: detección, tracking online, postprocesado offline y evaluación. Esta separación resulta útil tanto desde el punto de vista experimental como desde el punto de vista práctico, ya que permite aislar con claridad qué componente es responsable de cada mejora o degradación observada.
+
+La Figura~\ref{fig:metodologia_pipeline} resume el flujo metodológico seguido en el trabajo, diferenciando las fases online y offline, así como los elementos transversales de evaluación, análisis de errores y selección de configuraciones.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{metodologia_pipeline.png}
+	\caption{Pipeline metodológico del trabajo. El flujo experimental se organiza en dos grandes fases: una fase online, centrada en detección y tracking, y una fase offline, orientada al linking, la evaluación y el análisis de resultados. Además, el proceso incorpora elementos transversales como el registro de métricas, el análisis de errores, la generalización a múltiples secuencias y la selección de la configuración final.}
+	\label{fig:metodologia_pipeline}
+\end{figure}
+
+
+En primer lugar, se parte de un detector de personas basado en YOLOX, integrado dentro del ecosistema de ByteTrack. Sobre esas detecciones se ejecuta el proceso de seguimiento online, utilizando ByteTrack como tracker base y, dependiendo de la configuración, incorporando o no un módulo ReID basado en embeddings OSNet. Esta fase produce como salida un fichero de tracking en formato MOT, que constituye la representación estándar de las trayectorias generadas por el sistema.
+
+En segundo lugar, opcionalmente se aplica un postprocesado offline de \textit{tracklet linking}. A diferencia del tracking online, esta etapa no modifica la asociación frame a frame mientras el vídeo se procesa, sino que opera a posteriori sobre trayectorias ya cerradas. Su función es detectar fragmentos compatibles y fusionarlos cuando exista suficiente evidencia temporal, espacial y, en algunas variantes, visual. Este enfoque permite introducir restricciones más conservadoras y reducir ciertos errores geométricos residuales que no siempre quedan bien resueltos durante la asociación online.
+
+En tercer lugar, el pipeline incluye una capa de visualización y análisis. Esta capa sirve para generar vídeo etiquetado, inspeccionar trayectorias y revisar de forma manual casos dudosos. En el contexto amateur, esta parte del flujo adquirió especial importancia, ya que fue necesario depurar salidas MOT para construir un pseudo-\textit{ground truth} suficientemente consistente como para calcular métricas y preparar conjuntos de entrenamiento ReID en formato \textit{gallery/query}.
+
+Por último, el pipeline incorpora una etapa de evaluación cuantitativa y cualitativa. Cuando existe \textit{ground truth}, se calculan métricas estándar de MOT; cuando no existe, la evaluación debe apoyarse con más fuerza en la inspección manual, la revisión de trayectorias y el análisis de errores estructurales. De este modo, la metodología combina reproducibilidad automatizada y análisis experto, evitando depender exclusivamente de un único tipo de evidencia.
+
 \subsection{Protocolo de evaluación cuantitativa}
+
+La evaluación cuantitativa se diseñó para comparar configuraciones de tracking y ReID de forma homogénea y reproducible. Para ello se utilizaron métricas estándar del campo MOT, en particular MOTA, IDF1, HOTA, número de \textit{ID switches}, fragmentaciones y número total de identidades generadas por el sistema. Estas métricas ofrecen perspectivas complementarias: MOTA resume errores globales de detección y asociación; IDF1 mide consistencia de identidad; HOTA intenta equilibrar calidad de detección y asociación; mientras que \textit{ID switches}, fragmentaciones y Total IDs resultan especialmente útiles para analizar la estabilidad de las trayectorias en vídeo deportivo \cite{ciaparrone2020survey,zhang2022bytetrack,cioppa2022soccernettracking}.
+
+A nivel de implementación, el protocolo se apoyó en dos motores principales: \texttt{motmetrics} y \texttt{trackeval}. Durante el desarrollo fue necesario revisar el evaluador para corregir problemas de alineación temporal entre el formato del \textit{ground truth} y la salida del tracker, especialmente en relación con el indexado de frames. Esta revisión fue importante porque pequeñas inconsistencias en la correspondencia temporal pueden alterar sensiblemente las métricas de asociación y generar comparaciones engañosas entre configuraciones.
+
+Además de las métricas estándar, en determinadas fases del trabajo se incorporaron medidas derivadas más específicas del dominio, como \textit{ID switches} por minuto, \textit{ID switches} por jugador y minuto o número total de IDs producidos en un clip. La razón para hacerlo fue que, en un contexto de seguimiento de futbolistas, no basta con optimizar métricas globales si al mismo tiempo el sistema produce una fragmentación excesiva o multiplica artificialmente el número de trayectorias asignadas. En otras palabras, la evaluación cuantitativa se orientó no solo a “maximizar una métrica”, sino a capturar mejor la continuidad real de identidad en escenarios deportivos.
+
+Por último, conviene señalar que no todos los experimentos tienen el mismo estatus dentro de la memoria. Los resultados que se consideran definitivos son aquellos obtenidos con el protocolo ya estabilizado y comparables entre sí; en cambio, ciertos análisis exploratorios se conservaron únicamente como referencia metodológica o como prueba de hipótesis intermedias. Esta distinción se explicará con más detalle en la Sección~\ref{sec:definitivos_exploratorios}.
+
 \subsection{Protocolo de evaluación cualitativa}
+
+Aunque las métricas MOT son indispensables para comparar configuraciones, la experiencia acumulada durante el proyecto mostró que no son suficientes por sí solas para valorar la calidad real del seguimiento en fútbol. En particular, pueden existir trayectorias con pocas identidades totales o pocos cambios aparentes de ID que, sin embargo, contengan reasignaciones espacialmente imposibles o saltos visualmente inverosímiles. Por ello, se estableció desde fases tempranas un protocolo de evaluación cualitativa complementario.
+
+Este protocolo se basó en la inspección manual de secuencias seleccionadas, la generación de vídeo etiquetado y la revisión de casos anómalos detectados cuantitativamente. Entre los fenómenos de interés destacaron: cruces entre jugadores, desaparición y reaparición de trayectorias, duplicación de identidades, teletransportación de un mismo ID entre zonas incompatibles del campo visual y asignaciones residuales sobre árbitros o jugadores distintos. Estos análisis permitieron identificar problemas que luego orientaron tanto la recalibración online de ReID como el diseño del linking offline.
+
+La evaluación cualitativa no se utilizó como sustituto de las métricas, sino como criterio de validación estructural. Cuando dos configuraciones presentaban resultados cuantitativos cercanos, la plausibilidad geométrica y la coherencia visual de las trayectorias servían para interpretar mejor cuál de ellas resultaba más adecuada para el dominio. Esta idea fue particularmente importante en la elección final del pipeline, donde una pequeña degradación en alguna métrica global podía resultar aceptable si se corregían errores graves de consistencia espacial.
+
+En el caso amateur, el análisis cualitativo tuvo además una función adicional: facilitar la curación manual de salidas MOT para construir un pseudo-\textit{ground truth}. Los scripts desarrollados para revisión interactiva permitieron corregir IDs, eliminar duplicados y ajustar asociaciones dudosas, lo que posteriormente hizo posible tanto la evaluación sobre secuencias amateur como el entrenamiento de modelos ReID específicos.
+
 \subsection{Jerarquía de resultados: definitivos frente a exploratorios}
+\label{sec:definitivos_exploratorios}
+
+Una parte importante de la solidez metodológica del trabajo consiste en distinguir entre resultados definitivos y resultados exploratorios. A lo largo del desarrollo se generaron numerosos informes intermedios, algunos de los cuales fueron útiles para descartar hipótesis o para orientar decisiones posteriores, pero no todos deben recibir el mismo peso en la memoria final.
+
+En esta memoria se consideran \textbf{resultados definitivos} aquellos obtenidos con el protocolo de evaluación ya estabilizado, sobre configuraciones comparables y con un objetivo claramente integrado en el pipeline final del TFG. En particular, esta categoría incluye la evaluación final de modelos ReID genéricos y específicos por dominio, así como los experimentos de aplicación de \textit{tracklet linking} sobre dichos modelos. Estos bloques son los que sustentan la selección final del sistema.
+
+Por el contrario, se consideran \textbf{resultados exploratorios} aquellos experimentos cuyo propósito principal fue contrastar hipótesis parciales durante el desarrollo, por ejemplo comprobar si el peso efectivo del ReID en la función de asociación era demasiado bajo o si una implementación alternativa de fusión alteraba sustancialmente el comportamiento del tracker. Aunque estos experimentos ofrecen información valiosa sobre la evolución del proyecto, no siempre son directamente comparables con la configuración final y, por tanto, se tratan en la memoria como evidencia secundaria o como apoyo metodológico.
+
+Esta jerarquización cumple una doble función. En primer lugar, evita mezclar en el mismo plano resultados consolidados y pruebas de depuración o sensibilidad. En segundo lugar, permite contar de forma honesta el proceso real del TFG: no como una secuencia lineal sin incertidumbre, sino como una investigación aplicada en la que algunas líneas se confirmaron, otras se reformularon y otras se descartaron tras su validación experimental.
 
 \newpage
 

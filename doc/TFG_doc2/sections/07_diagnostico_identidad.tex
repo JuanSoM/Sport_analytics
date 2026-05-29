@@ -1,32 +1,223 @@
 \documentclass[../MAIN.tex]{subfiles}
 
 \begin{document}
-
-% ============================================================================
-% DIAGNÓSTICO DEL PROBLEMA DE IDENTIDAD
-% ============================================================================
-
-\section{Diagnóstico del problema de identidad}
-
-% Materiales:
-% - analisis_bytetrack_motip.md
-% - PDFs visuales de ByteTrack y MOTIP
-% - conclusiones_fase2.md
-%
-% Estado del bloque: Exploratorio / diagnóstico de fallos
-%
-% Guía de redacción:
-% - Analiza visualmente los fallos de identidad que motivan ReID y linking.
-% - Debe cerrar qué errores son estructurales del pipeline base y no simples casos aislados.
-
-\experimentchaptertemplate
-
-\subsection{Análisis visual de fallos en ByteTrack}
-\subsection{Casos críticos: oclusiones, jugador caído y teletransportación}
-\subsection{Influencia del \texttt{track\_buffer}}
-\subsection{Heurísticas tempranas y sus limitaciones}
-\subsection{Conclusión del diagnóstico}
-
-\newpage
-
+	
+	% ============================================================================
+	% DIAGNÓSTICO DEL PROBLEMA DE IDENTIDAD
+	% ============================================================================
+	
+	\section{Diagnóstico del problema de identidad}
+	
+	% Materiales base:
+	% - analisis_bytetrack_motip.md
+	% - Video comparison_ByteTrack...pdf
+	% - Vídeo_MOTIP_SOCCERNET.pdf
+	% - conclusiones_fase2.md
+	
+	\begin{chaptertemplatebox}
+		\textbf{Objetivo del experimento}\\
+		Identificar de forma visual y cuantitativa los mecanismos principales de fallo en la continuidad de identidad de los trackers evaluados, con el fin de orientar las siguientes fases del trabajo.\\[0.5em]
+		
+		\textbf{Material usado}\\
+		Diagnóstico visual de ByteTrack y MOTIP, vídeos comparativos, casos manualmente revisados y métricas ampliadas de fragmentación, número total de IDs y comportamiento temporal de las trayectorias.\\[0.5em]
+		
+		\textbf{Configuración}\\
+		Secuencia SNMOT-060 de SoccerNet, aproximadamente 750 frames. Se analizaron visualmente casos representativos de ByteTrack y MOTIP en situaciones de solapamiento, caída de jugadores, cambios de cámara y desaparición/reaparición de trayectorias.\\[0.5em]
+		
+		\textbf{Resultados principales}\\
+		Se identificaron tres mecanismos críticos en ByteTrack: intercambios de identidad en oclusiones múltiples, pérdida de seguimiento en cambios morfológicos extremos y teletransportación de IDs debida al exceso de memoria temporal. En MOTIP se observaron además reciclaje de IDs y creación repetida de identidades nuevas durante oclusiones complejas.\\[0.5em]
+		
+		\textbf{Interpretación}\\
+		El problema de identidad no podía entenderse únicamente como una cuestión de métricas globales. Era necesario introducir análisis visual para distinguir entre fragmentación aceptable, cambios de identidad y asociaciones físicamente incoherentes.\\[0.5em]
+		
+		\textbf{Limitaciones}\\
+		Este bloque corresponde todavía a una fase diagnóstica. Su objetivo no era comparar configuraciones finales, sino localizar patrones de fallo y derivar hipótesis de mejora para fases posteriores.\\[0.5em]
+		
+		\textbf{Conclusión parcial}\\
+		El diagnóstico visual confirmó que la continuidad de identidad era el cuello de botella central del problema y justificó las siguientes líneas de trabajo: ajuste del \texttt{track\_buffer}, análisis del módulo ReID, recalibración de la asociación online y diseño de un postprocesado offline mediante \textit{tracklet linking}.
+	\end{chaptertemplatebox}
+	
+	\subsection{Análisis visual de fallos en ByteTrack}
+	
+	El diagnóstico visual de ByteTrack permitió identificar tres casuísticas críticas. La primera corresponde a situaciones de oclusión múltiple, donde varios jugadores convergen en una misma zona del campo y el tracker intercambia identidades al resolverse el cruce. El informe de diagnóstico resume este comportamiento como un fallo de asociación en el que ByteTrack fuerza una resolución predominantemente geométrica, incluso cuando el descriptor visual debería haber ayudado a distinguir a jugadores de equipos distintos.
+	
+	La Figura~\ref{fig:bytetrack_solapamiento_multiple} muestra la evolución completa de uno de estos casos. En estas imágenes, las cajas y etiquetas en verde con el prefijo \texttt{GT} corresponden a la anotación de referencia (\textit{ground truth}), mientras que las cajas y etiquetas en rojo con el prefijo \texttt{T} representan la salida del tracker evaluado. En el frame 383, antes del solapamiento, las identidades todavía se mantienen de forma consistente. En el frame 413, varios jugadores convergen en una misma zona del campo y se produce la oclusión. Finalmente, en el frame 443, cuando el cruce ya se ha resuelto, se observa un intercambio de identidades entre jugadores que previamente estaban correctamente diferenciados. Este ejemplo es especialmente relevante porque no se trata solo de una pérdida temporal de seguimiento, sino de un \textit{ID switch} entre trayectorias que deberían haberse mantenido separadas.
+	
+	\begin{figure}[H]
+		\centering
+		\begin{subfigure}[b]{0.31\textwidth}
+			\centering
+			\includegraphics[width=\textwidth]{cap7/1_solapamiento_multiple.png}
+			\caption{Frame 383: antes del solapamiento.}
+		\end{subfigure}
+		\hfill
+		\begin{subfigure}[b]{0.31\textwidth}
+			\centering
+			\includegraphics[width=\textwidth]{cap7/2_solapamiento_multiple.png}
+			\caption{Frame 413: los jugadores se agrupan y se produce la oclusión.}
+		\end{subfigure}
+		\hfill
+		\begin{subfigure}[b]{0.31\textwidth}
+			\centering
+			\includegraphics[width=\textwidth]{cap7/3_solapamiento_multiple.png}
+			\caption{Frame 443: tras el cruce, aparecen los intercambios de identidad.}
+		\end{subfigure}
+		\caption{Caso de solapamiento múltiple en ByteTrack. La secuencia temporal muestra el estado previo al cruce, la fase de oclusión y la resolución final con intercambio de identidades. En particular, GT:4 pasa de estar asociado a T:11 a T:6, mientras que GT:16 pasa de T:6 a T:11, reflejando un \textit{ID switch} inducido por el solapamiento.}
+		\label{fig:bytetrack_solapamiento_multiple}
+	\end{figure}
+	
+	La segunda casuística crítica aparece cuando un jugador cambia radicalmente de morfología, por ejemplo al caer al suelo. En este escenario, el detector deja de reconocerlo temporalmente, el tracker pierde la trayectoria y, al reaparecer, se genera un nuevo ID. El diagnóstico resume este caso como el del \emph{jugador caído}, y lo asocia directamente a una caída del \textit{confidence score} del detector y a la incapacidad del sistema para enlazar la trayectoria previa con la reaparición posterior.
+	
+	La Figura~\ref{fig:bytetrack_jugador_caido} recoge este patrón. Al igual que en la figura anterior, las cajas y etiquetas en verde con el prefijo \texttt{GT} corresponden a la anotación de referencia (\textit{ground truth}), mientras que las cajas y etiquetas en rojo con el prefijo \texttt{T} representan la salida del tracker evaluado. La secuencia muestra cómo, tras la caída del jugador, la detección se degrada y la asociación de identidad deja de ser consistente. Este tipo de fallo combina tres problemas en uno: pérdida de detección, reutilización errónea de identidad y fragmentación de trayectoria.
+	
+	\begin{figure}[H]
+		\centering
+		\begin{subfigure}[b]{0.28\textwidth}
+			\centering
+			\includegraphics[width=\textwidth]{cap7/1_caido.png}
+			\caption{Estado inicial antes de la pérdida completa de consistencia.}
+		\end{subfigure}
+		\hfill
+		\begin{subfigure}[b]{0.18\textwidth}
+			\centering
+			\includegraphics[width=\textwidth]{cap7/2_caido.png}
+			\caption{El jugador permanece en el \textit{ground truth}, pero la salida del tracker deja de ajustarse correctamente.}
+		\end{subfigure}
+		\hfill
+		\begin{subfigure}[b]{0.22\textwidth}
+			\centering
+			\includegraphics[width=\textwidth]{cap7/3_caido.png}
+			\caption{Reaparición con asociación errónea y fragmentación de la trayectoria.}
+		\end{subfigure}
+		\caption{Caso del ``jugador caído'' en ByteTrack. Las etiquetas \texttt{GT} (verde) corresponden al \textit{ground truth}, mientras que las etiquetas \texttt{T} (rojo) corresponden a la salida del tracker. La secuencia ilustra cómo un cambio brusco de pose degrada la detección y provoca pérdida de consistencia en la identidad seguida.}
+		\label{fig:bytetrack_jugador_caido}
+	\end{figure}
+	
+	\subsection{Casos críticos: oclusiones, jugador caído y teletransportación}
+	
+	La tercera casuística relevante identificada en ByteTrack fue la teletransportación de IDs en bordes de escena. Este fenómeno aparece cuando un jugador desaparece por un extremo del campo visual y, debido al paneo de cámara, otro jugador o incluso el portero aparece por el lado opuesto. Si la memoria temporal del tracker se mantiene demasiado tiempo, este puede forzar una asociación entre ambos eventos y asignar el mismo ID a detecciones espacialmente incompatibles. El informe de diagnóstico atribuye este comportamiento al uso de un \texttt{track\_buffer} excesivamente alto, que mantiene vivas trayectorias ya incongruentes desde el punto de vista físico.
+	
+	Este hallazgo fue importante porque introdujo una idea que reaparecerá en capítulos posteriores: una reducción artificial del número de IDs no siempre implica mejor tracking si se logra a costa de asociaciones geométricamente imposibles. En otras palabras, la continuidad de identidad debía valorarse no solo en términos de cuántos IDs se producen, sino también en términos de plausibilidad espacial de las trayectorias resultantes.
+	
+	En el caso de MOTIP, el fenómeno análogo se manifestaba de forma todavía más agresiva. La documentación visual recoge un caso en el que el mismo identificador reaparece asociado sucesivamente a jugadores y posiciones incompatibles. Este comportamiento se interpreta como una forma extrema de reciclaje o teletransportación de identidades.
+	
+	La Figura~\ref{fig:motip_teletransportacion} ilustra este problema. A diferencia de las figuras anteriores, aquí se muestra directamente la salida del tracker, sin superposición de \textit{ground truth}. La secuencia pone de manifiesto cómo el ID 0 aparece primero asociado a un jugador de campo, después se reutiliza sobre el portero y, posteriormente, vuelve a aparecer sobre otro jugador diferente. Esta falta de coherencia geométrica invalida la utilidad práctica de la trayectoria y fue una de las razones principales para descartar MOTIP como base del desarrollo posterior.
+	
+	\begin{figure}[H]
+		\centering
+		\begin{subfigure}[b]{0.22\textwidth}
+			\centering
+			\includegraphics[width=\textwidth]{cap7/1_teletransportacion_ids.png}
+			\caption{El ID 0 aparece inicialmente asociado a un jugador de campo.}
+		\end{subfigure}
+		\hfill
+		\begin{subfigure}[b]{0.22\textwidth}
+			\centering
+			\includegraphics[width=\textwidth]{cap7/2_teletransportacion_ids.png}
+			\caption{El mismo ID 0 reaparece posteriormente sobre el portero.}
+		\end{subfigure}
+		\hfill
+		\begin{subfigure}[b]{0.34\textwidth}
+			\centering
+			\includegraphics[width=\textwidth]{cap7/3_teletransportacion_ids.png}
+			\caption{Más adelante, el ID 0 vuelve a aparecer sobre otro jugador distinto.}
+		\end{subfigure}
+		\caption{Caso de teletransportación y reciclaje de IDs en MOTIP. La secuencia temporal muestra cómo el mismo identificador se reutiliza sobre jugadores incompatibles, evidenciando una pérdida severa de coherencia espacial en el seguimiento.}
+		\label{fig:motip_teletransportacion}
+	\end{figure}
+	
+	\subsection{Influencia del \texttt{track\_buffer}}
+	
+	El diagnóstico visual mostró que el parámetro \texttt{track\_buffer} tenía un papel decisivo en el comportamiento de ByteTrack. Un valor elevado permitía conservar trayectorias durante más tiempo y, en principio, parecía una estrategia razonable para evitar fragmentación. Sin embargo, en la práctica también favorecía que el sistema mantuviera vivas identidades incompatibles durante demasiados frames, provocando saltos espaciales y teletransportación en los bordes de escena.
+	
+	Este resultado fue metodológicamente importante porque mostró que el problema no podía resolverse solo aumentando memoria temporal. Al contrario, una memoria demasiado larga podía generar una falsa sensación de continuidad mientras degradaba la coherencia física del seguimiento. Esta observación justificó que en fases posteriores se revisara el papel del \texttt{track\_buffer} y se buscara un equilibrio más fino entre persistencia de trayectoria y plausibilidad geométrica.
+	
+	\subsection{Heurísticas tempranas y sus limitaciones}
+	
+	A partir de los casos visuales identificados, se plantearon varias ideas de mejora temprana, entre ellas reducir el \texttt{track\_buffer}, introducir una heurística de asociación espacial forzada y penalizar la creación de IDs nuevos cuando ya existieran muchas trayectorias activas en el campo. El diagnóstico ya anticipa explícitamente esta hoja de ruta, señalando la necesidad de atacar tanto la teletransportación de IDs como el caso del jugador caído mediante mecanismos más controlados de asociación.
+	
+	No obstante, esta fase también dejó claro que las heurísticas aisladas no serían suficientes si no se entendía mejor el papel de la apariencia. En ByteTrack, algunos fallos sugerían que el sistema estaba priorizando en exceso la geometría frente al ReID en situaciones donde la apariencia debería haber ayudado. En MOTIP, por el contrario, la debilidad parecía estar en la propia consistencia del modelo de identidad cuando se enfrentaba a oclusiones severas y cambios de pose. Por ello, el siguiente paso lógico del trabajo no fue solo reajustar parámetros, sino analizar de manera más rigurosa el módulo ReID y su integración dentro del tracker.
+	
+	Además, en MOTIP se observó otro patrón especialmente problemático: la creación progresiva de múltiples IDs fantasma durante una misma interacción compleja. A diferencia de un cambio aislado de identidad, aquí el sistema no solo pierde consistencia, sino que va introduciendo nuevos identificadores sobre una escena ya degradada, lo que provoca una fragmentación acumulativa.
+	
+	Las Figuras~\ref{fig:motip_ids_fantasma_inicio} y~\ref{fig:motip_ids_fantasma_propagacion} recogen este fenómeno. En ambos casos se muestra directamente la salida del tracker, sin superposición de \textit{ground truth}. La primera secuencia ilustra el inicio del colapso, con la aparición progresiva de nuevos identificadores sobre una situación inicialmente más estable. La segunda secuencia muestra cómo el proceso continúa y termina generando nuevas identidades adicionales, evidenciando una pérdida severa de consistencia temporal.
+	
+	\begin{figure}[H]
+		\centering
+		\begin{subfigure}[b]{0.22\textwidth}
+			\centering
+			\includegraphics[width=\textwidth]{cap7/0_ids_fantasma_inicio.png}
+			\caption{Situación inicial con IDs activos todavía relativamente consistentes.}
+		\end{subfigure}
+		\hfill
+		\begin{subfigure}[b]{0.22\textwidth}
+			\centering
+			\includegraphics[width=\textwidth]{cap7/1_ids_fantasma_inicio.png}
+			\caption{La oclusión aumenta y se complica la separación de jugadores.}
+		\end{subfigure}
+		\hfill
+		\begin{subfigure}[b]{0.22\textwidth}
+			\centering
+			\includegraphics[width=\textwidth]{cap7/2_ids_fantasma_inicio.png}
+			\caption{Aparece un nuevo identificador (\texttt{ID:31}) sobre la escena.}
+		\end{subfigure}
+		\hfill
+		\begin{subfigure}[b]{0.22\textwidth}
+			\centering
+			\includegraphics[width=\textwidth]{cap7/3_ids_fantasma_inicio.png}
+			\caption{La fragmentación continúa con la aparición de otro nuevo ID (\texttt{ID:32}).}
+		\end{subfigure}
+		\caption{Inicio de la creación de IDs fantasma en MOTIP. La secuencia muestra cómo una interacción entre jugadores deriva en la aparición progresiva de nuevas identidades no coherentes con la continuidad esperada de la escena.}
+		\label{fig:motip_ids_fantasma_inicio}
+	\end{figure}
+	
+	
+	\begin{figure}[H]
+		\centering
+		\begin{subfigure}[b]{0.28\textwidth}
+			\centering
+			\includegraphics[width=\textwidth]{cap7/4_ids_fantasma_propagacion.png}
+			\caption{La proliferación continúa con la aparición de \texttt{ID:37}.}
+		\end{subfigure}
+		\hfill
+		\begin{subfigure}[b]{0.28\textwidth}
+			\centering
+			\includegraphics[width=\textwidth]{cap7/5_ids_fantasma_propagacion.png}
+			\caption{Se observa una reorganización parcial, aunque la escena sigue degradada.}
+		\end{subfigure}
+		\hfill
+		\begin{subfigure}[b]{0.28\textwidth}
+			\centering
+			\includegraphics[width=\textwidth]{cap7/6_ids_fantasma_propagacion.png}
+			\caption{Aparece un nuevo identificador adicional (\texttt{ID:41}), confirmando la inestabilidad.}
+		\end{subfigure}
+		\caption{Propagación del fenómeno de IDs fantasma en MOTIP. Tras el colapso inicial, el sistema continúa introduciendo nuevas identidades sobre la misma escena, lo que evidencia una pérdida severa de coherencia temporal y semántica.}
+		\label{fig:motip_ids_fantasma_propagacion}
+	\end{figure}
+	
+	\subsection{Conclusión del diagnóstico}
+	
+	La Tabla~\ref{tab:diagnostico_fallos} sintetiza los fallos principales detectados en esta fase diagnóstica. Su lectura conjunta confirma que el cuello de botella del problema no residía exclusivamente en detectar jugadores, sino en mantener identidades coherentes cuando la escena se volvía compleja.
+	
+	\begin{table}[H]
+		\centering
+		\caption{Resumen de fallos cualitativos identificados en la fase de diagnóstico.}
+		\label{tab:diagnostico_fallos}
+		\begin{tabular}{p{3.2cm}p{4.8cm}p{5.3cm}}
+			\toprule
+			\textbf{Sistema} & \textbf{Fallo principal} & \textbf{Consecuencia} \\
+			\midrule
+			ByteTrack & Intercambio de IDs en oclusiones múltiples & Pérdida de continuidad entre jugadores distintos tras resolver el cruce \\
+			ByteTrack & Pérdida de trayectoria en el caso del jugador caído & Nuevo ID al reaparecer y apropiación del ID previo por otra trayectoria \\
+			ByteTrack & Teletransportación por exceso de memoria temporal & Asociación geométricamente imposible entre extremos del campo \\
+			MOTIP & Reciclaje de IDs en paneos y reentradas & Reaparición del mismo ID sobre jugadores incompatibles \\
+			MOTIP & Creación de IDs fantasma en oclusiones severas & Explosión de fragmentación e inestabilidad de identidad \\
+			\bottomrule
+		\end{tabular}
+	\end{table}
+	
+	En conjunto, el diagnóstico visual y cuantitativo confirmó tres conclusiones de gran importancia para el resto del trabajo. En primer lugar, ByteTrack seguía siendo una base razonable, pero necesitaba ajustes porque su combinación de geometría, memoria y apariencia no resolvía adecuadamente ciertos casos críticos. En segundo lugar, MOTIP ofrecía un paradigma conceptualmente interesante, pero mostraba una inestabilidad demasiado alta en el dominio del fútbol. Finalmente, el problema central del TFG quedaba ya claramente delimitado: era necesario actuar sobre la continuidad de identidad, no solo sobre la detección, y hacerlo combinando análisis del ReID, recalibración online y postprocesado offline.
+	
+	\newpage
+	
 \end{document}

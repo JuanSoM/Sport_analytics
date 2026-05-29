@@ -5,25 +5,66 @@
 % ============================================================================
 % PLANTEAMIENTO DEL PROBLEMA
 % ============================================================================
-
 \section{Planteamiento del problema}
 
-% Materiales:
+% Materiales base:
 % - Anteproyecto
 % - Conversaciones con tutores
 % - Diagnóstico inicial de fallos
-%
-% Estado del bloque: Estructural / pendiente de formulación final
-%
-% Guía de redacción:
-% - Define las dificultades específicas del dominio amateur y los fallos que condicionan el diseño experimental.
-% - Debe cerrar preguntas de investigación e hipótesis de trabajo.
+% - Pipeline final decidido: SportsMOT + v1 + linking sin split
 
 \subsection{Dificultades específicas del dominio amateur}
+
+El seguimiento multiobjeto en fútbol presenta una dificultad estructural superior a la de otros escenarios de MOT más controlados. A diferencia de entornos urbanos o secuencias peatonales convencionales, en fútbol se combinan movimientos rápidos, aceleraciones bruscas, cambios de dirección frecuentes, agrupamientos densos y una apariencia altamente redundante entre jugadores del mismo equipo. Tanto SoccerNet-Tracking como SportsMOT señalan precisamente que una parte sustancial de la complejidad en escenas deportivas no reside únicamente en detectar correctamente a los jugadores, sino en mantener su identidad de forma consistente a lo largo del tiempo \cite{cioppa2022soccernettracking,cui2023sportsmot}.
+
+En el caso concreto del fútbol amateur, estas dificultades se agravan por factores adicionales relacionados con la adquisición del vídeo. Es habitual trabajar con una única cámara, encuadres menos estables, menor resolución efectiva sobre los jugadores, iluminación menos homogénea y ausencia de sistemas auxiliares de sensorización. Como consecuencia, las pistas visuales finas, como el dorsal o detalles locales de textura, tienden a degradarse con facilidad, y la señal disponible para re-identificación se vuelve menos fiable que en secuencias profesionales de mayor calidad. Este problema es especialmente relevante cuando el sistema debe distinguir entre jugadores del mismo equipo cuya apariencia global es muy similar \cite{cui2023sportsmot,wojke2017deepsort}.
+
+Desde el punto de vista experimental, el dominio amateur introduce además una limitación metodológica importante: la escasez de anotaciones listas para evaluación y entrenamiento. Mientras que benchmarks como SoccerNet-Tracking proporcionan secuencias anotadas y un protocolo de evaluación bien definido \cite{cioppa2022soccernettracking}, en el contexto amateur es frecuente que el investigador tenga que construir o depurar manualmente un pseudo-\textit{ground truth} para poder calcular métricas consistentes y preparar conjuntos \textit{gallery/query} destinados al entrenamiento de modelos ReID. Esto convierte la curación manual del dato en una parte funcional del pipeline, no solo en una tarea auxiliar.
+
 \subsection{Oclusiones, cruces, paneos y salidas de escena}
+
+El comportamiento de un tracker en fútbol se ve fuertemente condicionado por varios fenómenos visuales recurrentes. El primero de ellos es la oclusión, tanto parcial como total. Cuando varios jugadores convergen sobre una misma zona del campo, el detector puede producir cajas degradadas, perder temporalmente alguna instancia o generar asociaciones ambiguas. ByteTrack mostró que recuperar detecciones de baja confianza ayuda a reducir fragmentación causada por oclusiones y bajas puntuaciones del detector \cite{zhang2022bytetrack}; sin embargo, en escenas deportivas con interacción intensa la mera recuperación de detecciones no garantiza por sí sola la coherencia de identidad.
+
+Un segundo fenómeno crítico son los cruces entre trayectorias. Cuando dos o más jugadores intercambian posiciones relativas en pocos fotogramas, la asociación basada exclusivamente en proximidad geométrica puede inducir cambios de identidad si no existe una señal de apariencia suficientemente discriminativa. Deep SORT ya argumentaba que la incorporación de una métrica profunda de apariencia resulta especialmente útil para sostener identidades a través de oclusiones y cruces prolongados \cite{wojke2017deepsort}. No obstante, en fútbol esa señal de apariencia puede ser ambigua debido a la similitud entre compañeros, de modo que ni la geometría ni la apariencia son completamente fiables por separado.
+
+El tercer factor es el movimiento de cámara. En vídeo de retransmisión, los paneos y cambios de zoom alteran continuamente la localización aparente y la escala de los jugadores. Esto introduce errores tanto en la predicción dinámica del tracker como en la comparación visual entre recortes de una misma identidad tomados bajo perspectivas distintas. SoccerNet-Tracking destaca precisamente que las secuencias de fútbol contienen escenarios especialmente complejos en presencia de movimiento rápido y oclusión severa \cite{cioppa2022soccernettracking}. En un contexto amateur, donde la estabilización y la calidad óptica suelen ser peores, este efecto puede resultar todavía más acusado.
+
+Finalmente, las salidas y reentradas de escena generan un problema de largo alcance. Un jugador puede abandonar el campo visual por un lateral y reaparecer decenas de fotogramas después en una posición muy distinta debido al paneo de cámara. Si la memoria temporal del tracker es demasiado corta, se fragmenta la trayectoria; si es demasiado larga, aumenta el riesgo de reasignaciones geométricamente imposibles. Por ello, uno de los retos centrales del trabajo consiste en encontrar un equilibrio entre persistencia temporal, asociación visual y plausibilidad espacial.
+
 \subsection{Coherencia de identidad y coherencia geométrica}
+
+En este trabajo se distinguen dos nociones que, aunque relacionadas, no son equivalentes: la coherencia de identidad y la coherencia geométrica.
+
+La coherencia de identidad hace referencia a la capacidad del sistema para mantener el mismo identificador asignado a un jugador a lo largo del vídeo, evitando fragmentación excesiva, cambios de identidad y reutilización errónea de IDs. Esta dimensión suele reflejarse en métricas como IDF1, número de \textit{ID switches}, fragmentaciones o número total de identidades generadas por el sistema \cite{ciaparrone2020survey,zhang2022bytetrack}. En aplicaciones deportivas, esta propiedad es esencial para poder reconstruir trayectorias largas y extraer estadísticas fiables por jugador.
+
+La coherencia geométrica, en cambio, se refiere a la plausibilidad espacial y temporal de las asociaciones realizadas por el tracker. Un sistema puede producir pocas identidades totales y, aun así, cometer errores físicamente incoherentes, por ejemplo reasignando un mismo ID a detecciones separadas por distancias incompatibles con el movimiento real del jugador entre fotogramas consecutivos o tras una breve desaparición. Este tipo de fallo no siempre queda suficientemente penalizado por las métricas MOT agregadas, especialmente cuando la reducción del número de IDs se logra a costa de fusiones demasiado agresivas.
+
+La experiencia experimental de este TFG llevó precisamente a identificar que una parte del problema no era solo “cuántos IDs” producía el sistema, sino “cómo” se mantenían esos IDs. Por ello, la evaluación no se limita a métricas globales, sino que incorpora también inspección cualitativa de trayectorias, análisis de saltos espaciales y revisión de casos donde el tracker genera asociaciones que, aun reduciendo fragmentación, resultan visualmente inverosímiles. Esta distinción será clave para justificar más adelante la combinación de ReID online y \textit{tracklet linking} offline.
+
 \subsection{Preguntas de investigación}
+
+A partir del contexto anterior, el trabajo se articula en torno a las siguientes preguntas de investigación:
+
+\begin{itemize}
+	\item ¿Qué tracker ofrece el mejor punto de partida para seguimiento de jugadores en fútbol dentro de un esquema modular y reproducible?
+	\item ¿Hasta qué punto el módulo de re-identificación aporta información útil en este dominio, y qué limitaciones presenta cuando la apariencia entre jugadores es altamente similar?
+	\item ¿Es preferible integrar la señal ReID durante el proceso online de asociación o utilizarla, directa o indirectamente, en un postprocesado offline sobre tracklets ya formados?
+	\item ¿Cómo afecta el dominio de entrenamiento del modelo ReID al rendimiento final del tracking, comparando un modelo genérico con modelos específicos para fútbol profesional y amateur?
+	\item ¿Puede un postprocesado geométrico de \textit{tracklet linking} corregir fragmentaciones e incoherencias espaciales que el tracker online no resuelve adecuadamente?
+	\item ¿Qué combinación final de modelo ReID, configuración del tracker y linking ofrece el mejor equilibrio entre continuidad de identidad, reducción de fragmentación y plausibilidad geométrica?
+\end{itemize}
+
+Estas preguntas sintetizan la evolución real del proyecto: desde una comparación inicial de trackers hasta una investigación más precisa sobre cómo se representa, se utiliza y se corrige la identidad en el pipeline de seguimiento.
+
 \subsection{Hipótesis de trabajo}
+
+La primera hipótesis del trabajo es que ByteTrack constituye una base adecuada para el dominio del fútbol por su robustez como tracker \textit{tracking-by-detection} y por su capacidad para aprovechar detecciones de baja confianza, algo especialmente útil en presencia de oclusiones \cite{zhang2022bytetrack}. Sin embargo, se plantea que su rendimiento en fútbol no depende solo del tracker en sí, sino de la forma en que se integra la señal de apariencia.
+
+La segunda hipótesis es que el módulo ReID sí contiene información útil, pero su eficacia en fútbol queda condicionada por la similitud visual entre jugadores, la baja resolución de detalles locales y la variabilidad provocada por cámara y pose. En consecuencia, se espera que la utilidad del embedding dependa menos de su mera existencia y más de cómo se combine con criterios geométricos y temporales \cite{wojke2017deepsort,cui2023sportsmot}.
+
+La tercera hipótesis es que el postprocesado offline mediante \textit{tracklet linking} puede corregir parte de los errores residuales del seguimiento online, especialmente aquellos relacionados con fragmentación e incoherencias espaciales. A diferencia de la asociación online, el linking opera sobre trayectorias ya observadas y puede aplicar criterios más conservadores y globales, lo que sugiere una complementariedad potencial entre ambos enfoques.
+
+Por último, se plantea que la adaptación del modelo ReID al dominio puede mejorar la discriminación visual respecto a un baseline genérico, aunque dicha mejora no tiene por qué traducirse linealmente en mejores métricas globales si el tracker ya impone una parte importante de la dinámica de asociación. Por ello, el trabajo no asume de partida que “más especialización del ReID” implique necesariamente “mejor sistema final”, sino que somete esa relación a validación experimental.
 
 \newpage
 

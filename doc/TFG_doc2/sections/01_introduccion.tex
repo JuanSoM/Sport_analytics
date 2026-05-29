@@ -8,21 +8,51 @@
 
 \section{Introducción}
 
-% Materiales:
+% Materiales base:
 % - Anteproyecto
 % - Conversaciones con tutores sobre objetivos y alcance
-%
-% Estado del bloque: Estructural / pendiente de redacción final
-%
-% Guía de redacción:
-% - Presenta el contexto del tracking multiobjeto aplicado a fútbol y la motivación del TFG.
-% - Debe cerrar objetivos, alcance y estructura general de la memoria antes de entrar en experimentos.
+% - Pipeline final decidido: SportsMOT + v1 + linking sin split
 
 \subsection{Contexto del problema}
+
+El seguimiento multiobjeto (\textit{Multi-Object Tracking}, MOT) es una tarea central de la visión por computador que persigue estimar la trayectoria y mantener la identidad de múltiples objetos a lo largo del tiempo en una secuencia de vídeo. En los sistemas modernos, el paradigma dominante es \textit{tracking-by-detection}, en el que primero se detectan los objetos en cada fotograma y, posteriormente, se resuelve su asociación temporal mediante pistas geométricas, dinámicas y de apariencia \cite{ciaparrone2020survey, wojke2017deepsort, zhang2022bytetrack}.
+
+En el ámbito deportivo, y particularmente en fútbol, este problema adquiere una relevancia práctica inmediata. Un sistema de tracking robusto permite estimar posiciones, trayectorias, ocupación espacial, distancias recorridas y patrones colectivos, información que resulta útil tanto para analítica táctica como para generación automática de estadísticas. Sin embargo, los vídeos de retransmisión plantean dificultades específicas: fuertes cambios de cámara, oclusiones frecuentes, cruces entre jugadores, escalas variables, similitud visual entre futbolistas del mismo equipo y desapariciones temporales al salir del campo visual \cite{cioppa2022soccernettracking, cui2023sportsmot}.
+
+La disponibilidad de benchmarks específicos ha permitido estudiar este problema de forma más sistemática. SoccerNet-Tracking formaliza el seguimiento de jugadores, árbitros y balón en vídeo de fútbol, y muestra que el problema está lejos de resolverse en escenarios con movimiento rápido y oclusión severa \cite{cioppa2022soccernettracking}. Por su parte, SportsMOT amplía el análisis a varios deportes y concluye que, en escenas deportivas, una parte sustancial de la dificultad reside en la asociación de identidades, no solo en la detección \cite{cui2023sportsmot}.
+
 \subsection{Motivación}
+
+Este trabajo nace de una necesidad doble. Por un lado, existe interés en disponer de un pipeline de seguimiento aplicable a fútbol amateur, donde habitualmente no se cuenta con sistemas comerciales de captura, sensores invasivos ni recursos de anotación abundantes. Por otro, aunque trackers generales como ByteTrack ofrecen muy buen rendimiento en benchmarks estándar, su comportamiento en fútbol no es directamente óptimo, especialmente cuando la calidad de la señal visual, las oclusiones y la reentrada de jugadores en escena degradan la consistencia de identidad \cite{zhang2022bytetrack, cioppa2022soccernettracking}.
+
+A ello se suma el hecho de que los métodos basados en apariencia, normalmente implementados mediante módulos de \textit{person re-identification} (ReID), pueden ayudar a reducir cambios de identidad al complementar la asociación geométrica. Deep SORT mostró tempranamente que incorporar una métrica profunda de apariencia podía reducir los \textit{identity switches} al atravesar oclusiones más largas \cite{wojke2017deepsort}. Sin embargo, en entornos deportivos la apariencia también resulta ambigua: jugadores del mismo equipo comparten colores, la resolución de los dorsales no siempre es suficiente y los cambios de pose o escala pueden deteriorar la utilidad del embedding visual \cite{cui2023sportsmot, cioppa2022soccernettracking}.
+
+La motivación concreta del TFG consiste, por tanto, en estudiar de forma experimental hasta qué punto un pipeline basado en ByteTrack puede adaptarse al dominio del fútbol mediante tres vías complementarias: la integración online de ReID, el postprocesado offline mediante \textit{tracklet linking} y el ajuste de modelos de ReID al dominio específico. Además, se persigue que el resultado no sea solo un análisis teórico, sino también una herramienta utilizable para ejecutar experimentos, visualizar resultados y evaluar secuencias con y sin \textit{ground truth}.
+
 \subsection{Objetivos del TFG}
+
+El objetivo general de este trabajo es diseñar, analizar y evaluar un pipeline de seguimiento multiobjeto aplicado a fútbol, con especial atención a la continuidad de identidad en escenarios profesionales y amateur.
+
+De este objetivo general se derivan los siguientes objetivos específicos:
+
+\begin{itemize}
+	\item Comparar distintos enfoques de tracking multiobjeto y seleccionar una base de trabajo adecuada para el dominio del fútbol.
+	\item Analizar el comportamiento del módulo de re-identificación, tanto de forma aislada como integrado en el tracker, para entender qué información codifica y cuáles son sus limitaciones.
+	\item Estudiar distintas estrategias de integración online de ReID dentro de ByteTrack, evaluando sus ventajas y sus posibles degradaciones.
+	\item Diseñar y validar un postprocesado offline basado en \textit{tracklet linking} para reducir fragmentación e incoherencias geométricas.
+	\item Investigar el impacto del dominio mediante el uso de un modelo genérico de ReID y modelos específicos entrenados para fútbol profesional y amateur.
+	\item Construir una herramienta de apoyo que permita ejecutar el pipeline completo, visualizar resultados y facilitar la evaluación experimental.
+\end{itemize}
+
 \subsection{Alcance y limitaciones}
+
+El trabajo se centra en seguimiento multiobjeto con una única cámara de vídeo, utilizando secuencias de fútbol profesional y amateur. El núcleo experimental se apoya en ByteTrack como tracker base, modelos OSNet para ReID y un módulo de \textit{tracklet linking} como postprocesado offline. La evaluación se realiza principalmente mediante métricas estándar de MOT, como MOTA, IDF1, HOTA, \textit{ID switches}, fragmentación y número total de identidades, complementadas con análisis cualitativo cuando las métricas por sí solas no capturan errores geométricamente incoherentes \cite{cioppa2022soccernettracking, zhang2022bytetrack, cui2023sportsmot}.
+
+No obstante, el trabajo presenta también varias limitaciones. En primer lugar, no se aborda un sistema end-to-end de reconstrucción global del estado del partido, sino un pipeline modular centrado en detección, asociación e identidad. En segundo lugar, la parte amateur exige una fase adicional de curación manual para construir un pseudo-\textit{ground truth}, lo que limita la escalabilidad del proceso. Finalmente, aunque se estudian modelos específicos de dominio, el alcance del TFG no incluye un rediseño completo del tracker ni un entrenamiento conjunto detector--ReID--tracker.
+
 \subsection{Estructura de la memoria}
+
+La memoria se organiza del siguiente modo. En primer lugar, se presenta el estado del arte y el planteamiento del problema. A continuación, se describen los datos, materiales y la metodología general empleada. Después, se desarrolla la comparación inicial de trackers, el diagnóstico del problema de identidad y el análisis del módulo ReID. Sobre esa base, se estudian dos líneas principales de mejora: la integración online de ReID en ByteTrack y el postprocesado offline mediante \textit{tracklet linking}. Posteriormente, se analiza la adaptación del ReID al dominio mediante modelos específicos y se describe la herramienta de apoyo desarrollada para la ejecución del pipeline y la curación manual de resultados. Finalmente, se integran los resultados globales, se justifica la selección del sistema final y se exponen las conclusiones y líneas de trabajo futuro.
 
 \newpage
 

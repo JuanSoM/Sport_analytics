@@ -1,31 +1,287 @@
 \documentclass[../MAIN.tex]{subfiles}
 
 \begin{document}
-
-% ============================================================================
-% ANÁLISIS DEL MÓDULO REID
-% ============================================================================
-
-\section{Análisis del módulo ReID}
-
-% Materiales:
-% - verify_results.txt
-% - informe_reid_tutores.html
-%
-% Estado del bloque: Exploratorio / validación del módulo
-%
-% Guía de redacción:
-% - Evalúa si el extractor ReID produce embeddings útiles para distinguir identidades/equipos.
-% - Debe cerrar si el problema principal está en el embedding o en su integración con el tracker.
-
-\experimentchaptertemplate
-
-\subsection{Modelo OSNet y embeddings}
-\subsection{Verificación inicial del extractor ReID}
-\subsection{Análisis experimental de embeddings}
-\subsection{Separabilidad por identidad y por equipo}
-\subsection{Discusión: problema del embedding frente a problema de integración}
-
-\newpage
-
+	
+	% ============================================================================
+	% ANÁLISIS DEL MÓDULO REID
+	% ============================================================================
+	
+	\section{Análisis del módulo ReID}
+	
+	% Materiales base:
+	% - informe_reid_tutores.html
+	% - id_crops_grid.png
+	% - roc_id.png
+	% - hist_id.png / hist_equipo.png
+	% - tsne_by_id.png / tsne_by_team.png
+	% - pca_by_id.png / pca_by_team.png / pca_variance.png
+	% - similarity_matrix.png
+	% - temporal_drift.png
+	% - attribution_summary.png
+	% - phase3_comparison.png
+	
+	\begin{chaptertemplatebox}
+		\textbf{Objetivo del experimento}\\
+		Analizar el módulo ReID de forma aislada y estudiar qué información visual codifica realmente el embedding en el dominio del fútbol, con el fin de determinar si los problemas observados en tracking provienen del descriptor visual o de su integración dentro del tracker.\\[0.5em]
+		
+		\textbf{Material usado}\\
+		Informe completo de análisis ReID, recortes representativos por identidad, métricas de separabilidad, figuras de ROC, histogramas, t-SNE, PCA, matriz de similitud, drift temporal, experimentos de atribución y comparación embedding puro frente a ByteTrack.\\[0.5em]
+		
+		\textbf{Configuración}\\
+		Modelo OSNet x1.0 fine-tuned para deporte, secuencia SoccerNet SNMOT-060, 750 frames, 26 IDs del GT relevantes para el análisis. Se estudió el embedding tanto en aislamiento como en interacción con configuraciones de tracking.\\[0.5em]
+		
+		\textbf{Resultados principales}\\
+		El embedding aislado presenta una separabilidad individual alta (AUC $\approx$ 0.903), mejor que la separabilidad por equipo (AUC $\approx$ 0.685). Además, el análisis de atribución muestra que el color ayuda, pero no es la única señal; el dorsal aporta discriminación individual; y la parte inferior del cuerpo resulta, en esta secuencia, tan informativa o más que el torso. Sin embargo, cuando el tracker usa el ReID online, la pureza de identidad y la separabilidad empeoran respecto a ByteTrack sin ReID.\\[0.5em]
+		
+		\textbf{Interpretación}\\
+		El ReID no está ``roto'', pero tampoco proporciona una firma individual lo bastante robusta como para ser usada indiscriminadamente en asociación online. Parte del problema parece residir en que el embedding captura información útil, aunque mezclada entre señales de identidad individual, equipo y estructura visual global.\\[0.5em]
+		
+		\textbf{Limitaciones}\\
+		El análisis se centra en una secuencia concreta y en un modelo concreto. Sus conclusiones son muy informativas para el dominio del TFG, pero no deben extrapolarse automáticamente a cualquier escenario de ReID deportivo.\\[0.5em]
+		
+		\textbf{Conclusión parcial}\\
+		El estudio del embedding justificó que la fase siguiente del trabajo se centrara no solo en usar ReID, sino en decidir cuándo y cómo debía intervenir dentro del pipeline de tracking.
+	\end{chaptertemplatebox}
+	
+	\subsection{Planteamiento del análisis}
+	
+	El objetivo de este capítulo es estudiar el modelo de re-identificación de forma aislada, antes de discutir su integración en el tracker. La motivación es clara: si la salida final del tracking presenta errores de identidad, es necesario distinguir si dichos errores proceden del propio embedding o de la forma en que el tracker lo utiliza. El informe experimental de ReID se diseñó precisamente para responder a esta cuestión mediante una secuencia de fases que van desde la auditoría del protocolo hasta la comparación entre embedding puro y tracking real.
+	
+	Conceptualmente, el modelo ReID recibe un recorte de imagen de un jugador y produce una representación matemática fija de 512 dimensiones, denominada embedding. Si el modelo ha aprendido una firma visual útil, dos imágenes del mismo jugador deberían dar embeddings próximos, mientras que dos jugadores distintos deberían quedar más separados en el espacio de características. El propio informe introduce esta idea como una “huella digital visual” y la toma como base de todo el análisis posterior.
+	
+	\subsection{Fase 0: auditoría y preparación del experimento}
+	
+	Antes de extraer conclusiones sobre el embedding, el informe dedica una fase específica a auditar el protocolo experimental. La idea central es garantizar que los embeddings analizados proceden exclusivamente del modelo ReID y no están contaminados por el tracker. En el informe se comprueba, entre otros aspectos, que los ficheros de vídeo, anotaciones y checkpoint están disponibles, que el GT es parseable, que el vídeo y el GT se solapan suficientemente, que el preprocesado coincide con el usado en producción y que el código de análisis no importa módulos del tracker. El resultado global del informe es concluyente: la auditoría se considera superada y el experimento se interpreta como válido. 
+	
+	En esta fase también resulta muy útil mostrar una visión global de las identidades analizadas. Para ello, conviene incluir una rejilla con recortes representativos por ID, que sirve como soporte visual para entender qué jugadores se están comparando y cómo se realizó la asignación manual de equipos.
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.95\textwidth]{cap8/id_crops_grid.png}
+		\caption{Recortes representativos por identidad utilizados en el análisis del embedding. Esta figura permite visualizar el conjunto de IDs considerados y sirve como base para la asignación manual de equipos a partir de la apariencia visual.}
+		\label{fig:cap8_id_crops_grid}
+	\end{figure}
+	
+	
+	A partir de la inspección visual de los recortes representativos, se realizó además una asignación manual de identidades a equipo, necesaria para los análisis de separabilidad por equipo y para los experimentos de atribución. Esta asignación no se utilizó para modificar el tracking, sino únicamente como soporte analítico dentro del estudio del embedding. En particular, se distinguieron dos equipos de jugadores de campo en función de la equipación visible, mientras que árbitros y balón se excluyeron de este análisis específico.
+	
+	\begin{table}[H]
+		\centering
+		\caption{Asignación manual de identidades a equipo para el análisis del embedding.}
+		\label{tab:cap8_asignacion_equipos}
+		\begin{tabular}{p{3.2cm}p{10.2cm}}
+			\toprule
+			\textbf{Grupo} & \textbf{IDs incluidos} \\
+			\midrule
+			Equipo A (camiseta blanca con detalles azules) & 1, 2, 7, 11, 12, 13, 15, 16, 19, 20, 21 \\
+			Equipo B (camiseta verde) & 3, 4, 5, 6, 8, 9, 10, 23, 24 \\
+			Excluidos del análisis de equipo & 14, 17, 18, 22, 25, 26 \\
+			\bottomrule
+		\end{tabular}
+	\end{table}
+	
+	
+	
+	\begin{table}[H]
+		\centering
+		\caption{Resumen de la auditoría del experimento ReID.}
+		\label{tab:cap8_auditoria}
+		\begin{tabular}{p{8.5cm}c}
+			\toprule
+			\textbf{Comprobación} & \textbf{Resultado} \\
+			\midrule
+			Existencia y accesibilidad de vídeo, GT y checkpoint & PASS \\
+			Anotaciones GT válidas y parseables & PASS \\
+			Solapamiento suficiente entre vídeo y GT & PASS \\
+			Preprocesado idéntico al del pipeline de producción & PASS \\
+			Código de análisis aislado del tracker & PASS \\
+			Test de repetibilidad del embedding & PASS \\
+			Escala / norma del embedding documentada & PASS \\
+			\bottomrule
+		\end{tabular}
+	\end{table}
+	
+	\subsection{Fase 1: validación del embedding puro}
+	
+	La primera pregunta importante es si el embedding puro, sin intervención del tracker, discrimina realmente jugadores. El informe responde afirmativamente: la curva ROC y las métricas de separabilidad por jugador muestran que el modelo aislado alcanza un AUC de aproximadamente 0.903, interpretado como una discriminación alta para este dominio. En la narrativa del informe, esto se traduce en una conclusión clara: la “huella digital visual” generada por OSNet es suficientemente discriminativa como para ser útil en un sistema de tracking, al menos cuando se la estudia aislada del proceso de asociación. 
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.8\textwidth]{cap8/roc_id.png}
+		\caption{Curva ROC del embedding puro para discriminación por jugador. Una curva próxima a la esquina superior izquierda indica una buena capacidad discriminativa. En el informe, el área bajo la curva se sitúa en torno a 0.903.}
+		\label{fig:cap8_roc_id}
+	\end{figure}
+	
+	Aun así, el análisis no se limita a identidad individual. El informe estudia también la separabilidad por equipo y muestra que el embedding distingue mejor entre jugadores concretos que entre equipos. En particular, la separabilidad por equipo se describe como moderada, con un AUC de aproximadamente 0.685, claramente inferior al AUC por jugador. Esto sugiere que el modelo no se basa únicamente en el color de la camiseta, aunque sí retiene cierta información global de equipo. 
+	
+	\begin{table}[H]
+		\centering
+		\caption{Separabilidad del embedding puro por identidad individual y por equipo.}
+		\label{tab:cap8_separabilidad}
+		\begin{tabular}{lcc}
+			\toprule
+			\textbf{Medida} & \textbf{Jugador} & \textbf{Equipo} \\
+			\midrule
+			AUC & 0.903 & 0.685 \\
+			Interpretación & Alta separabilidad & Separabilidad moderada \\
+			\bottomrule
+		\end{tabular}
+	\end{table}
+	
+	Para reforzar esta interpretación, el capítulo puede apoyarse en histogramas de distancia, matrices de similitud y proyecciones de alta dimensión reducidas a dos dimensiones. Estas visualizaciones no deben interpretarse como prueba definitiva por sí solas, pero sí son muy útiles para mostrar la estructura general del espacio de embeddings.
+	
+	\begin{figure}[H]
+		\centering
+		\begin{subfigure}[b]{0.48\textwidth}
+			\centering
+			\includegraphics[width=\textwidth]{cap8/hist_id.png}
+			\caption{Distribución de distancias por identidad.}
+		\end{subfigure}
+		\hfill
+		\begin{subfigure}[b]{0.48\textwidth}
+			\centering
+			\includegraphics[width=\textwidth]{cap8/hist_equipo.png}
+			\caption{Distribución de distancias por equipo.}
+		\end{subfigure}
+		\caption{Histogramas de distancias en el espacio de embeddings. La separación entre distribuciones es más clara en el caso de la identidad individual que en el caso del equipo.}
+		\label{fig:cap8_histogramas}
+	\end{figure}
+	
+	\subsection{Estructura del espacio de embeddings: t-SNE, PCA y similitud}
+	
+	Las visualizaciones en t-SNE y PCA permiten profundizar en la estructura del embedding. Cuando los puntos se colorean por identidad, el espacio aparece relativamente disperso, mientras que al colorearlos por equipo se aprecia cierta estructura global, aunque no completamente separada. Esta observación es coherente con la conclusión previa: el embedding contiene información de identidad útil, pero también una componente importante de apariencia global compartida entre miembros del mismo equipo.
+	
+	\begin{figure}[H]
+		\centering
+		\begin{subfigure}[b]{0.48\textwidth}
+			\centering
+			\includegraphics[width=\textwidth]{cap8/tsne_by_id.png}
+			\caption{t-SNE coloreado por identidad.}
+		\end{subfigure}
+		\hfill
+		\begin{subfigure}[b]{0.48\textwidth}
+			\centering
+			\includegraphics[width=\textwidth]{cap8/tsne_by_team.png}
+			\caption{t-SNE coloreado por equipo.}
+		\end{subfigure}
+		\caption{Proyecciones t-SNE del embedding. La estructura por equipo resulta más visible que la separación limpia por jugador individual.}
+		\label{fig:cap8_tsne}
+	\end{figure}
+	
+	\begin{figure}[H]
+		\centering
+		\begin{subfigure}[b]{0.48\textwidth}
+			\centering
+			\includegraphics[width=\textwidth]{cap8/pca_by_id.png}
+			\caption{PCA coloreado por identidad.}
+		\end{subfigure}
+		\hfill
+		\begin{subfigure}[b]{0.48\textwidth}
+			\centering
+			\includegraphics[width=\textwidth]{cap8/pca_by_team.png}
+			\caption{PCA coloreado por equipo.}
+		\end{subfigure}
+		\caption{Proyecciones PCA del embedding. Aunque la reducción lineal no separa perfectamente a los jugadores, sí permite observar agrupaciones parciales relacionadas con la apariencia global de equipo.}
+		\label{fig:cap8_pca}
+	\end{figure}
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.72\textwidth]{cap8/pca_variance.png}
+		\caption{Varianza explicada acumulada por PCA. Esta figura ayuda a valorar cuánta estructura útil del embedding se conserva en las primeras componentes principales.}
+		\label{fig:cap8_pca_variance}
+	\end{figure}
+	
+	La matriz de similitud coseno entre identidades medias refuerza esta lectura. Si el embedding separara perfectamente a los jugadores, cabría esperar un patrón claramente bloque-diagonal con similitudes bajas fuera de la diagonal. Sin embargo, la matriz presenta similitudes elevadas entre varias identidades, lo que ya anticipa el riesgo de fusiones erróneas cuando el descriptor se utiliza como señal fuerte de asociación. Esta figura es particularmente útil para conectar este capítulo con el siguiente, donde se discutirá la integración online del ReID dentro de ByteTrack. 
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.82\textwidth]{cap8/similarity_matrix.png}
+		\caption{Matriz de similitud coseno entre embeddings medios por identidad. Las similitudes elevadas entre distintos jugadores reflejan que el espacio de embeddings no está completamente separado a nivel individual.}
+		\label{fig:cap8_similarity_matrix}
+	\end{figure}
+	
+	\subsection{Estabilidad temporal del embedding}
+	
+	Una cuestión distinta, pero igualmente importante, es la estabilidad temporal. No basta con que dos jugadores diferentes estén algo separados; además, una misma identidad debería mantener una representación relativamente estable a lo largo del tiempo. El informe señala explícitamente que la distancia al embedding inicial raramente supera 0.25–0.30, lo que interpreta como una buena estabilidad frame a frame. 
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.9\textwidth]{cap8/temporal_drift.png}
+		\caption{Evolución temporal de la distancia respecto al embedding inicial. En general, las curvas se mantienen bajas, lo que indica una estabilidad temporal razonable del descriptor visual para una misma trayectoria.}
+		\label{fig:cap8_temporal_drift}
+	\end{figure}
+	
+	Este resultado es interesante porque introduce un matiz importante: el embedding no parece ser caótico ni totalmente inestable. De hecho, visto en aislamiento, es relativamente consistente en el tiempo. El problema, por tanto, no es simplemente que el ReID “cambie demasiado de un frame a otro”, sino que esa estabilidad temporal convive con una separabilidad imperfecta entre distintas identidades del mismo dominio.
+	
+	\subsection{Fase 2: ¿qué información visual usa el modelo?}
+	
+	Una de las partes más interesantes del informe es la fase de atribución, en la que se modifica de forma controlada el contenido visual de los recortes para observar qué señales afectan más al embedding. Los experimentos considerados son seis: escala de grises, blur suave, blur fuerte, solo torso, solo piernas y combinación de grises más blur. El propio informe presenta esta fase como una forma de preguntar en qué se fija realmente el modelo: color, dorsal, forma corporal o estructura general. 
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.88\textwidth]{cap8/attribution_summary.png}
+		\caption{Resumen visual de los experimentos de atribución. Las barras comparan la separabilidad por jugador y por equipo tras aplicar perturbaciones controladas a los recortes.}
+		\label{fig:cap8_attribution_summary}
+	\end{figure}
+	
+	\begin{table}[H]
+		\centering
+		\caption{Resultados de los experimentos de atribución del embedding.}
+		\label{tab:cap8_atribucion}
+		\begin{tabular}{lcccc}
+			\toprule
+			\textbf{Experimento} & \textbf{AUC jugador} & \textbf{$\Delta$ AUC jugador} & \textbf{AUC equipo} & \textbf{$\Delta$ AUC equipo} \\
+			\midrule
+			Baseline (original)   & 0.904 & --      & 0.684 & -- \\
+			Escala de grises      & 0.853 & -5.6\%  & 0.659 & -3.7\% \\
+			Blur suave (k=15)     & 0.891 & -1.4\%  & 0.700 & +2.3\% \\
+			Blur fuerte (k=31)    & 0.855 & -5.7\%  & 0.664 & -2.9\% \\
+			Solo torso            & 0.862 & -4.6\%  & 0.652 & -4.7\% \\
+			Solo piernas          & 0.877 & -3.0\%  & 0.656 & -4.1\% \\
+			Grises + blur         & 0.842 & -6.9\%  & 0.685 & $\approx$0\% \\
+			\bottomrule
+		\end{tabular}
+	\end{table}
+	
+	De esta fase surgen cuatro conclusiones especialmente interesantes. En primer lugar, el color importa, pero no es la única señal: al pasar a escala de grises, el AUC por jugador cae de 0.904 a 0.853, una degradación significativa, aunque el modelo sigue funcionando razonablemente bien. En segundo lugar, el blur suave apenas perjudica la discriminación por jugador y, de forma sorprendente, mejora la discriminación por equipo, lo que sugiere que el dorsal y los logos pueden introducir ruido cuando se intenta distinguir uniformidad de equipo. En tercer lugar, el análisis por partes del cuerpo muestra que las piernas son, en esta secuencia, ligeramente más informativas que el torso. Finalmente, la combinación de grises y blur apenas altera el AUC por equipo, lo que apunta a que la señal de equipo no depende exclusivamente del color.
+	
+	Estas observaciones son extremadamente valiosas para el TFG porque permiten pasar de una interpretación vaga del ReID a una interpretación más concreta: el modelo sí usa color, pero también forma y textura estructural; el dorsal aporta discriminación individual, aunque puede perjudicar una agrupación por equipo; y la región inferior del cuerpo contiene más información útil de la que intuitivamente podría esperarse. Todo ello refuerza la idea de que el embedding no es una señal simple, sino una mezcla de pistas visuales con relevancia desigual según el tipo de decisión que se quiera tomar.
+	
+	\subsection{Fase 3: comparación entre embedding puro y tracker}
+	
+	La última fase del informe introduce una comparación especialmente importante: no basta con saber si el embedding puro funciona razonablemente bien, sino que hay que comprobar si el tracker sabe aprovecharlo. El informe lo plantea de forma explícita mediante tres configuraciones: referencia con embedding puro sobre GT, ByteTrack sin ReID y ByteTrack con ReID activado.
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.88\textwidth]{cap8/phase3_comparison.png}
+		\caption{Comparación entre embedding puro y configuraciones de tracking. La figura resume la diferencia entre la separabilidad intrínseca del modelo y la forma en que el tracker explota —o degrada— esa señal visual.}
+		\label{fig:cap8_phase3}
+	\end{figure}
+	
+	\begin{table}[H]
+		\centering
+		\caption{Comparación entre embedding puro y uso del embedding dentro del tracker.}
+		\label{tab:cap8_phase3}
+		\begin{tabular}{lcccc}
+			\toprule
+			\textbf{Configuración} & \textbf{d'} & \textbf{AUC} & \textbf{Pureza de ID} & \textbf{Cambios de ID} \\
+			\midrule
+			Referencia: embedding puro (GT) & 1.794 & 0.896 & 1.000 & 0 \\
+			ByteTrack solo IoU              & 1.860 & 0.902 & 0.978 & 11 \\
+			ByteTrack con ReID              & 1.146 & 0.793 & 0.903 & 13 \\
+			\bottomrule
+		\end{tabular}
+	\end{table}
+	
+	El resultado es muy revelador: ByteTrack sin ReID mantiene una pureza de identidad muy alta y una separabilidad incluso ligeramente mejor que la referencia aislada, mientras que ByteTrack con ReID activado empeora tanto en separabilidad como en pureza y además incrementa los cambios de identidad. El propio informe lo interpreta como una evidencia de que el tracker no está explotando bien los embeddings, sino que en esta configuración está introduciendo confusión adicional.
+	
+	\subsection{Discusión: qué demuestra realmente este estudio}
+	
+	En conjunto, el estudio del embedding ReID demuestra varias cosas a la vez. Primero, que el modelo no está trivialmente roto: aislado del tracker, discrimina jugadores individuales con una calidad razonable y mantiene una estabilidad temporal aceptable. Segundo, que la información que codifica es compleja y no puede reducirse únicamente al color de la camiseta o al dorsal. En particular, la separabilidad por equipo es solo moderada, y los experimentos de atribución sugieren que la señal de equipo no depende exclusivamente del color, sino también de propiedades más globales como la forma, la textura estructural o la configuración visual general del recorte. En consecuencia, el embedding sí capta cierta información de equipo, pero no de forma lo bastante fuerte y limpia como para constituir por sí sola una señal robusta de asociación.
+	
+	Tercero, una buena capacidad discriminativa del embedding puro no garantiza automáticamente una buena integración dentro del pipeline de tracking. Esta última conclusión es probablemente la más importante de todo el capítulo. El análisis del ReID no llevó a descartarlo como tecnología, sino a reformular su papel dentro del sistema. Si el embedding aislado contiene información útil, pero la configuración online de ByteTrack con ReID la aprovecha mal, entonces el siguiente paso lógico no es abandonar el módulo, sino estudiar cómo recalibrar su integración. Precisamente esa será la tarea del capítulo siguiente.
+	
+	\newpage
+	
 \end{document}
