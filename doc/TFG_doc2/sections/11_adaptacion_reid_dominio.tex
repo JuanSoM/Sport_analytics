@@ -1,32 +1,210 @@
 \documentclass[../MAIN.tex]{subfiles}
 
 \begin{document}
-
-% ============================================================================
-% ADAPTACIÓN DEL REID AL DOMINIO
-% ============================================================================
-
-\section{Adaptación del ReID al dominio}
-
-% Materiales:
-% - phase2_results_complete.html [definitivo]
-% - linking_on_best_models.html [definitivo]
-%
-% Estado del bloque: Definitivo
-%
-% Guía de redacción:
-% - Presenta la adaptación del modelo ReID al dominio profesional y amateur.
-% - Debe cerrar qué checkpoints/modelos son los más sólidos antes del sistema final.
-
-\experimentchaptertemplate
-
-\subsection{Modelo baseline SportsMOT}
-\subsection{Entrenamiento específico en fútbol profesional}
-\subsection{Entrenamiento específico en fútbol amateur}
-\subsection{Curvas de aprendizaje y selección de checkpoints}
-\subsection{Comparación entre modelos genéricos y específicos}
-\subsection{Aplicación de tracklet linking sobre los mejores modelos}
-
-\newpage
-
+	
+	% ============================================================================
+	% ADAPTACIÓN DEL REID AL DOMINIO
+	% ============================================================================
+	
+	\section{Adaptación del ReID al dominio}
+	
+	% Materiales:
+	% - phase2_results_complete.html [definitivo]
+	% - linking_on_best_models.html [definitivo]
+	%
+	% Estado del bloque: Definitivo
+	%
+	% Guía de redacción:
+	% - Presenta la adaptación del modelo ReID al dominio profesional y amateur.
+	% - Debe cerrar qué checkpoints/modelos son los más sólidos antes del sistema final.
+	
+	\begin{chaptertemplatebox}
+		\textbf{Objetivo del experimento}\\
+		Evaluar si el entrenamiento específico de dominio mejora el comportamiento del módulo ReID respecto al modelo genérico SportsMOT, distinguiendo entre fútbol profesional y fútbol amateur, y analizar si el \textit{tracklet linking} sigue aportando valor sobre estos modelos ya adaptados.\\[0.5em]
+		
+		\textbf{Material usado}\\
+		Informe de evaluación final de modelos ReID específicos de dominio frente a SportsMOT, curvas de aprendizaje completas con \texttt{eval-freq=1}, y evaluación de \textit{tracklet linking} geométrico sobre los mejores checkpoints profesional y amateur.\\[0.5em]
+		
+		\textbf{Configuración}\\
+		Arquitectura OSNet x1.0 con preentrenamiento en ImageNet. Modelos evaluados: SportsMOT genérico, modelo específico profesional y modelo específico amateur. Todas las pruebas de tracking se realizaron con una misma configuración de ByteTrack, de manera que las diferencias observadas pudieran atribuirse principalmente al modelo ReID.\\[0.5em]
+		
+		\textbf{Resultados principales}\\
+		El modelo específico profesional mejora ligeramente las métricas globales y la consistencia de identidad frente a SportsMOT, aunque incrementa el número total de IDs. En amateur, el modelo específico mejora claramente IDF1 y reduce los ID switches absolutos, pero no mejora MOTA y genera una sobreidentificación severa, aumentando de forma muy notable el número total de IDs. El linking aplicado sobre estos modelos tiene un efecto limitado y reduce sobre todo el número total de IDs.\\[0.5em]
+		
+		\textbf{Interpretación}\\
+		La adaptación de dominio sí aporta información útil, pero su efecto no es uniforme. En profesional, el modelo específico resulta competitivo y mejora varias métricas clave. En amateur, la mejora en asociación fina viene acompañada de una fragmentación excesiva. Por ello, el valor del entrenamiento específico no debe juzgarse solo por MOTA o IDF1, sino también por estabilidad e identidades totales.\\[0.5em]
+		
+		\textbf{Limitaciones}\\
+		Los dos dominios presentan dificultades distintas y no admiten una lectura idéntica de resultados. Además, incluso los mejores modelos específicos pueden seguir necesitando postprocesado posterior para corregir sobreidentificación o fragmentación residual.\\[0.5em]
+		
+		\textbf{Conclusión parcial}\\
+		El entrenamiento específico de dominio mejora la calidad del embedding y puede traducirse en mejores métricas de tracking, pero no garantiza automáticamente una mejor coherencia de identidad final. La conveniencia de usar un modelo específico depende del dominio y de qué métricas se prioricen.
+	\end{chaptertemplatebox}
+	
+	\subsection{Modelo baseline SportsMOT}
+	
+	El punto de partida de este bloque experimental fue el modelo ReID genérico entrenado en SportsMOT. Este baseline resulta especialmente útil porque no está especializado en un único dominio futbolístico, sino que proporciona una representación visual aprendida sobre un conjunto más amplio de escenarios deportivos. Desde el punto de vista metodológico, esto lo convierte en una referencia razonable para medir hasta qué punto el \textit{fine-tuning} específico aporta valor real.
+	
+	El uso de SportsMOT como baseline tenía además una ventaja importante: permitía comparar el efecto del entrenamiento específico sin modificar el resto del pipeline. En todas las pruebas de este capítulo, la configuración de tracking se mantuvo fija, de modo que las diferencias en métricas pudieran atribuirse al cambio de modelo ReID y no a variaciones de asociación, memoria o umbrales del tracker.
+	
+	Por tanto, SportsMOT no debe entenderse aquí como un modelo ``débil'', sino como un baseline competitivo y bien calibrado frente al que se contrasta la utilidad del entrenamiento específico de dominio.
+	
+	\subsection{Curvas de aprendizaje y selección de checkpoints}
+	
+	Los modelos específicos se entrenaron con OSNet x1.0 siguiendo un protocolo estándar de \textit{person re-identification}, con evaluación de validación en cada época. Esta decisión fue importante porque permitió disponer de curvas de aprendizaje completas y seleccionar checkpoints a partir de evidencia empírica densa, en lugar de depender de una evaluación esporádica o de una elección manual aproximada.
+	
+	El criterio de selección fue el máximo mAP de validación. En el caso profesional, el mAP alcanza el 100\% y el primer punto donde se observa esa convergencia completa corresponde al \texttt{Epoch 40}, por lo que ese checkpoint se selecciona como referencia final. En el caso amateur, la convergencia es más lenta y menos saturada; el mejor punto de validación se alcanza en \texttt{Epoch 98}, con un mAP inferior al del dominio profesional pero suficiente para justificar su elección como mejor checkpoint del entrenamiento.
+	
+	Este procedimiento refuerza la solidez metodológica del capítulo. No se comparan modelos escogidos de manera arbitraria, sino checkpoints seleccionados con un criterio homogéneo y explícito. Además, las curvas permiten visualizar una diferencia interesante entre dominios: el profesional converge de forma más limpia y temprana, mientras que el amateur presenta una evolución más irregular, coherente con la mayor heterogeneidad del dominio.
+	
+	\begin{figure}[H]
+		\centering
+		\begin{subfigure}[b]{0.48\textwidth}
+			\centering
+			\includegraphics[width=\textwidth]{cap11/profesional_learning_curves.png}
+			\caption{Curvas del modelo profesional.}
+		\end{subfigure}
+		\hfill
+		\begin{subfigure}[b]{0.48\textwidth}
+			\centering
+			\includegraphics[width=\textwidth]{cap11/amateur_learning_curves.png}
+			\caption{Curvas del modelo amateur.}
+		\end{subfigure}
+		\caption{Curvas de aprendizaje completas obtenidas con evaluación por época. La selección de checkpoints se basó en el máximo mAP de validación.}
+		\label{fig:cap11_learning_curves}
+	\end{figure}
+	
+	\begin{table}[H]
+		\centering
+		\caption{Resumen del protocolo de entrenamiento y selección de checkpoints.}
+		\label{tab:cap11_checkpoints}
+		\begin{tabular}{p{3.4cm}p{4.1cm}p{3.2cm}p{3.2cm}}
+			\toprule
+			\textbf{Aspecto} & \textbf{SportsMOT} & \textbf{Profesional} & \textbf{Amateur} \\
+			\midrule
+			Arquitectura & OSNet x1.0 & OSNet x1.0 & OSNet x1.0 \\
+			Preentrenamiento & ImageNet + SportsMOT & ImageNet + fine-tuning & ImageNet + fine-tuning \\
+			Dominio & Multi-deporte & Fútbol profesional & Fútbol amateur \\
+			Checkpoint usado & baseline disponible & Epoch 40 & Epoch 98 \\
+			Criterio de selección & referencia base & primer mAP máximo & máximo mAP \\
+			Evaluación & protocolo fijo & eval-freq = 1 & eval-freq = 1 \\
+			\bottomrule
+		\end{tabular}
+	\end{table}
+	
+	\subsection{Entrenamiento específico en fútbol profesional}
+	
+	En el dominio profesional, el modelo específico muestra una mejora ligera pero consistente frente a SportsMOT en varias métricas de interés. La mejora no es espectacular en términos absolutos, pero sí suficientemente estable como para considerarla real: aumenta ligeramente MOTA, mejora IDF1 y reduce el número de \textit{ID switches}. Esta combinación es especialmente valiosa porque no se limita a mejorar cobertura global, sino que también sugiere una mejor discriminación de identidad.
+	
+	Sin embargo, la lectura del resultado no debe ser simplista. El modelo profesional específico mejora algunas métricas centrales del tracking, pero lo hace a costa de incrementar el número total de IDs y el número de fragmentaciones. Esto indica que el embedding específico es más sensible y, en algunos casos, más discriminativo, pero también puede romper más trayectorias cuando la señal no es suficientemente estable. En otras palabras, gana en precisión fina de identidad, pero no necesariamente en compactación estructural del conjunto de trayectorias.
+	
+	Esta tensión es muy importante para la memoria porque muestra que el entrenamiento específico no produce una mejora unidimensional. En profesional, la conclusión correcta no es ``el modelo específico gana en todo'', sino algo más matizado: mejora varias métricas clave y resulta competitivo frente al baseline genérico, aunque introduce más IDs de los deseables si se prioriza una lectura muy conservadora de continuidad.
+	
+	\begin{table}[H]
+		\centering
+		\caption{Comparación entre SportsMOT y el modelo específico profesional.}
+		\label{tab:cap11_profesional}
+		\resizebox{\textwidth}{!}{%
+			\begin{tabular}{lccccccccc}
+				\toprule
+				\textbf{Modelo} & \textbf{HOTA} & \textbf{MOTA} & \textbf{IDF1} & \textbf{IDSW} & \textbf{IDSW/min} & \textbf{Frags.} & \textbf{IDs} & \textbf{Prec.} & \textbf{Rec.} \\
+				\midrule
+				SportsMOT (Baseline v1) & -- & 81.95\% & 77.14\% & 32 & 63.9 & 91 & 30 & 98.26\% & 83.67\% \\
+				SNMOT-060 Epoch 40 & 60.2\% & 81.99\% & 78.11\% & 30 & 60.0 & 101 & 41 & 98.31\% & 83.65\% \\
+				\bottomrule
+			\end{tabular}%
+		}
+	\end{table}
+	
+	\subsection{Entrenamiento específico en fútbol amateur}
+	
+	El comportamiento del modelo específico amateur es más complejo y, en cierto sentido, más revelador. Aquí el entrenamiento específico mejora sobre todo la calidad de asociación medida por IDF1 y reduce los ID switches absolutos respecto a SportsMOT, además de aumentar ligeramente el \textit{recall}. Sin embargo, no mejora MOTA y tampoco mejora la precisión, por lo que el balance global debe interpretarse con cautela.
+	
+	Sin embargo, esa lectura sería incompleta si se atendiera solo a métricas agregadas de asociación. Aunque el modelo específico reduce los ID switches absolutos respecto a SportsMOT, incrementa de forma muy notable el número total de IDs generados. En la práctica, esto significa que el sistema se vuelve más sensible y consigue seguir mejor el contenido global de la escena, pero lo hace fragmentando en exceso las identidades. El informe interpreta este comportamiento como un caso de sobreidentificación severa, ya que el número de IDs sube de 28 a 42 en un vídeo con aproximadamente 21 jugadores reales.
+	
+	\begin{table}[H]
+		\centering
+		\caption{Comparación entre SportsMOT y el modelo específico amateur.}
+		\label{tab:cap11_amateur_completa}
+		\resizebox{\textwidth}{!}{%
+			\begin{tabular}{lccccccccc}
+				\toprule
+				\textbf{Modelo} & \textbf{HOTA} & \textbf{MOTA} & \textbf{IDF1} & \textbf{IDSW} & \textbf{IDSW/min} & \textbf{Frags.} & \textbf{IDs} & \textbf{Prec.} & \textbf{Rec.} \\
+				\midrule
+				SportsMOT (Baseline v1) & -- & 44.81\% & 39.72\% & 91 & 86.4 & 141 & 28 & 66.78\% & 90.14\% \\
+				Amateur Epoch 98 & 36.8\% & 44.72\% & 43.78\% & 80 & 76.0 & 138 & 42 & 66.69\% & 90.21\% \\
+				\bottomrule
+			\end{tabular}%
+		}
+	\end{table}
+	
+	Esta tabla deja ver con claridad la naturaleza del trade-off. El modelo específico amateur mejora IDF1 y reduce los ID switches absolutos, pero no mejora MOTA y eleva de forma muy marcada el número total de trayectorias. Por tanto, no puede hablarse de una victoria limpia como en el dominio profesional, sino de una mejora parcial con costes estructurales importantes.
+	
+	\begin{table}[H]
+		\centering
+		\caption{Resumen del trade-off del modelo específico amateur frente a SportsMOT.}
+		\label{tab:cap11_amateur}
+		\begin{tabular}{lc}
+			\toprule
+			\textbf{Magnitud} & \textbf{Cambio del modelo amateur específico} \\
+			\midrule
+			MOTA & -0.09 pp \\
+			IDF1 & +4.06 pp \\
+			Precision & -0.09 pp \\
+			Recall & +0.07 pp \\
+			ID switches & -11 abs. / menor IDSW bruto \\
+			Total IDs & +50\% \\
+			Interpretación & Mejor asociación fina, peor compactación de identidad \\
+			\bottomrule
+		\end{tabular}
+	\end{table}
+	
+	\subsection{Comparación entre modelos genéricos y específicos}
+	
+	A la luz de ambos dominios, la comparación entre SportsMOT y modelos específicos no puede resolverse con una única regla universal. En fútbol profesional, el modelo específico es competitivo y mejora varias métricas importantes, aunque incrementa el número total de IDs. En fútbol amateur, la mejora en asociación fina viene acompañada de un deterioro mucho más acusado en compactación de identidad y sobreidentificación.
+	
+	Esta diferencia obliga a interpretar los resultados en función del objetivo real del sistema. Si se prioriza maximizar MOTA, IDF1 y algunas métricas de asociación fina, el entrenamiento específico resulta atractivo, especialmente en profesional. Si se prioriza contener el número de identidades generadas y mantener trayectorias más compactas, entonces el juicio es más matizado, y SportsMOT sigue siendo una referencia muy sólida.
+	
+	Desde el punto de vista del TFG, esta comparación deja una conclusión metodológica fuerte: la adaptación de dominio no debe juzgarse solo por mAP de validación o por mejoras puntuales en tracking global, sino por su impacto completo sobre la coherencia de identidad. Precisamente por eso este capítulo no cierra todavía la elección del sistema final, sino que prepara el terreno para una comparación global posterior entre modelos, integración online y linking offline.
+	
+	\begin{table}[H]
+		\centering
+		\caption{Síntesis comparativa entre baseline genérico y modelos específicos.}
+		\label{tab:cap11_sintesis}
+		\begin{tabular}{p{3.2cm}p{4.7cm}p{5.2cm}}
+			\toprule
+			\textbf{Dominio} & \textbf{Ventaja del modelo específico} & \textbf{Coste principal} \\
+			\midrule
+			Profesional & Mejora ligera en MOTA, IDF1 e IDSW & Aumento de IDs y fragmentaciones \\
+			Amateur & Mejor asociación fina (IDF1) y menor IDSW absoluto & Sobreidentificación severa y sin mejora real en MOTA \\
+			\bottomrule
+		\end{tabular}
+	\end{table}
+	
+	\subsection{Aplicación de tracklet linking sobre los mejores modelos}
+	
+	Una vez seleccionados los mejores checkpoints específicos, se aplicó sobre ellos el \textit{tracklet linking} geométrico para comprobar si el postprocesado offline seguía teniendo margen de mejora. El resultado general es que el linking tiene un impacto limitado sobre modelos que ya incorporan un ReID online relativamente fuerte. En ambos dominios, la mejora más clara se observa en el número total de IDs, que disminuye en 4 unidades, mientras que el resto de métricas cambia muy poco o incluso empeora ligeramente.
+	
+	En profesional, el baseline con el mejor modelo específico presenta 30 ID switches y 41 IDs. Tras aplicar linking, los ID switches suben ligeramente a 31, mientras que los IDs bajan a 37. MOTA cae de forma casi despreciable e IDF1 permanece estable. En amateur, la situación es parecida: el linking reduce el número total de IDs, pero no consigue reducir los ID switches y tampoco mejora las métricas globales. Esto sugiere que el linking actúa aquí como una capa de refinamiento moderado, no como una corrección transformadora del sistema.
+	
+	La lectura correcta de estos resultados es que el linking sobre modelos ya fuertes no funciona como una segunda revolución del pipeline, sino como un ajuste final. En profesional, ayuda a contener algo la sobrefragmentación residual del modelo específico. En amateur, mitiga levemente la sobreidentificación, pero no resuelve el problema estructural de fondo. Esto encaja bien con la lógica general del TFG: el linking offline es complementario al ReID online, no un reemplazo mágico de sus limitaciones.
+	
+	\begin{table}[H]
+		\centering
+		\caption{Impacto del linking geométrico sobre los mejores modelos específicos.}
+		\label{tab:cap11_linking_best_models}
+		\begin{tabular}{llcccc}
+			\toprule
+			\textbf{Dominio} & \textbf{Condición} & \textbf{MOTA} & \textbf{IDF1} & \textbf{IDSW} & \textbf{IDs} \\
+			\midrule
+			Profesional & Baseline específico & 81.99\% & 78.11\% & 30 & 41 \\
+			Profesional & Específico + linking & 81.96\% & 78.11\% & 31 & 37 \\
+			Amateur & Baseline específico & 44.72\% & 43.78\% & 80 & 42 \\
+			Amateur & Específico + linking & 44.62\% & 43.76\% & 80 & 38 \\
+			\bottomrule
+		\end{tabular}
+	\end{table}
+	
+	\newpage
+	
 \end{document}

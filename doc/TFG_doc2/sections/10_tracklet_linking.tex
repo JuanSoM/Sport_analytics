@@ -1,35 +1,187 @@
 \documentclass[../MAIN.tex]{subfiles}
 
 \begin{document}
-
-% ============================================================================
-% POSTPROCESADO OFFLINE MEDIANTE TRACKLET LINKING
-% ============================================================================
-
-\section{Postprocesado offline mediante tracklet linking}
-
-% Materiales:
-% - informe_experimentos_1.html
-% - informe_unificado_v1_linking.html
-% - resultados_generalizacion.md
-% - CONCLUSIONES_EXPERIMENTOS.html [exploratorio]
-%
-% Estado del bloque: Exploratorio con soporte para decisiones posteriores
-%
-% Guía de redacción:
-% - Explica la motivación y criterios del linking offline sobre tracklets.
-% - Debe cerrar cuándo el postprocesado mejora la coherencia de identidad y cuándo introduce riesgos.
-
-\experimentchaptertemplate
-
-\subsection{Motivación del tracklet linking}
-\subsection{Construcción y análisis de tracklets}
-\subsection{Linking geométrico y criterios de fusión}
-\subsection{Experimentos principales sobre v0}
-\subsection{Aplicación sobre v1}
-\subsection{Generalización a múltiples secuencias}
-\subsection{Discusión: online frente a offline}
-
-\newpage
-
+	
+	% ============================================================================
+	% POSTPROCESADO OFFLINE MEDIANTE TRACKLET LINKING
+	% ============================================================================
+	
+	\section{Postprocesado offline mediante tracklet linking}
+	
+	% Materiales:
+	% - informe_experimentos_1.html
+	% - informe_unificado_v1_linking.html
+	% - resultados_generalizacion.md
+	% - CONCLUSIONES_EXPERIMENTOS.html [exploratorio]
+	%
+	% Estado del bloque: Exploratorio con soporte para decisiones posteriores
+	%
+	% Guía de redacción:
+	% - Explica la motivación y criterios del linking offline sobre tracklets.
+	% - Debe cerrar cuándo el postprocesado mejora la coherencia de identidad y cuándo introduce riesgos.
+	
+	\begin{chaptertemplatebox}
+		\textbf{Objetivo del experimento}\\
+		Diseñar y evaluar un postprocesado offline basado en \textit{tracklet linking}, con el fin de reducir fragmentación e incoherencias de identidad sin modificar el funcionamiento interno del tracker online.\\[0.5em]
+		
+		\textbf{Material usado}\\
+		Informe de experimentos de linking offline sobre SNMOT-060, comparativa unificada entre enfoques online y offline, resultados de generalización a múltiples secuencias y documentación exploratoria utilizada para formular hipótesis de trabajo.\\[0.5em]
+		
+		\textbf{Configuración}\\
+		El pipeline se aplicó inicialmente sobre la salida \texttt{v0} de ByteTrack sin ReID y, en una fase posterior, sobre variantes derivadas de \texttt{v1}. El linking utiliza información temporal, espacial y, en algunas variantes, visual, para proponer fusiones entre tracklets.\\[0.5em]
+		
+		\textbf{Resultados principales}\\
+		El linking offline redujo de forma consistente el número total de IDs y los \textit{ID switches} por minuto, alargando la duración media de los tracklets y reduciendo el porcentaje de fragmentos cortos. Su efecto sobre MOTA y HOTA fue necesariamente limitado, al no introducir nuevas detecciones.\\[0.5em]
+		
+		\textbf{Interpretación}\\
+		El linking offline no sustituye al tracking online, sino que actúa como una segunda capa de coherencia temporal. Su principal valor aparece cuando el tracker ya genera trayectorias razonables, pero todavía deja cortes, gaps o reasignaciones localizadas.\\[0.5em]
+		
+		\textbf{Limitaciones}\\
+		El método no recupera falsos negativos del detector ni corrige errores severos de localización frame a frame. Además, si se vuelve demasiado agresivo, puede introducir fusiones incorrectas entre jugadores distintos.\\[0.5em]
+		
+		\textbf{Conclusión parcial}\\
+		El tracklet linking offline constituye una herramienta complementaria y modular para mejorar la continuidad de identidad, especialmente útil cuando el tracker online produce trayectorias parcialmente correctas pero todavía fragmentadas.
+	\end{chaptertemplatebox}
+	
+	\subsection{Motivación del tracklet linking}
+	
+	Tras el análisis del bloque online, quedó claro que parte del problema de identidad no se resolvía únicamente ajustando pesos dentro del tracker. Incluso en configuraciones competitivas seguían apareciendo fragmentación, gaps internos y errores de continuidad espacial. Esta observación llevó a plantear un cambio de perspectiva: en lugar de decidir todo exclusivamente frame a frame, podía resultar más útil analizar las trayectorias ya formadas y corregirlas a posteriori.
+	
+	El enfoque offline parte de una idea sencilla. Si el tracker genera varios fragmentos que en realidad pertenecen al mismo jugador, esos fragmentos pueden compararse como unidades temporales completas: cuándo terminan y empiezan, cuánta distancia espacial los separa, cuánto duran y, si se desea, qué apariencia media presentan. De este modo, la unidad de decisión deja de ser la detección instantánea y pasa a ser el \textit{tracklet}.
+	
+	Este cambio de perspectiva aporta además una ventaja metodológica importante. El linking offline no requiere modificar el núcleo del tracker ni volver a ejecutar detección y asociación desde cero. Se aplica sobre salidas MOT ya generadas, lo que lo convierte en un procedimiento modular, reproducible y fácil de analizar de forma aislada. Por ello, el objetivo de este capítulo no es competir con el tracker online en todos los aspectos, sino estudiar si una segunda capa de coherencia temporal puede corregir parte de la fragmentación residual.
+	
+	\subsection{Construcción y análisis de tracklets}
+	
+	El primer paso del pipeline consiste en construir los tracklets a partir de la salida del tracker. Cada tracklet se define como una secuencia temporal continua de detecciones asociadas a un mismo ID, con un frame inicial, un frame final, una duración total y una colección de observaciones intermedias. A partir de estos elementos, se calculan estadísticas útiles para el linking posterior.
+	
+	Entre las magnitudes analizadas destacan la duración del tracklet, su frame de inicio y fin, la posición de la primera y última caja, los gaps temporales entre tracklets candidatos y la distancia espacial entre el final de uno y el inicio de otro. Cuando la variante utiliza información visual, también se calcula un embedding representativo de la cola del tracklet emisor y de la cabeza del tracklet receptor.
+	
+	Este análisis exploratorio es importante porque permite fijar umbrales razonables para el linking. En vez de elegir valores arbitrarios de distancia máxima o gap máximo, se observan primero las distribuciones reales del clip: cuánto suelen durar los tracklets, qué gaps aparecen con frecuencia y qué distancias espaciales son plausibles en una reconexión legítima. De este modo, el diseño del postprocesado queda guiado por la estructura real de los datos y no solo por intuición.
+	
+	\begin{table}[H]
+		\centering
+		\caption{Resumen del análisis exploratorio previo sobre la salida base del tracker.}
+		\label{tab:cap10_exploratorio}
+		\begin{tabular}{lc}
+			\toprule
+			\textbf{Magnitud} & \textbf{Valor} \\
+			\midrule
+			Tracklets totales & 62 \\
+			Detecciones totales & 11\,415 \\
+			Frames del clip & 750 \\
+			Duración media de tracklet & 190.2 f \\
+			Duración mediana de tracklet & 100.0 f \\
+			Percentil 75 de duración & 402 f \\
+			Gap mediano entre candidatos & 65.5 f \\
+			Percentil 75 de gap & 116 f \\
+			Distancia espacial mediana & 483.2 px \\
+			\bottomrule
+		\end{tabular}
+	\end{table}
+	
+	\subsection{Linking geométrico y criterios de fusión}
+	
+	Una vez construidos los tracklets, el siguiente paso consiste en generar candidatos de fusión. Dos tracklets solo pueden aspirar a enlazarse si cumplen ciertas condiciones mínimas: cercanía temporal, una distancia espacial compatible y, en las variantes que lo incorporan, una similitud visual suficiente. Sobre esos candidatos se define un score compuesto que combina distintas fuentes de evidencia.
+	
+	La primera componente es temporal: cuanto menor es el gap entre el final del tracklet \(A\) y el inicio del tracklet \(B\), mayor plausibilidad existe de que ambos pertenezcan a una misma trayectoria. La segunda componente es espacial: cuanto menor es la distancia entre la última posición de \(A\) y la primera de \(B\), más coherente resulta la fusión. La tercera componente, cuando se activa, es visual: la similitud coseno entre embeddings medios de cola y cabeza introduce una señal adicional de compatibilidad de apariencia.
+	
+	De forma general, el score final puede expresarse como
+	
+	\[
+	\mathrm{score}_{final} = w_T \cdot \mathrm{score}_{temporal} + w_S \cdot \mathrm{score}_{espacial} + w_V \cdot \mathrm{score}_{visual},
+	\]
+	
+	donde las puntuaciones temporal y espacial se normalizan respecto a umbrales máximos de gap y distancia. A partir de estos scores, el pipeline resuelve los enlaces mediante una estrategia greedy, priorizando los candidatos mejor puntuados y evitando asignaciones incompatibles entre sí.
+	
+	Desde el punto de vista conceptual, el linking geométrico representa la forma más conservadora del método: solo enlaza cuando la continuidad temporal y espacial es muy plausible. La introducción del término visual permite flexibilizar el método para candidatos más ambiguos, pero también aumenta el riesgo de fusiones erróneas si la señal de apariencia se sobrevalora. Por ello, el bloque experimental de este capítulo no debe leerse como una búsqueda ciega del mayor número de fusiones posible, sino como un estudio del equilibrio entre agresividad de enlace y coherencia final de identidad.
+	
+	\subsection{Experimentos principales sobre v0}
+	
+	El grueso de la evaluación offline se llevó a cabo inicialmente sobre la salida \texttt{v0} de ByteTrack, es decir, la versión sin ReID online. Esta elección tenía sentido por dos motivos. En primer lugar, \texttt{v0} proporciona una línea base limpia, donde la fragmentación no está ya alterada por decisiones de apariencia internas al tracker. En segundo lugar, permite comprobar hasta qué punto un postprocesado offline puede recuperar continuidad de identidad sin depender de un módulo ReID activado desde el origen.
+	
+	A partir de \texttt{v0} se evaluaron varias variantes de linking con diferente agresividad. Las configuraciones más conservadoras usaban umbrales reducidos de gap temporal y distancia espacial, buscando fusiones muy seguras. Las configuraciones más agresivas ampliaban estos umbrales y, en algunos casos, incorporaban embeddings visuales para decidir entre candidatos más lejanos. Esta progresión experimental permitió identificar el compromiso entre seguridad de enlace y capacidad real de compactar trayectorias.
+	
+	\begin{table}[H]
+		\centering
+		\caption{Resumen de variantes offline evaluadas sobre la salida \texttt{v0}.}
+		\label{tab:cap10_variantes}
+		\small
+		\setlength{\tabcolsep}{4pt}
+		\begin{tabularx}{\textwidth}{Xcccccc}
+			\toprule
+			\textbf{Experimento} & \textbf{IDs} & \textbf{Dur. media} & \textbf{Short\%} & \textbf{Fusiones} & \textbf{max-gap} & \textbf{max-dist} \\
+			\midrule
+			v0 baseline & 62 & 190.2 & 14.5\% & 0 & -- & -- \\
+			EXP-3 conservador sin ReID & 50 & 237.1 & 10.0\% & 10 & 30 & 200 \\
+			EXP-4 agresivo sin ReID & 38 & 318.5 & 2.6\% & 24 & 115 & 400 \\
+			EXP-5 conservador th alto & 53 & 224.1 & 7.5\% & 9 & 80 & 300 \\
+			EXP-6 con ReID conservador & 48 & 248.6 & 4.2\% & 14 & 80 & 300 \\
+			EXP-7 con ReID agresivo & 45 & 268.2 & 2.2\% & 17 & 115 & 600 \\
+			\bottomrule
+		\end{tabularx}
+	\end{table}
+	
+	Los resultados muestran una mejora consistente en las métricas más sensibles al linking: disminución del número total de IDs, reducción de \textit{ID switches} por minuto, incremento de la duración media de tracklets y reducción del porcentaje de fragmentos cortos. En cambio, el efecto sobre MOTA y HOTA fue mucho más contenido, algo esperable dado que el postprocesado no añade nuevas detecciones.
+	
+	Dentro de este bloque, la variante más interesante fue \texttt{EXP-7}. Esta configuración reduce los IDs de 62 a 45, alarga la duración media de tracklets de 190 a 268 frames y baja el porcentaje de tracklets cortos de 14.5\% a 2.2\%. Además, reduce de forma apreciable la tasa de cambios de identidad por minuto. El resultado más importante aquí no es tanto una supuesta mejora espectacular en métricas globales, sino la evidencia de que un linking offline bien calibrado puede actuar como mecanismo real de compactación de identidad sobre una baseline sin ReID.
+	
+	\begin{table}[H]
+		\centering
+		\caption{Comparación entre \texttt{v0}, \texttt{EXP-7} y una referencia online compacta.}
+		\label{tab:cap10_exp7_vs_baselines}
+		\begin{tabular}{lcccccc}
+			\toprule
+			\textbf{Configuración} & \textbf{HOTA} & \textbf{MOTA} & \textbf{IDF1} & \textbf{IDSW} & \textbf{Frags} & \textbf{IDs} \\
+			\midrule
+			v0 baseline & 60.0\% & 80.7\% & 75.6\% & 45 & 119 & 62 \\
+			EXP-7 offline & 59.2\% & 80.8\% & 74.2\% & 35 & 118 & 45 \\
+			v1 ReID online & 59.3\% & 79.4\% & 75.6\% & 36 & 133 & 30 \\
+			\bottomrule
+		\end{tabular}
+	\end{table}
+	
+	\subsection{Aplicación sobre v1}
+	
+	Una vez validado el método sobre \texttt{v0}, el siguiente paso natural fue estudiar su aplicación sobre una salida online más compacta, en particular \texttt{v1}. Esta transición es metodológicamente relevante porque cambia la naturaleza del problema. En \texttt{v0}, el linking corrige sobre todo fragmentación geométrica. En \texttt{v1}, en cambio, el sistema ya ha compactado muchas identidades, pero conserva errores espaciales y semánticos más sutiles, como teletransportes o gaps mal resueltos.
+	
+	Por ello, el linking sobre \texttt{v1} no debe entenderse como una simple repetición del experimento anterior, sino como una segunda fase con un objetivo distinto: ya no se trata solo de fusionar fragmentos cortos, sino de decidir cuándo conviene preservar la continuidad obtenida online y cuándo, por el contrario, es necesario cortar o impedir una reconexión incoherente.
+	
+	El informe unificado muestra precisamente que el linking sobre \texttt{v1} debe leerse con cuidado. Aplicado sin preparación adicional, su efecto puede ser pequeño, porque \texttt{v1} ya llega muy compactado desde el tracker online. Sin embargo, cuando se combina con estrategias que abren el espacio de linking mediante división o saneamiento previo de trayectorias, el postprocesado vuelve a tener margen de actuación real. Esto confirma que online y offline no compiten exactamente por lo mismo: el online previene fragmentación desde el origen, mientras que el offline corrige fragmentación residual o incoherencias que sobreviven al proceso frame a frame.
+	
+	\subsection{Generalización a múltiples secuencias}
+	
+	Una cuestión importante era determinar si el linking offline estaba sobreajustado a una única secuencia o si, por el contrario, podía generalizar a otros clips del mismo dominio. Para responder a esta pregunta se aplicó el pipeline geométrico a múltiples secuencias adicionales de SoccerNet. El objetivo de esta fase no era optimizar finamente cada vídeo, sino comprobar si la reducción de fragmentación e ID switches aparecía también fuera del clip de desarrollo.
+	
+	Los resultados mostraron una mejora consistente en varias secuencias, especialmente en términos de reducción de \textit{ID switches}. La disminución relativa osciló entre aproximadamente el \(-11\%\) y el \(-22\%\), con una mejora media cercana al \(-18\%\). Además, el número total de IDs también se redujo de manera sistemática. Esta tendencia es importante porque sugiere que el pipeline offline no está sobreajustado a un único vídeo, sino que captura una estructura de error relativamente estable dentro del dominio SoccerNet.
+	
+	\begin{table}[H]
+		\centering
+		\caption{Generalización del linking geométrico offline a cinco secuencias de SoccerNet.}
+		\label{tab:cap10_generalizacion}
+		\begin{tabular}{lccc}
+			\toprule
+			\textbf{Secuencia} & \textbf{IDSW baseline} & \textbf{IDSW linked} & \textbf{$\Delta$ IDSW} \\
+			\midrule
+			SNMOT-060 & 45 & 35 & -22\% \\
+			SNMOT-105 & 41 & 32 & -22\% \\
+			SNMOT-167 & 46 & 41 & -11\% \\
+			SNMOT-074 & 27 & 22 & -19\% \\
+			SNMOT-111 & 19 & 16 & -16\% \\
+			\bottomrule
+		\end{tabular}
+	\end{table}
+	
+	Desde el punto de vista del TFG, esta generalización refuerza una idea metodológica fuerte: un pipeline modular de tracking no solo permite comparar trackers distintos, sino también incorporar una segunda capa de corrección que mantiene su utilidad en varias secuencias sin necesidad de rediseñar por completo el sistema.
+	
+	\subsection{Discusión: online frente a offline}
+	
+	El resultado más importante de este capítulo es que el linking offline no sustituye al tracking online, sino que lo complementa. Ambos niveles resuelven problemas distintos. El online decide de forma inmediata y local entre detecciones frame a frame, mientras que el offline dispone de una perspectiva temporal más amplia y puede revisar trayectorias ya formadas, detectando fragmentación, cortes o incoherencias que el proceso online no consigue resolver bien.
+	
+	Esto explica por qué no debe juzgarse el linking principalmente por métricas como MOTA o HOTA. Al no introducir nuevas detecciones, su capacidad de alterar la calidad global de detección es limitada. Su aportación real aparece en métricas de identidad y estructura de trayectoria: número total de IDs, duración media de tracklets, porcentaje de fragmentos cortos e \textit{ID switches} por minuto.
+	
+	En consecuencia, el aprendizaje principal de este bloque no es solo que una variante concreta haya funcionado mejor que otra, sino que el postprocesado offline constituye una estrategia válida, interpretable y modular para mejorar la coherencia de identidad. Esta conclusión abre el camino al siguiente capítulo, donde el linking dejará de aplicarse únicamente sobre la línea base \texttt{v0} y pasará a estudiarse en combinación con modelos ReID más específicos de dominio.
+	
+	\newpage
+	
 \end{document}

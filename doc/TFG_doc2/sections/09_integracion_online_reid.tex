@@ -1,31 +1,210 @@
 \documentclass[../MAIN.tex]{subfiles}
 
 \begin{document}
-
-% ============================================================================
-% INTEGRACIÓN ONLINE DE REID EN BYTETRACK
-% ============================================================================
-
-\section{Integración online de ReID en ByteTrack}
-
-% Materiales:
-% - informe_recalibracion.html
-% - informe_v1_cualitativo_embedded.html
-%
-% Estado del bloque: Exploratorio / integración online
-%
-% Guía de redacción:
-% - Documenta la integración online de ReID, la recalibración IoU--ReID y las variantes v0--v3.
-% - Debe cerrar los trade-offs del enfoque online frente a alternativas offline.
-
-\experimentchaptertemplate
-
-\subsection{Configuración base v1}
-\subsection{Recalibración de la fusión IoU--ReID}
-\subsection{Experimentos v0, v1, v2 y v3}
-\subsection{Evaluación cualitativa de v1}
-\subsection{Trade-offs del enfoque online}
-
-\newpage
-
+	
+	% ============================================================================
+	% INTEGRACIÓN ONLINE DE REID EN BYTETRACK
+	% ============================================================================
+	
+	\section{Integración online de ReID en ByteTrack}
+	
+	% Materiales base:
+	% - informe_recalibracion.html
+	% - informe_v1_cualitativo_embedded.html
+	% - informe_v1_cualitativo_local.html
+	% - imágenes exportadas a images/cap9/
+	
+	\begin{chaptertemplatebox}
+		\textbf{Objetivo del experimento}\\
+		Estudiar distintas estrategias de integración online del módulo ReID en ByteTrack y evaluar si la señal de apariencia mejora realmente la continuidad de identidad o, por el contrario, introduce ruido adicional en el proceso de asociación.\\[0.5em]
+		
+		\textbf{Material usado}\\
+		Informe de recalibración del ReID en ByteTrack, comparación de las configuraciones v0, v1, v2 y v3 sobre SNMOT-060, e informe cualitativo específico de la configuración v1 con ejemplos visuales de teletransportes, saltos espaciales y gaps internos.\\[0.5em]
+		
+		\textbf{Configuración}\\
+		Secuencia SNMOT-060 de SoccerNet. Se compararon cuatro variantes: ByteTrack sin ReID (v0), integración original del ReID (v1), división de asociación con tracks activos por IoU y tracks perdidos por IoU+ReID (v2), y la misma división añadiendo una guardia IoU y reducción del peso base del ReID (v3).\\[0.5em]
+		
+		\textbf{Resultados principales}\\
+		La integración original del ReID (v1) redujo los ID switches de 45 a 36 y los IDs totales de 62 a 30, pero empeoró MOTA (80.7\% $\rightarrow$ 79.4\%) y aumentó las fragmentaciones (119 $\rightarrow$ 133). La configuración v2 resultó claramente degradada. La configuración v3 recuperó MOTA hasta 80.8\% y redujo los ID switches a 41, aunque quedó por detrás de v1 en compactación de identidades (49 IDs frente a 30).\\[0.5em]
+		
+		\textbf{Interpretación}\\
+		El ReID online sí puede aportar valor, pero su efecto depende fuertemente de cómo se combine con la señal geométrica. Aplicarlo de forma indiscriminada sobre todos los tracks degrada el tracker; utilizarlo de forma más selectiva mejora la estabilidad global, aunque no siempre maximiza la compactación de identidades.\\[0.5em]
+		
+		\textbf{Limitaciones}\\
+		Este bloque se centra en integración online sobre una secuencia concreta. La evaluación muestra el compromiso entre continuidad de identidad y estabilidad geométrica, pero no agota todavía el problema, ya que parte de los errores residuales siguen requiriendo intervención offline.\\[0.5em]
+		
+		\textbf{Conclusión parcial}\\
+		La integración online del ReID no debe tratarse como un bloque todo-o-nada. Los resultados justifican tanto la recalibración del \textit{matching} como la necesidad de un postprocesado posterior para corregir los errores espaciales que el tracker online aún no resuelve.
+	\end{chaptertemplatebox}
+	
+	\subsection{Motivación de la recalibración online}
+	
+	Tras el análisis del capítulo anterior, el problema dejó de formularse como una pregunta binaria del tipo ``usar ReID'' frente a ``no usar ReID''. El embedding aislado mostraba capacidad discriminativa razonable, pero también limitaciones importantes: señal de equipo solo moderada, separabilidad imperfecta entre identidades del mismo dominio y riesgo de similitudes espurias entre jugadores visualmente parecidos. Por tanto, la cuestión relevante pasó a ser otra: \emph{cómo} debía intervenir el ReID dentro del proceso de asociación online de ByteTrack.
+	
+	El punto de partida del experimento de recalibración fue una hipótesis muy concreta: el problema no era necesariamente el modelo ReID en sí, sino el hecho de aplicarlo de forma indiscriminada sobre todos los tracks, incluso cuando la evidencia geométrica ya era suficiente para decidir correctamente. Dicho de forma simple, si el tracker ``sabía perfectamente dónde estaba un jugador'' a través del IoU y de la continuidad temporal, añadir apariencia podía introducir más ruido que información.
+	
+	Desde esta perspectiva, la recalibración online se diseñó para responder a tres preguntas. En primer lugar, qué rendimiento ofrecía ByteTrack sin ayuda explícita de apariencia. En segundo lugar, qué ocurría al introducir el ReID en su forma original. En tercer lugar, si era posible obtener una versión más selectiva y prudente de esa integración, restringiendo el uso de la apariencia a aquellos casos donde verdaderamente pudiera aportar valor.
+	
+	\subsection{Diseño de las configuraciones v0, v1, v2 y v3}
+	
+	Con el fin de estudiar el impacto real del ReID online en ByteTrack, se definieron cuatro configuraciones progresivas. La idea no era únicamente comparar ``con ReID'' frente a ``sin ReID'', sino analizar distintas formas de introducir la señal de apariencia dentro del proceso de asociación.
+	
+	La configuración \texttt{v0} corresponde a la línea base del tracker, es decir, ByteTrack sin integración explícita de ReID. En este caso, la asociación se apoya esencialmente en información geométrica y temporal, por lo que \texttt{v0} actúa como referencia para medir hasta qué punto la apariencia añade valor real al sistema.
+	
+	La configuración \texttt{v1} introduce el módulo ReID en su forma original, es decir, incorporando la señal de apariencia dentro del \textit{matching} online sin distinguir entre tipos de track ni entre situaciones fáciles o ambiguas. Esta variante representa el uso más directo del embedding visual y permite comprobar si la simple incorporación del ReID mejora la continuidad de identidad.
+	
+	La configuración \texttt{v2} surge como una primera recalibración. En ella se separa la lógica de asociación entre tracks activos y tracks perdidos: los tracks activos se asocian por IoU, mientras que los tracks perdidos se resuelven mediante una combinación de IoU y ReID. La hipótesis detrás de esta variante es que la apariencia debería ser más útil en reidentificación de trayectorias perdidas que en seguimiento local de objetos ya bien posicionados.
+	
+	La configuración \texttt{v3} introduce una segunda recalibración sobre \texttt{v2}. Además del esquema de asociación dividida, se añade una guardia geométrica basada en IoU y se reduce el peso relativo del ReID. El objetivo es convertir la señal visual en un criterio auxiliar y conservador, evitando que domine la decisión cuando la evidencia espacial ya es suficientemente fuerte.
+	
+	Desde un punto de vista experimental, estas cuatro configuraciones representan una progresión lógica. \texttt{v0} responde a la pregunta de qué puede hacer ByteTrack por sí solo; \texttt{v1} mide el efecto de añadir ReID sin restricciones; \texttt{v2} comprueba si limitar su uso a tracks perdidos mejora el comportamiento; y \texttt{v3} evalúa si una integración más prudente consigue equilibrar continuidad de identidad y estabilidad global del seguimiento.
+	
+	\subsection{Por qué la guardia IoU de v3 no duplica el IoU nativo de ByteTrack}
+	
+	Un punto importante de esta variante es que la guardia IoU introducida en \texttt{v3} no debe interpretarse como una duplicación redundante del IoU que ByteTrack ya emplea de serie. ByteTrack utiliza IoU como parte de su mecanismo estándar de asociación entre tracks y detecciones, es decir, como una señal geométrica dentro del proceso ordinario de \textit{matching}. En ese contexto, el IoU responde a una pregunta del tipo: \emph{qué detección encaja mejor con este track en el estado actual del seguimiento}.
+	
+	En cambio, la guardia IoU de \texttt{v3} cumple una función distinta. No se introduce para volver a calcular el mismo emparejamiento geométrico, sino para limitar la influencia del ReID en casos donde la continuidad espacial es insuficiente o ambigua. Dicho de otro modo, el IoU nativo de ByteTrack participa en el coste de asociación base, mientras que el IoU añadido en \texttt{v3} actúa como una condición de plausibilidad espacial sobre el uso de la apariencia.
+	
+	Esta distinción es relevante porque al introducir ReID aparece un modo de fallo nuevo que ByteTrack puro no sufre con la misma intensidad: asociaciones con alta similitud visual pero baja coherencia geométrica. Es exactamente el tipo de error que se observó en teletransportes de identidad y reapariciones imposibles entre extremos opuestos del campo. En esos casos, el problema ya no es simplemente ``qué detección solapa mejor'', sino si resulta aceptable permitir que la similitud visual intervenga en una reasociación espacialmente débil.
+	
+	Por tanto, \texttt{v3} no ``reaplica IoU'' para hacer otra vez lo mismo, sino que reutiliza la información geométrica con un papel diferente: no como criterio de asociación principal, sino como veto o guardia sobre la rama de apariencia. Esta diferencia funcional es la que justifica que la variante tenga sentido incluso cuando ByteTrack ya incorpora IoU en su lógica base.
+	
+	\subsection{Resultados cuantitativos de la recalibración}
+	
+	La Tabla~\ref{tab:cap9_recalibracion} resume los resultados de las cuatro configuraciones comparadas en el experimento de recalibración. \texttt{v0} actúa como línea base nativa de ByteTrack, \texttt{v1} como integración original del ReID, \texttt{v2} como primera propuesta de \textit{split} de asociación y \texttt{v3} como versión recalibrada con guardia IoU.
+	
+	\begin{table}[H]
+		\centering
+		\caption{Comparación de configuraciones online de ReID en ByteTrack sobre SNMOT-060.}
+		\label{tab:cap9_recalibracion}
+		\begin{tabular}{lccccccc}
+			\toprule
+			\textbf{Config.} & \textbf{HOTA} & \textbf{MOTA} & \textbf{IDF1} & \textbf{ID Sw.} & \textbf{Frags.} & \textbf{IDs} & \textbf{IDSW/min} \\
+			\midrule
+			v0 -- Sin ReID              & 60.0\% & 80.7\% & 75.6\% & 45 & 119 & 62 & 90 \\
+			v1 -- ReID original         & 59.3\% & 79.4\% & 75.6\% & 36 & 133 & 30 & 72 \\
+			v2 -- ReID split            & 56.6\% & 79.4\% & 72.0\% & 72 & 160 & 31 & 144 \\
+			v3 -- ReID split + guardia  & 58.5\% & 80.8\% & 73.9\% & 41 & 135 & 49 & 82 \\
+			\bottomrule
+		\end{tabular}
+	\end{table}
+	
+	Los resultados permiten extraer varias observaciones claras. En primer lugar, \texttt{v1} es la configuración que más reduce los IDs totales y también la que más baja los \textit{ID switches}, lo que confirma que el ReID online sí puede contribuir a la continuidad de identidad. En segundo lugar, \texttt{v2} demuestra que no basta con ``mover'' el ReID a los tracks perdidos si se mantiene un peso demasiado alto: su comportamiento es claramente degradado, con 72 \textit{ID switches} y 160 fragmentaciones, muy por encima de cualquier otra configuración. En tercer lugar, \texttt{v3} recupera la estabilidad global del tracker: alcanza la mejor MOTA (80.8\%) y reduce los \textit{ID switches} a 41, aunque no compacta identidades tan agresivamente como \texttt{v1}.
+	
+	Estos resultados son especialmente importantes porque muestran que el ReID online no se comporta como una mejora monótona. Puede reducir el número de identidades, pero también empeorar otras métricas si se utiliza sin control. En consecuencia, el análisis no debe plantearse como una comparación simple entre ``con ReID'' y ``sin ReID'', sino como una comparación entre distintas políticas de integración de la apariencia.
+	
+	\subsection{Lectura funcional del trade-off}
+	
+	Desde una perspectiva funcional, cada configuración ocupa un papel distinto dentro del experimento. \texttt{v0} representa la robustez geométrica pura de ByteTrack y constituye la referencia frente a la que medir cualquier ganancia o degradación causada por la apariencia. \texttt{v1} demuestra que el ReID puede compactar identidades y reducir cambios de ID de manera notable, pero también deja claro que esa compactación no garantiza por sí sola una mejora homogénea del tracking.
+	
+	\texttt{v2} cumple un papel especialmente útil desde el punto de vista científico, aunque sus resultados sean malos. Actúa como contraejemplo experimental: muestra que la idea de ``usar ReID solo en tracks perdidos'' no funciona automáticamente si la apariencia sigue teniendo demasiado peso y no se controla geométricamente. Es decir, no basta con desplazar el ReID a un subconjunto del problema; también hay que moderar cómo influye en la decisión final.
+	
+	\texttt{v3}, por su parte, puede interpretarse como la variante más equilibrada del experimento online. No logra la compactación extrema de \texttt{v1}, pero recupera estabilidad global y evita parte de la degradación introducida por el uso agresivo de apariencia. En este sentido, \texttt{v3} es la mejor evidencia de que el ReID online solo resulta útil cuando se trata como una pista auxiliar y no como una señal dominante.
+	
+	\subsection{Evaluación cualitativa de v1}
+	
+	Aunque la lectura global del experimento sugiere que \texttt{v3} es una configuración más equilibrada en términos agregados, la evaluación cualitativa de \texttt{v1} muestra por qué esta variante seguía siendo extremadamente relevante para el TFG. El informe cualitativo específico de \texttt{v1} concluye que el tracking tiene una calidad general aceptable y lo considera explícitamente un candidato a \textit{tracklet linking}, precisamente porque compacta bien identidades pero deja errores espaciales residuales que parecen corregibles a posteriori.
+	
+	Las métricas cualitativas del informe son muy ilustrativas: \texttt{v1} produce 30 IDs únicos, un \textit{fill rate} medio del 89.5\%, 17 saltos espaciales críticos, 30 \textit{gaps} internos, 5 \textit{gaps} con error confirmado, 17 IDs con \textit{fill rate} superior al 95\% y 10 IDs con dos o más \textit{gaps}. En otras palabras, la configuración consigue trayectorias largas y relativamente continuas, pero no evita todavía reasignaciones geométricamente imposibles ni reapariciones incoherentes.
+	
+	\begin{table}[H]
+		\centering
+		\caption{Resumen cualitativo de la configuración v1 (ReID online original).}
+		\label{tab:cap9_v1_cualitativo}
+		\begin{tabular}{lc}
+			\toprule
+			\textbf{Indicador} & \textbf{Valor} \\
+			\midrule
+			IDs únicos & 30 \\
+			Fill rate medio & 89.5\% \\
+			Saltos $>$100 px/frame & 17 \\
+			Gaps internos ($>$2f) & 30 \\
+			Gaps con error confirmado & 5 \\
+			IDs con fill $\geq$95\% & 17 \\
+			IDs con $\geq$2 gaps & 10 \\
+			\bottomrule
+		\end{tabular}
+	\end{table}
+	
+	La Figura~\ref{fig:cap9_v1_overview} resume visualmente el comportamiento general de \texttt{v1} a lo largo de la secuencia. Se han escogido tres frames representativos del inicio, la parte media y el final del clip para mostrar que el tracker mantiene pocas identidades totales y trayectorias largas durante buena parte del vídeo. Esta continuidad global explica por qué \texttt{v1} era una configuración tan atractiva pese a sus errores residuales.
+	
+	\begin{figure}[H]
+		\centering
+		\begin{subfigure}[b]{0.31\textwidth}
+			\centering
+			\includegraphics[width=\textwidth]{cap9/overview_f0000.jpg}
+			\caption{Frame inicial.}
+		\end{subfigure}
+		\hfill
+		\begin{subfigure}[b]{0.31\textwidth}
+			\centering
+			\includegraphics[width=\textwidth]{cap9/overview_f0400.jpg}
+			\caption{Zona media del clip.}
+		\end{subfigure}
+		\hfill
+		\begin{subfigure}[b]{0.31\textwidth}
+			\centering
+			\includegraphics[width=\textwidth]{cap9/overview_f0749.jpg}
+			\caption{Frame final.}
+		\end{subfigure}
+		\caption{Vista general del comportamiento cualitativo de \texttt{v1}. La configuración mantiene trayectorias largas y un número reducido de identidades, lo que la convierte en una buena candidata para postprocesado offline.}
+		\label{fig:cap9_v1_overview}
+	\end{figure}
+	
+	El valor de esta evaluación cualitativa es doble. Por un lado, confirma que \texttt{v1} no es una configuración desastrosa ni arbitraria, sino un sistema que efectivamente logra compactar la identidad de forma visible. Por otro, evidencia que esa compactación todavía viene acompañada de errores espaciales graves, como saltos imposibles entre extremos del campo o reconexiones erróneas tras \textit{gaps} internos. Esta lectura es muy importante porque anticipa la lógica del capítulo siguiente: si \texttt{v1} produce \textit{tracklets} largos pero con puntos de ruptura muy localizados, entonces el postprocesado offline puede tener sentido como mecanismo corrector.
+	
+	\subsection{Errores espaciales representativos}
+	
+	Uno de los errores más graves detectados en \texttt{v1} es el teletransporte de identidad entre extremos opuestos de la pantalla. El HTML cualitativo lo describe explícitamente como un error clásico de ReID online: un jugador desaparece por un lado del campo y otro distinto reaparece por el lado contrario, pero ambos quedan asociados bajo el mismo ID por tener una apariencia similar. En el caso seleccionado para la Figura~\ref{fig:cap9_v1_teleport}, el ID 17 recorre implícitamente 1902.1 píxeles en solo 24 frames, algo físicamente incompatible con el movimiento real de un mismo jugador dentro del clip.
+	
+	\begin{figure}[H]
+		\centering
+		\begin{subfigure}[b]{0.44\textwidth}
+			\centering
+			\includegraphics[width=\textwidth]{cap9/teleport_id17_f0467_before.jpg}
+			\caption{Desaparición en frame 467.}
+		\end{subfigure}
+		\hfill
+		\begin{subfigure}[b]{0.44\textwidth}
+			\centering
+			\includegraphics[width=\textwidth]{cap9/teleport_id17_f0491_after.jpg}
+			\caption{Reaparición en frame 491.}
+		\end{subfigure}
+		\caption{Ejemplo de teletransporte de identidad en \texttt{v1}. El mismo ID 17 se reutiliza tras una desaparición en una posición incompatible con la continuidad geométrica esperable.}
+		\label{fig:cap9_v1_teleport}
+	\end{figure}
+	
+	Este tipo de fallo es especialmente relevante para el TFG porque muestra una limitación fundamental del enfoque online: aunque el ReID ayude a compactar identidades, también puede forzar reasignaciones imposibles cuando la evidencia visual se impone a la coherencia espacial. Dicho de otro modo, la reducción de IDs totales puede venir acompañada de asociaciones semánticamente incorrectas.
+	
+	Un segundo tipo de error importante son los \textit{gaps} internos mal resueltos. El HTML local marca algunos de ellos como errores confirmados y señala explícitamente que no deben reconectarse durante el \textit{tracklet linking}. La Figura~\ref{fig:cap9_v1_gap_error} muestra uno de los casos más claros: el ID 14 desaparece y reaparece más tarde sobre un árbitro. Aquí el problema ya no es solo un salto espacial, sino una ruptura semántica directa de la trayectoria.
+	
+	\begin{figure}[H]
+		\centering
+		\begin{subfigure}[b]{0.44\textwidth}
+			\centering
+			\includegraphics[width=\textwidth]{cap9/gap_id14_f0537_end.jpg}
+			\caption{Última detección válida en frame 537.}
+		\end{subfigure}
+		\hfill
+		\begin{subfigure}[b]{0.44\textwidth}
+			\centering
+			\includegraphics[width=\textwidth]{cap9/gap_id14_f0605_return.jpg}
+			\caption{Reaparición errónea en frame 605.}
+		\end{subfigure}
+		\caption{Ejemplo de \textit{gap} con error confirmado en \texttt{v1}. El mismo ID reaparece sobre un árbitro, por lo que la trayectoria no debe reconectarse como si se tratara del mismo jugador.}
+		\label{fig:cap9_v1_gap_error}
+	\end{figure}
+	
+	Estos ejemplos justifican una idea muy importante para el resto del trabajo: el objetivo no es únicamente reducir IDs o cerrar \textit{gaps}, sino hacerlo preservando coherencia geométrica y semántica. Un sistema que compacta trayectorias a costa de unir jugadores distintos no resulta útil para el análisis final.
+	
+	\subsection{Conclusión del enfoque online y transición al linking}
+	
+	El principal resultado de este capítulo es que la integración online del ReID obliga a aceptar un compromiso entre varios objetivos parcialmente incompatibles. \texttt{v1} maximiza la compactación de identidades y reduce de forma muy fuerte el número total de IDs, pero lo hace sacrificando parte de la estabilidad global del tracker y manteniendo errores espaciales críticos. \texttt{v3}, en cambio, protege mejor la calidad global del seguimiento y contiene mejor el ruido del ReID, pero ya no logra la misma compresión de identidades. \texttt{v2} muestra de forma negativa lo que ocurre cuando se introduce el ReID con una política todavía demasiado agresiva.
+	
+	Por tanto, no existe una única conclusión simplista del tipo ``el ReID online mejora'' o ``el ReID online empeora''. Lo que muestran estos experimentos es algo más preciso: el ReID online puede ser útil, pero solo si se controla cuidadosamente su ámbito de actuación y su peso relativo frente a la señal geométrica. Además, incluso en su mejor forma, el tracker online sigue dejando errores que no se resuelven bien frame a frame y que resultan más adecuados para un tratamiento posterior sobre \textit{tracklets} ya formados.
+	
+	Desde esta perspectiva, el papel de \texttt{v1} dentro del TFG es especialmente interesante. No es la configuración más equilibrada en todas las métricas, pero sí una de las más informativas, porque pone de manifiesto tanto el potencial como las limitaciones del ReID online. Precisamente por ello, el siguiente paso lógico no es cerrar aquí la discusión, sino explorar si un postprocesado offline puede aprovechar la continuidad que \texttt{v1} consigue y corregir, al mismo tiempo, sus incoherencias espaciales más graves.
+	
+	\newpage
+	
 \end{document}

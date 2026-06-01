@@ -1,11 +1,19 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex 2025.5.14)  1 JUN 2026 01:05
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex 2025.5.14)  1 JUN 2026 01:04
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**./MAIN.tex
-(MAIN.tex
+**./11_adaptacion_reid_dominio.tex
+(11_adaptacion_reid_dominio.tex
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-04-14>
+
+(C:\Users\Soriano\AppData\Local\Programs\MiKTeX\tex/latex/subfiles\subfiles.cls
+Document Class: subfiles 2020/11/14 v2.2 Multi-file projects (class)
+Preamble taken from file `../MAIN.tex'
+(C:\Users\Soriano\AppData\Local\Programs\MiKTeX\tex/latex/import\import.sty
+Package: import 2020/04/01  v 6.2
+)
+(../MAIN.tex
 (C:\Users\Soriano\AppData\Local\Programs\MiKTeX\tex/latex/base\article.cls
 Document Class: article 2024/06/29 v1.4n Standard LaTeX document class
 (C:\Users\Soriano\AppData\Local\Programs\MiKTeX\tex/latex/base\size12.clo
@@ -114,9 +122,7 @@ File: pppdftex.def 2025/03/12 v0.6f Pdfpages driver for pdfTeX (AM)
 )
 (C:\Users\Soriano\AppData\Local\Programs\MiKTeX\tex/latex/subfiles\subfiles.sty
 Package: subfiles 2020/11/14 v2.2 Multi-file projects (package)
-(C:\Users\Soriano\AppData\Local\Programs\MiKTeX\tex/latex/import\import.sty
-Package: import 2020/04/01  v 6.2
-))
+)
 (C:\Users\Soriano\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\hyperref.sty
 Package: hyperref 2024-11-05 v7.01l Hypertext links for LaTeX
 (C:\Users\Soriano\AppData\Local\Programs\MiKTeX\tex/generic/iftex\iftex.sty
@@ -1269,7 +1275,7 @@ ode.tex
 Library (tcolorbox): 'tcbposter.code.tex' version '6.4.1'
 ))
 Package hyperref Info: Option `colorlinks' set `true' on input line 65.
-
+))
 
 Package biblatex Warning: Load 'inputenc' before biblatex.
 
@@ -1277,32 +1283,32 @@ Package csquotes Info: Checking for multilingual support...
 Package csquotes Info: ... found 'babel' package.
 Package csquotes Info: Adjusting default style.
 Package csquotes Info: Redefining alias 'default' -> 'spanish'.
-(MAIN.aux
+(11_adaptacion_reid_dominio.aux
 LaTeX Info: Redefining \. on input line 15.
 LaTeX Info: Redefining \% on input line 15.
 Package babel Info: 'spanish' activates 'spanish' shorthands.
 (babel)             Reported  on input line 15.
 )
-\openout1 = `MAIN.aux'.
+\openout1 = `11_adaptacion_reid_dominio.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 138.
-LaTeX Font Info:    ... okay on input line 138.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 138.
-LaTeX Font Info:    ... okay on input line 138.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 138.
-LaTeX Font Info:    ... okay on input line 138.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 138.
-LaTeX Font Info:    ... okay on input line 138.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 138.
-LaTeX Font Info:    ... okay on input line 138.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 138.
-LaTeX Font Info:    ... okay on input line 138.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 138.
-LaTeX Font Info:    ... okay on input line 138.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 138.
-LaTeX Font Info:    ... okay on input line 138.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 138.
-LaTeX Font Info:    ... okay on input line 138.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 3.
+LaTeX Font Info:    ... okay on input line 3.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 3.
+LaTeX Font Info:    ... okay on input line 3.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 3.
+LaTeX Font Info:    ... okay on input line 3.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 3.
+LaTeX Font Info:    ... okay on input line 3.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 3.
+LaTeX Font Info:    ... okay on input line 3.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 3.
+LaTeX Font Info:    ... okay on input line 3.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 3.
+LaTeX Font Info:    ... okay on input line 3.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 3.
+LaTeX Font Info:    ... okay on input line 3.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 3.
+LaTeX Font Info:    ... okay on input line 3.
 
 (C:\Users\Soriano\AppData\Local\Programs\MiKTeX\tex/context/base/mkii\supp-pdf.
 mkii
@@ -1343,10 +1349,10 @@ Package: lscape 2020/05/28 v3.02 Landscape Pages (DPC)
 )
 Package pdflscape Info: Auto-detected driver: pdftex on input line 81.
 ))
-Package hyperref Info: Link coloring ON on input line 138.
- (MAIN.out) (MAIN.out)
+Package hyperref Info: Link coloring ON on input line 3.
+ (11_adaptacion_reid_dominio.out) (11_adaptacion_reid_dominio.out)
 \@outlinefile=\write5
-\openout5 = `MAIN.out'.
+\openout5 = `11_adaptacion_reid_dominio.out'.
 
 \c@lstlisting=\count510
 Package biblatex Info: Trying to load language 'spanish'...
@@ -1362,13 +1368,13 @@ Package biblatex Info: Automatic encoding selection.
 Package biblatex Info: Input encoding 'utf8' detected.
 Package biblatex Info: Data encoding 'utf8' specified.
 (biblatex)             No need to reencode data.
-\openout3 = `MAIN-blx.bib'.
+\openout3 = `11_adaptacion_reid_dominio-blx.bib'.
 
 Package biblatex Info: Trying to load bibliographic data...
-Package biblatex Info: ... file 'MAIN.bbl' found.
- (MAIN.bbl)
-Package biblatex Info: Reference section=0 on input line 138.
-Package biblatex Info: Reference segment=0 on input line 138.
+Package biblatex Info: ... file '11_adaptacion_reid_dominio.bbl' found.
+ (11_adaptacion_reid_dominio.bbl)
+Package biblatex Info: Reference section=0 on input line 3.
+Package biblatex Info: Reference segment=0 on input line 3.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -1404,889 +1410,12 @@ Package biblatex Info: Reference segment=0 on input line 138.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-LaTeX Info: Redefining \sptext on input line 138.
-LaTeX Info: Redefining \. on input line 138.
-LaTeX Info: Redefining \% on input line 138.
+LaTeX Info: Redefining \sptext on input line 3.
+LaTeX Info: Redefining \. on input line 3.
+LaTeX Info: Redefining \% on input line 3.
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: End \AtBeginDocument code.
-<cover.pdf, id=418, 597.73312pt x 845.40843pt>
-File: cover.pdf Graphic file (type pdf)
-<use cover.pdf>
-Package pdftex.def Info: cover.pdf  used on input line 141.
-(pdftex.def)             Requested size: 597.73166pt x 845.40636pt.
-<cover.pdf, id=420, page=1, 597.73312pt x 845.40843pt>
-File: cover.pdf Graphic file (type pdf)
-<use cover.pdf, page 1>
-Package pdftex.def Info: cover.pdf , page1 used on input line 141.
-(pdftex.def)             Requested size: 597.73166pt x 845.40636pt.
-File: cover.pdf Graphic file (type pdf)
-<use cover.pdf, page 1>
-Package pdftex.def Info: cover.pdf , page1 used on input line 141.
-(pdftex.def)             Requested size: 597.73166pt x 845.40636pt.
-File: cover.pdf Graphic file (type pdf)
-<use cover.pdf, page 1>
-Package pdftex.def Info: cover.pdf , page1 used on input line 141.
-(pdftex.def)             Requested size: 597.73166pt x 845.40636pt.
 
-
-File: cover.pdf Graphic file (type pdf)
-<use cover.pdf, page 1>
-Package pdftex.def Info: cover.pdf , page1 used on input line 141.
-(pdftex.def)             Requested size: 597.73166pt x 845.40636pt.
-[1
-
-
- <./cover.pdf>]
-<title.pdf, id=438, 597.73312pt x 845.40843pt>
-File: title.pdf Graphic file (type pdf)
-<use title.pdf>
-Package pdftex.def Info: title.pdf  used on input line 146.
-(pdftex.def)             Requested size: 597.73166pt x 845.40636pt.
-<title.pdf, id=440, page=1, 597.73312pt x 845.40843pt>
-File: title.pdf Graphic file (type pdf)
-<use title.pdf, page 1>
-Package pdftex.def Info: title.pdf , page1 used on input line 146.
-(pdftex.def)             Requested size: 597.73166pt x 845.40636pt.
-File: title.pdf Graphic file (type pdf)
-<use title.pdf, page 1>
-Package pdftex.def Info: title.pdf , page1 used on input line 146.
-(pdftex.def)             Requested size: 597.73166pt x 845.40636pt.
-File: title.pdf Graphic file (type pdf)
-<use title.pdf, page 1>
-Package pdftex.def Info: title.pdf , page1 used on input line 146.
-(pdftex.def)             Requested size: 597.73166pt x 845.40636pt.
-
-
-
-pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has 
-been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.146 ...scale=true, width=\paperwidth]{title.pdf}
-                                                  
-File: title.pdf Graphic file (type pdf)
-<use title.pdf, page 1>
-Package pdftex.def Info: title.pdf , page1 used on input line 146.
-(pdftex.def)             Requested size: 597.73166pt x 845.40636pt.
- [1
-
-
- <./title.pdf>] (MAIN.toc
-LaTeX Info: Redefining \sptext on input line 1.
-LaTeX Info: Redefining \. on input line 1.
-LaTeX Info: Redefining \% on input line 1.
-
-Underfull \vbox (badness 5316) has occurred while \output is active []
-
-
-
-LaTeX Info: Redefining \sptext on input line 27.
-LaTeX Info: Redefining \. on input line 27.
-LaTeX Info: Redefining \% on input line 27.
-Package babel Info: 'spanish' activates 'spanish' shorthands.
-(babel)             Reported  on input line 27.
-[2{C:/Users/Soriano/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-
-[3]
-
-LaTeX Info: Redefining \sptext on input line 82.
-LaTeX Info: Redefining \. on input line 82.
-LaTeX Info: Redefining \% on input line 82.
-[4])
-\tf@toc=\write6
-\openout6 = `MAIN.toc'.
-
-
-
-[5] (sections/01_introduccion.tex
-
-LaTeX Info: Redefining \sptext on input line 29.
-LaTeX Info: Redefining \. on input line 29.
-LaTeX Info: Redefining \% on input line 29.
-[6]
-
-[7]
-
-LaTeX Info: Redefining \sptext on input line 57.
-LaTeX Info: Redefining \. on input line 57.
-LaTeX Info: Redefining \% on input line 57.
-[8]) (sections/02_estado_arte.tex
-
-[9]
-Underfull \vbox (badness 1838) has occurred while \output is active []
-
-
-
-LaTeX Info: Redefining \sptext on input line 39.
-LaTeX Info: Redefining \. on input line 39.
-LaTeX Info: Redefining \% on input line 39.
-[10]
-
-[11]
-Underfull \vbox (badness 1371) has occurred while \output is active []
-
-
-
-LaTeX Info: Redefining \sptext on input line 63.
-LaTeX Info: Redefining \. on input line 63.
-LaTeX Info: Redefining \% on input line 63.
-[12]
-
-[13]) (sections/03_planteamiento_problema.tex
-
-LaTeX Info: Redefining \sptext on input line 27.
-LaTeX Info: Redefining \. on input line 27.
-LaTeX Info: Redefining \% on input line 27.
-[14]
-Underfull \vbox (badness 1371) has occurred while \output is active []
-
-
-
-[15]
-
-LaTeX Info: Redefining \sptext on input line 55.
-LaTeX Info: Redefining \. on input line 55.
-LaTeX Info: Redefining \% on input line 55.
-[16]
-
-[17]) (sections/04_datos_materiales_entorno.tex
-
-LaTeX Info: Redefining \sptext on input line 29.
-LaTeX Info: Redefining \. on input line 29.
-LaTeX Info: Redefining \% on input line 29.
-[18]) (sections/05_metodologia_general.tex
-
-[19]
-<images/metodologia_pipeline.png, id=693, 998.9822pt x 330.48468pt>
-File: images/metodologia_pipeline.png Graphic file (type png)
-<use images/metodologia_pipeline.png>
-Package pdftex.def Info: images/metodologia_pipeline.png  used on input line 36
-.
-(pdftex.def)             Requested size: 426.79135pt x 141.19289pt.
-
-
-LaTeX Info: Redefining \sptext on input line 49.
-LaTeX Info: Redefining \. on input line 49.
-LaTeX Info: Redefining \% on input line 49.
-[20 <./images/metodologia_pipeline.png>]
-Overfull \hbox (18.61766pt too wide) in paragraph at lines 54--55
-[]\T1/cmr/m/n/12 A ni-vel de im-ple-men-ta-ción, el pro-to-co-lo se apo-yó en d
-os mo-to-res prin-ci-pa-les: \T1/cmtt/m/n/12 motmetrics
- []
-
-
-
-[21]
-
-LaTeX Info: Redefining \sptext on input line 74.
-LaTeX Info: Redefining \. on input line 74.
-LaTeX Info: Redefining \% on input line 74.
-[22]
-
-[23]) (sections/06_comparativa_inicial_trackers.tex
-Underfull \hbox (badness 10000) in paragraph at lines 19--21
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 22--24
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 25--27
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 28--30
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 31--33
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 34--36
-
- []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-
-LaTeX Info: Redefining \sptext on input line 39.
-LaTeX Info: Redefining \. on input line 39.
-LaTeX Info: Redefining \% on input line 39.
-[24]
-Overfull \hbox (49.11171pt too wide) in paragraph at lines 55--65
- [][] 
- []
-
-
-
-[25]
-
-LaTeX Warning: Reference `ap:tablas_completas' on page 26 undefined on input li
-ne 67.
-
-
-
-LaTeX Info: Redefining \sptext on input line 77.
-LaTeX Info: Redefining \. on input line 77.
-LaTeX Info: Redefining \% on input line 77.
-[26]
-
-[27]
-
-LaTeX Info: Redefining \sptext on input line 103.
-LaTeX Info: Redefining \. on input line 103.
-LaTeX Info: Redefining \% on input line 103.
-[28]
-
-[29]) (sections/07_diagnostico_identidad.tex
-Underfull \hbox (badness 10000) in paragraph at lines 18--20
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 21--23
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 24--26
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 27--29
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 30--32
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 33--35
-
- []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-
-LaTeX Info: Redefining \sptext on input line 38.
-LaTeX Info: Redefining \. on input line 38.
-LaTeX Info: Redefining \% on input line 38.
-[30]
-<images/cap7/1_solapamiento_multiple.png, id=751, 431.36156pt x 253.69781pt>
-File: images/cap7/1_solapamiento_multiple.png Graphic file (type png)
-<use images/cap7/1_solapamiento_multiple.png>
-Package pdftex.def Info: images/cap7/1_solapamiento_multiple.png  used on input
- line 50.
-(pdftex.def)             Requested size: 132.30428pt x 77.80934pt.
-<images/cap7/2_solapamiento_multiple.png, id=752, 142.28156pt x 162.6075pt>
-File: images/cap7/2_solapamiento_multiple.png Graphic file (type png)
-<use images/cap7/2_solapamiento_multiple.png>
-Package pdftex.def Info: images/cap7/2_solapamiento_multiple.png  used on input
- line 56.
-(pdftex.def)             Requested size: 132.30428pt x 151.22093pt.
-<images/cap7/3_solapamiento_multiple.png, id=753, 311.66437pt x 188.95593pt>
-File: images/cap7/3_solapamiento_multiple.png Graphic file (type png)
-<use images/cap7/3_solapamiento_multiple.png>
-Package pdftex.def Info: images/cap7/3_solapamiento_multiple.png  used on input
- line 62.
-(pdftex.def)             Requested size: 132.30428pt x 80.21437pt.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-
-[31]
-<images/cap7/1_caido.png, id=760, 91.09032pt x 152.82094pt>
-File: images/cap7/1_caido.png Graphic file (type png)
-<use images/cap7/1_caido.png>
-Package pdftex.def Info: images/cap7/1_caido.png  used on input line 77.
-(pdftex.def)             Requested size: 119.50105pt x 200.49301pt.
-<images/cap7/2_caido.png, id=761, 87.32625pt x 70.01157pt>
-File: images/cap7/2_caido.png Graphic file (type png)
-<use images/cap7/2_caido.png>
-Package pdftex.def Info: images/cap7/2_caido.png  used on input line 83.
-(pdftex.def)             Requested size: 76.8193pt x 61.59113pt.
-
-Underfull \hbox (badness 1337) in paragraph at lines 84--84
-[]\T1/cmr/m/n/10.95 (b) |El ju-ga-dor
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 84--84
-\T1/cmr/m/n/10.95 per-ma-ne-ce en
- []
-
-
-Underfull \hbox (badness 4531) in paragraph at lines 84--84
-\T1/cmr/m/n/10.95 pe-ro la sa-li-da
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 84--84
-\T1/cmr/m/n/10.95 de ajus-tar-se
- []
-
-<images/cap7/3_caido.png, id=762, 103.88812pt x 82.05656pt>
-File: images/cap7/3_caido.png Graphic file (type png)
-<use images/cap7/3_caido.png>
-Package pdftex.def Info: images/cap7/3_caido.png  used on input line 89.
-(pdftex.def)             Requested size: 93.8946pt x 74.16573pt.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-
-LaTeX Info: Redefining \sptext on input line 95.
-LaTeX Info: Redefining \. on input line 95.
-LaTeX Info: Redefining \% on input line 95.
-[32 <./images/cap7/1_solapamiento_multiple.png> <./images/cap7/2_solapamiento_m
-ultiple.png> <./images/cap7/3_solapamiento_multiple.png>]
-
-[33 <./images/cap7/1_caido.png> <./images/cap7/2_caido.png> <./images/cap7/3_ca
-ido.png>]
-<images/cap7/1_teletransportacion_ids.png, id=781, 62.48344pt x 80.55093pt>
-File: images/cap7/1_teletransportacion_ids.png Graphic file (type png)
-<use images/cap7/1_teletransportacion_ids.png>
-Package pdftex.def Info: images/cap7/1_teletransportacion_ids.png  used on inpu
-t line 110.
-(pdftex.def)             Requested size: 93.8946pt x 121.05717pt.
-<images/cap7/2_teletransportacion_ids.png, id=782, 54.9553pt x 82.80937pt>
-File: images/cap7/2_teletransportacion_ids.png Graphic file (type png)
-<use images/cap7/2_teletransportacion_ids.png>
-Package pdftex.def Info: images/cap7/2_teletransportacion_ids.png  used on inpu
-t line 116.
-(pdftex.def)             Requested size: 93.8946pt x 141.48923pt.
-<images/cap7/3_teletransportacion_ids.png, id=783, 166.37157pt x 186.6975pt>
-File: images/cap7/3_teletransportacion_ids.png Graphic file (type png)
-<use images/cap7/3_teletransportacion_ids.png>
-Package pdftex.def Info: images/cap7/3_teletransportacion_ids.png  used on inpu
-t line 122.
-(pdftex.def)             Requested size: 145.10748pt x 162.84427pt.
-LaTeX Font Info:    Font shape `T1/cmtt/bx/n' in size <14.4> not available
-(Font)              Font shape `T1/cmtt/m/n' tried instead on input line 129.
-
-
-LaTeX Info: Redefining \sptext on input line 134.
-LaTeX Info: Redefining \. on input line 134.
-LaTeX Info: Redefining \% on input line 134.
-[34 <./images/cap7/1_teletransportacion_ids.png> <./images/cap7/2_teletransport
-acion_ids.png> <./images/cap7/3_teletransportacion_ids.png>]
-<images/cap7/0_ids_fantasma_inicio.png, id=795, 279.29344pt x 160.34906pt>
-File: images/cap7/0_ids_fantasma_inicio.png Graphic file (type png)
-<use images/cap7/0_ids_fantasma_inicio.png>
-Package pdftex.def Info: images/cap7/0_ids_fantasma_inicio.png  used on input l
-ine 149.
-(pdftex.def)             Requested size: 93.8946pt x 53.90627pt.
-<images/cap7/1_ids_fantasma_inicio.png, id=796, 118.94438pt x 147.55125pt>
-File: images/cap7/1_ids_fantasma_inicio.png Graphic file (type png)
-<use images/cap7/1_ids_fantasma_inicio.png>
-Package pdftex.def Info: images/cap7/1_ids_fantasma_inicio.png  used on input l
-ine 155.
-(pdftex.def)             Requested size: 93.8946pt x 116.48314pt.
-<images/cap7/2_ids_fantasma_inicio.png, id=797, 153.57375pt x 153.57375pt>
-File: images/cap7/2_ids_fantasma_inicio.png Graphic file (type png)
-<use images/cap7/2_ids_fantasma_inicio.png>
-Package pdftex.def Info: images/cap7/2_ids_fantasma_inicio.png  used on input l
-ine 161.
-(pdftex.def)             Requested size: 93.8946pt x 93.89543pt.
-
-Underfull \hbox (badness 10000) in paragraph at lines 162--162
-[]\T1/cmr/m/n/10.95 (c) |Apa-re-ce un
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 162--162
-\T1/cmr/m/n/10.95 (\T1/cmtt/m/n/10.95 ID:31\T1/cmr/m/n/10.95 ) so-bre la
- []
-
-<images/cap7/3_ids_fantasma_inicio.png, id=798, 164.11313pt x 159.59625pt>
-File: images/cap7/3_ids_fantasma_inicio.png Graphic file (type png)
-<use images/cap7/3_ids_fantasma_inicio.png>
-Package pdftex.def Info: images/cap7/3_ids_fantasma_inicio.png  used on input l
-ine 167.
-(pdftex.def)             Requested size: 93.8946pt x 91.31172pt.
-
-Underfull \hbox (badness 1264) in paragraph at lines 168--168
-[]\T1/cmr/m/n/10.95 (d) |La frag-men-ta-
- []
-
-
-Underfull \hbox (badness 2359) in paragraph at lines 168--168
-\T1/cmr/m/n/10.95 ción con-ti-núa con
- []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-
-[35]
-<images/cap7/4_ids_fantasma_propagacion.png, id=805, 208.52907pt x 149.05687pt>
-
-File: images/cap7/4_ids_fantasma_propagacion.png Graphic file (type png)
-<use images/cap7/4_ids_fantasma_propagacion.png>
-Package pdftex.def Info: images/cap7/4_ids_fantasma_propagacion.png  used on in
-put line 179.
-(pdftex.def)             Requested size: 119.50105pt x 85.42046pt.
-<images/cap7/5_ids_fantasma_propagacion.png, id=806, 229.60782pt x 161.85469pt>
-
-File: images/cap7/5_ids_fantasma_propagacion.png Graphic file (type png)
-<use images/cap7/5_ids_fantasma_propagacion.png>
-Package pdftex.def Info: images/cap7/5_ids_fantasma_propagacion.png  used on in
-put line 185.
-(pdftex.def)             Requested size: 119.50105pt x 84.239pt.
-<images/cap7/6_ids_fantasma_propagacion.png, id=807, 258.21469pt x 177.66376pt>
-
-File: images/cap7/6_ids_fantasma_propagacion.png Graphic file (type png)
-<use images/cap7/6_ids_fantasma_propagacion.png>
-Package pdftex.def Info: images/cap7/6_ids_fantasma_propagacion.png  used on in
-put line 191.
-(pdftex.def)             Requested size: 119.50105pt x 82.22241pt.
-
-Underfull \hbox (badness 3199) in paragraph at lines 192--192
-[]\T1/cmr/m/n/10.95 (c) |Apa-re-ce un nue-vo
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 192--192
-\T1/cmr/m/n/10.95 iden-ti-fi-ca-dor adi-cio-nal
- []
-
-
-Underfull \hbox (badness 5592) in paragraph at lines 210--210
-[]|\T1/cmr/m/n/12 Intercambio de IDs en
- []
-
-
-Underfull \hbox (badness 2042) in paragraph at lines 211--212
-[]|\T1/cmr/m/n/12 Nuevo ID al re-apa-re-cer y
- []
-
-
-Underfull \hbox (badness 2253) in paragraph at lines 212--213
-[]|\T1/cmr/m/n/12 Asociación geo-mé-tri-ca-men-te
- []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-
-LaTeX Info: Redefining \sptext on input line 218.
-LaTeX Info: Redefining \. on input line 218.
-LaTeX Info: Redefining \% on input line 218.
-[36 <./images/cap7/0_ids_fantasma_inicio.png> <./images/cap7/1_ids_fantasma_ini
-cio.png> <./images/cap7/2_ids_fantasma_inicio.png> <./images/cap7/3_ids_fantasm
-a_inicio.png> <./images/cap7/4_ids_fantasma_propagacion.png> <./images/cap7/5_i
-ds_fantasma_propagacion.png> <./images/cap7/6_ids_fantasma_propagacion.png>]
-
-[37]) (sections/08_analisis_reid.tex
-Underfull \hbox (badness 10000) in paragraph at lines 24--26
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 27--29
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 30--32
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 33--35
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 36--38
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 39--41
-
- []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-
-LaTeX Info: Redefining \sptext on input line 44.
-LaTeX Info: Redefining \. on input line 44.
-LaTeX Info: Redefining \% on input line 44.
-[38]
-
-[39]
-<images/cap8/id_crops_grid.png, id=836, 1047.915pt x 953.5625pt>
-File: images/cap8/id_crops_grid.png Graphic file (type png)
-<use images/cap8/id_crops_grid.png>
-Package pdftex.def Info: images/cap8/id_crops_grid.png  used on input line 62.
-(pdftex.def)             Requested size: 405.45047pt x 368.93419pt.
-
-
-LaTeX Info: Redefining \sptext on input line 68.
-LaTeX Info: Redefining \. on input line 68.
-LaTeX Info: Redefining \% on input line 68.
-[40 <./images/cap8/id_crops_grid.png (PNG copy)>]
-Underfull \hbox (badness 2884) in paragraph at lines 77--77
-\T1/cmr/m/n/12 se-ta blan-ca con
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 79--79
-[]|\T1/cmr/m/n/12 Excluidos del
- []
-
-
-
-[41]
-<images/cap8/roc_id.png, id=848, 433.62pt x 433.62pt>
-File: images/cap8/roc_id.png Graphic file (type png)
-<use images/cap8/roc_id.png>
-Package pdftex.def Info: images/cap8/roc_id.png  used on input line 111.
-(pdftex.def)             Requested size: 341.43437pt x 341.4511pt.
-
-
-LaTeX Info: Redefining \sptext on input line 133.
-LaTeX Info: Redefining \. on input line 133.
-LaTeX Info: Redefining \% on input line 133.
-[42 <./images/cap8/roc_id.png>]
-<images/cap8/hist_id.png, id=858, 794.97pt x 361.35pt>
-File: images/cap8/hist_id.png Graphic file (type png)
-<use images/cap8/hist_id.png>
-Package pdftex.def Info: images/cap8/hist_id.png  used on input line 140.
-(pdftex.def)             Requested size: 204.85802pt x 93.1162pt.
-<images/cap8/hist_equipo.png, id=859, 794.97pt x 361.35pt>
-File: images/cap8/hist_equipo.png Graphic file (type png)
-<use images/cap8/hist_equipo.png>
-Package pdftex.def Info: images/cap8/hist_equipo.png  used on input line 146.
-(pdftex.def)             Requested size: 204.85802pt x 93.1162pt.
-<images/cap8/tsne_by_id.png, id=860, 1005.0348pt x 643.203pt>
-File: images/cap8/tsne_by_id.png Graphic file (type png)
-<use images/cap8/tsne_by_id.png>
-Package pdftex.def Info: images/cap8/tsne_by_id.png  used on input line 161.
-(pdftex.def)             Requested size: 204.85802pt x 131.10175pt.
-<images/cap8/tsne_by_team.png, id=861, 714.9912pt x 498.663pt>
-File: images/cap8/tsne_by_team.png Graphic file (type png)
-<use images/cap8/tsne_by_team.png>
-Package pdftex.def Info: images/cap8/tsne_by_team.png  used on input line 167.
-(pdftex.def)             Requested size: 204.85802pt x 142.87372pt.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-
-[43 <./images/cap8/hist_id.png> <./images/cap8/hist_equipo.png>]
-<images/cap8/pca_by_id.png, id=869, 1004.553pt x 642.7212pt>
-File: images/cap8/pca_by_id.png Graphic file (type png)
-<use images/cap8/pca_by_id.png>
-Package pdftex.def Info: images/cap8/pca_by_id.png  used on input line 178.
-(pdftex.def)             Requested size: 204.85802pt x 131.0624pt.
-<images/cap8/pca_by_team.png, id=870, 715.473pt x 498.663pt>
-File: images/cap8/pca_by_team.png Graphic file (type png)
-<use images/cap8/pca_by_team.png>
-Package pdftex.def Info: images/cap8/pca_by_team.png  used on input line 184.
-(pdftex.def)             Requested size: 204.85802pt x 142.7748pt.
-<images/cap8/pca_variance.png, id=871, 650.43pt x 289.08pt>
-File: images/cap8/pca_variance.png Graphic file (type png)
-<use images/cap8/pca_variance.png>
-Package pdftex.def Info: images/cap8/pca_variance.png  used on input line 193.
-(pdftex.def)             Requested size: 307.29028pt x 136.57777pt.
-
-
-LaTeX Info: Redefining \sptext on input line 199.
-LaTeX Info: Redefining \. on input line 199.
-LaTeX Info: Redefining \% on input line 199.
-[44 <./images/cap8/tsne_by_id.png> <./images/cap8/tsne_by_team.png> <./images/c
-ap8/pca_by_id.png> <./images/cap8/pca_by_team.png> <./images/cap8/pca_variance.
-png>]
-<images/cap8/similarity_matrix.png, id=884, 939.51pt x 845.559pt>
-File: images/cap8/similarity_matrix.png Graphic file (type png)
-<use images/cap8/similarity_matrix.png>
-Package pdftex.def Info: images/cap8/similarity_matrix.png  used on input line 
-202.
-(pdftex.def)             Requested size: 349.97203pt x 314.9679pt.
-<images/cap8/temporal_drift.png, id=885, 933.2466pt x 642.7212pt>
-File: images/cap8/temporal_drift.png Graphic file (type png)
-<use images/cap8/temporal_drift.png>
-Package pdftex.def Info: images/cap8/temporal_drift.png  used on input line 213
-.
-(pdftex.def)             Requested size: 384.1096pt x 264.53734pt.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-
-[45 <./images/cap8/similarity_matrix.png>]
-<images/cap8/attribution_summary.png, id=892, 1156.32pt x 433.62pt>
-File: images/cap8/attribution_summary.png Graphic file (type png)
-<use images/cap8/attribution_summary.png>
-Package pdftex.def Info: images/cap8/attribution_summary.png  used on input lin
-e 226.
-(pdftex.def)             Requested size: 375.57846pt x 140.8388pt.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-
-LaTeX Info: Redefining \sptext on input line 230.
-LaTeX Info: Redefining \. on input line 230.
-LaTeX Info: Redefining \% on input line 230.
-[46 <./images/cap8/temporal_drift.png>]
-Overfull \hbox (63.63728pt too wide) in paragraph at lines 235--248
- [][] 
- []
-
-
-
-[47 <./images/cap8/attribution_summary.png>]
-<images/cap8/phase3_comparison.png, id=907, 1084.05pt x 361.35pt>
-File: images/cap8/phase3_comparison.png Graphic file (type png)
-<use images/cap8/phase3_comparison.png>
-Package pdftex.def Info: images/cap8/phase3_comparison.png  used on input line 
-260.
-(pdftex.def)             Requested size: 375.57846pt x 125.18968pt.
-
-Overfull \hbox (31.56686pt too wide) in paragraph at lines 269--278
- [][] 
- []
-
-
-Underfull \vbox (badness 3930) has occurred while \output is active []
-
-
-
-LaTeX Info: Redefining \sptext on input line 285.
-LaTeX Info: Redefining \. on input line 285.
-LaTeX Info: Redefining \% on input line 285.
-[48 <./images/cap8/phase3_comparison.png>]
-
-[49]) (sections/09_integracion_online_reid.tex
-Underfull \hbox (badness 10000) in paragraph at lines 18--20
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 21--23
-
- []
-
-
-Underfull \hbox (badness 1337) in paragraph at lines 24--26
-\T1/cmr/m/n/12 Secuencia SNMOT-060 de Soc-cer-Net. Se com-pa-ra-ron cua-tro va-
-rian-tes:
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 24--26
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 27--29
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 30--32
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 33--35
-
- []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-
-LaTeX Info: Redefining \sptext on input line 38.
-LaTeX Info: Redefining \. on input line 38.
-LaTeX Info: Redefining \% on input line 38.
-[50]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-
-[51]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-
-LaTeX Info: Redefining \sptext on input line 65.
-LaTeX Info: Redefining \. on input line 65.
-LaTeX Info: Redefining \% on input line 65.
-[52]
-Overfull \hbox (79.78091pt too wide) in paragraph at lines 80--90
- [][] 
- []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-
-[53]
-
-LaTeX Info: Redefining \sptext on input line 103.
-LaTeX Info: Redefining \. on input line 103.
-LaTeX Info: Redefining \% on input line 103.
-[54]
-<images/cap9/overview_f0000.jpg, id=944, 963.6pt x 542.025pt>
-File: images/cap9/overview_f0000.jpg Graphic file (type jpg)
-<use images/cap9/overview_f0000.jpg>
-Package pdftex.def Info: images/cap9/overview_f0000.jpg  used on input line 135
-.
-(pdftex.def)             Requested size: 132.30428pt x 74.41907pt.
-<images/cap9/overview_f0400.jpg, id=945, 963.6pt x 542.025pt>
-File: images/cap9/overview_f0400.jpg Graphic file (type jpg)
-<use images/cap9/overview_f0400.jpg>
-Package pdftex.def Info: images/cap9/overview_f0400.jpg  used on input line 141
-.
-(pdftex.def)             Requested size: 132.30428pt x 74.41907pt.
-<images/cap9/overview_f0749.jpg, id=946, 963.6pt x 542.025pt>
-File: images/cap9/overview_f0749.jpg Graphic file (type jpg)
-<use images/cap9/overview_f0749.jpg>
-Package pdftex.def Info: images/cap9/overview_f0749.jpg  used on input line 147
-.
-(pdftex.def)             Requested size: 132.30428pt x 74.41907pt.
-
-Underfull \vbox (badness 2126) has occurred while \output is active []
-
-
-
-[55]
-<images/cap9/teleport_id17_f0467_before.jpg, id=955, 963.6pt x 542.025pt>
-File: images/cap9/teleport_id17_f0467_before.jpg Graphic file (type jpg)
-<use images/cap9/teleport_id17_f0467_before.jpg>
-Package pdftex.def Info: images/cap9/teleport_id17_f0467_before.jpg  used on in
-put line 164.
-(pdftex.def)             Requested size: 187.78923pt x 105.62415pt.
-<images/cap9/teleport_id17_f0491_after.jpg, id=956, 963.6pt x 542.025pt>
-File: images/cap9/teleport_id17_f0491_after.jpg Graphic file (type jpg)
-<use images/cap9/teleport_id17_f0491_after.jpg>
-Package pdftex.def Info: images/cap9/teleport_id17_f0491_after.jpg  used on inp
-ut line 170.
-(pdftex.def)             Requested size: 187.78923pt x 105.62415pt.
-
-
-LaTeX Info: Redefining \sptext on input line 178.
-LaTeX Info: Redefining \. on input line 178.
-LaTeX Info: Redefining \% on input line 178.
-[56 <./images/cap9/overview_f0000.jpg> <./images/cap9/overview_f0400.jpg> <./im
-ages/cap9/overview_f0749.jpg> <./images/cap9/teleport_id17_f0467_before.jpg> <.
-/images/cap9/teleport_id17_f0491_after.jpg>]
-<images/cap9/gap_id14_f0537_end.jpg, id=963, 963.6pt x 542.025pt>
-File: images/cap9/gap_id14_f0537_end.jpg Graphic file (type jpg)
-<use images/cap9/gap_id14_f0537_end.jpg>
-Package pdftex.def Info: images/cap9/gap_id14_f0537_end.jpg  used on input line
- 185.
-(pdftex.def)             Requested size: 187.78923pt x 105.62415pt.
-<images/cap9/gap_id14_f0605_return.jpg, id=964, 963.6pt x 542.025pt>
-File: images/cap9/gap_id14_f0605_return.jpg Graphic file (type jpg)
-<use images/cap9/gap_id14_f0605_return.jpg>
-Package pdftex.def Info: images/cap9/gap_id14_f0605_return.jpg  used on input l
-ine 191.
-(pdftex.def)             Requested size: 187.78923pt x 105.62415pt.
-
-
-[57 <./images/cap9/gap_id14_f0537_end.jpg> <./images/cap9/gap_id14_f0605_return
-.jpg>]
-
-LaTeX Info: Redefining \sptext on input line 208.
-LaTeX Info: Redefining \. on input line 208.
-LaTeX Info: Redefining \% on input line 208.
-[58]) (sections/10_tracklet_linking.tex
-Underfull \hbox (badness 10000) in paragraph at lines 24--26
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 27--29
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 30--32
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 33--35
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 36--38
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 39--41
-
- []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-
-[59]
-
-LaTeX Info: Redefining \sptext on input line 59.
-LaTeX Info: Redefining \. on input line 59.
-LaTeX Info: Redefining \% on input line 59.
-[60]
-
-[61]
-Underfull \hbox (badness 10000) in paragraph at lines 122--122
-[]|\T1/cmr/m/n/10.95 EXP-4 agre-si-vo sin
- []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-
-LaTeX Info: Redefining \sptext on input line 124.
-LaTeX Info: Redefining \. on input line 124.
-LaTeX Info: Redefining \% on input line 124.
-[62]
-
-[63]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-
-LaTeX Info: Redefining \sptext on input line 174.
-LaTeX Info: Redefining \. on input line 174.
-LaTeX Info: Redefining \% on input line 174.
-[64]
-
-[65]) (sections/11_adaptacion_reid_dominio.tex
 Underfull \hbox (badness 10000) in paragraph at lines 22--24
 
  []
@@ -2327,24 +1456,28 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
 
-LaTeX Info: Redefining \sptext on input line 42.
-LaTeX Info: Redefining \. on input line 42.
-LaTeX Info: Redefining \% on input line 42.
-[66]
+[1{C:/Users/Soriano/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}
 
-[67]
-<images/cap11/profesional_learning_curves.png, id=1018, 1004.3121pt x 711.3777p
-t>
-File: images/cap11/profesional_learning_curves.png Graphic file (type png)
-<use images/cap11/profesional_learning_curves.png>
-Package pdftex.def Info: images/cap11/profesional_learning_curves.png  used on 
-input line 64.
+]
+
+LaTeX Info: Redefining \sptext on input line 55.
+LaTeX Info: Redefining \. on input line 55.
+LaTeX Info: Redefining \% on input line 55.
+Package babel Info: 'spanish' activates 'spanish' shorthands.
+(babel)             Reported  on input line 55.
+[2]
+<../images/cap11/profesional_learning_curves.png, id=85, 1004.3121pt x 711.3777
+pt>
+File: ../images/cap11/profesional_learning_curves.png Graphic file (type png)
+<use ../images/cap11/profesional_learning_curves.png>
+Package pdftex.def Info: ../images/cap11/profesional_learning_curves.png  used 
+on input line 64.
 (pdftex.def)             Requested size: 204.85802pt x 145.1061pt.
-<images/cap11/amateur_learning_curves.png, id=1019, 1004.3121pt x 711.3777pt>
-File: images/cap11/amateur_learning_curves.png Graphic file (type png)
-<use images/cap11/amateur_learning_curves.png>
-Package pdftex.def Info: images/cap11/amateur_learning_curves.png  used on inpu
-t line 70.
+<../images/cap11/amateur_learning_curves.png, id=87, 1004.3121pt x 711.3777pt>
+File: ../images/cap11/amateur_learning_curves.png Graphic file (type png)
+<use ../images/cap11/amateur_learning_curves.png>
+Package pdftex.def Info: ../images/cap11/amateur_learning_curves.png  used on i
+nput line 70.
 (pdftex.def)             Requested size: 204.85802pt x 145.1061pt.
 
 Underfull \hbox (badness 3792) in paragraph at lines 86--86
@@ -2371,24 +1504,21 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
 
-LaTeX Info: Redefining \sptext on input line 94.
-LaTeX Info: Redefining \. on input line 94.
-LaTeX Info: Redefining \% on input line 94.
-[68 <./images/cap11/profesional_learning_curves.png> <./images/cap11/amateur_le
-arning_curves.png>]
+[3 <../images/cap11/profesional_learning_curves.png> <../images/cap11/amateur_l
+earning_curves.png>]
 Underfull \vbox (badness 2134) has occurred while \output is active []
 
 
 
-[69]
+LaTeX Info: Redefining \sptext on input line 122.
+LaTeX Info: Redefining \. on input line 122.
+LaTeX Info: Redefining \% on input line 122.
+[4]
 Underfull \vbox (badness 6725) has occurred while \output is active []
 
 
 
-LaTeX Info: Redefining \sptext on input line 165.
-LaTeX Info: Redefining \. on input line 165.
-LaTeX Info: Redefining \% on input line 165.
-[70]
+[5]
 Underfull \hbox (badness 10000) in paragraph at lines 179--179
 []|\T1/cmr/m/n/12 Mejor aso-cia-ción fi-na
  []
@@ -2400,54 +1530,12 @@ Underfull \hbox (badness 2057) in paragraph at lines 179--179
 
 
 
-[71]
+LaTeX Info: Redefining \sptext on input line 189.
+LaTeX Info: Redefining \. on input line 189.
+LaTeX Info: Redefining \% on input line 189.
+[6]
 
-LaTeX Info: Redefining \sptext on input line 208.
-LaTeX Info: Redefining \. on input line 208.
-LaTeX Info: Redefining \% on input line 208.
-[72]) (sections/12_curacion_manual_herramienta.tex
-
-[73]) (sections/13_resultados_globales.tex
-
-LaTeX Info: Redefining \sptext on input line 33.
-LaTeX Info: Redefining \. on input line 33.
-LaTeX Info: Redefining \% on input line 33.
-[74]) (sections/14_conclusiones.tex)
-Overfull \hbox (0.34766pt too wide) in paragraph at lines 178--178
-\T1/cmr/m/n/12 Trac-king with a Deep As-so-cia-tion Me-tric^^T. En: \T1/cmr/m/i
-t/12 ar-Xiv pre-print ar-Xiv:1703.07402
- []
-
-<backcover.pdf, id=1058, 597.23125pt x 845.1575pt>
-File: backcover.pdf Graphic file (type pdf)
-<use backcover.pdf>
-Package pdftex.def Info: backcover.pdf  used on input line 183.
-(pdftex.def)             Requested size: 597.22978pt x 845.15544pt.
-<backcover.pdf, id=1060, page=1, 597.23125pt x 845.1575pt>
-File: backcover.pdf Graphic file (type pdf)
-<use backcover.pdf, page 1>
-Package pdftex.def Info: backcover.pdf , page1 used on input line 183.
-(pdftex.def)             Requested size: 597.22978pt x 845.15544pt.
-
-
-[75]
-File: backcover.pdf Graphic file (type pdf)
-<use backcover.pdf, page 1>
-Package pdftex.def Info: backcover.pdf , page1 used on input line 183.
-(pdftex.def)             Requested size: 597.22978pt x 845.15544pt.
-File: backcover.pdf Graphic file (type pdf)
-<use backcover.pdf, page 1>
-Package pdftex.def Info: backcover.pdf , page1 used on input line 183.
-(pdftex.def)             Requested size: 597.22978pt x 845.15544pt.
-
-
-File: backcover.pdf Graphic file (type pdf)
-<use backcover.pdf, page 1>
-Package pdftex.def Info: backcover.pdf , page1 used on input line 183.
-(pdftex.def)             Requested size: 597.22978pt x 845.15544pt.
-[76
-
- <./backcover.pdf>] (MAIN.aux
+[7] (11_adaptacion_reid_dominio.aux
 LaTeX Info: Redefining \sptext on input line 15.
 LaTeX Info: Redefining \. on input line 15.
 LaTeX Info: Redefining \% on input line 15.
@@ -2456,45 +1544,32 @@ LaTeX Info: Redefining \% on input line 15.
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-04-14>
  ***********
-
-
-LaTeX Warning: There were undefined references.
-
-Package rerunfilecheck Info: File `MAIN.out' has not changed.
-(rerunfilecheck)             Checksum: E0128F244FD40CE444D91E8580E3014D;22571.
-Package logreq Info: Writing requests to 'MAIN.run.xml'.
-\openout1 = `MAIN.run.xml'.
+Package rerunfilecheck Info: File `11_adaptacion_reid_dominio.out' has not chan
+ged.
+(rerunfilecheck)             Checksum: C0D8C729771F7957FAEACEA4B4737A87;1991.
+Package logreq Info: Writing requests to '11_adaptacion_reid_dominio.run.xml'.
+\openout1 = `11_adaptacion_reid_dominio.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 40855 strings out of 469940
- 827275 string characters out of 5468441
- 1440733 words of memory out of 5000000
- 66774 multiletter control sequences out of 15000+600000
- 640569 words of font info for 70 fonts, out of 8000000 for 9000
+ 39736 strings out of 469940
+ 797821 string characters out of 5468441
+ 1434370 words of memory out of 5000000
+ 65947 multiletter control sequences out of 15000+600000
+ 636629 words of font info for 61 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 98i,17n,101p,1905b,2395s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 118i,11n,118p,1951b,1810s stack positions out of 10000i,1000n,20000p,200000b,200000s
  <C:\Users\Soriano\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ec
-bx1095.pk> <C:\Users\Soriano\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/d
-pi600\ectt1095.pk> <C:\Users\Soriano\AppData\Local\MiKTeX\fonts/pk/ljfour/jknap
-pen/ec/dpi600\ectt1440.pk> <C:\Users\Soriano\AppData\Local\MiKTeX\fonts/pk/ljfo
-ur/jknappen/ec/dpi600\ecti1095.pk> <C:\Users\Soriano\AppData\Local\MiKTeX\fonts
-/pk/ljfour/jknappen/ec/dpi600\ecrm1095.pk> <C:\Users\Soriano\AppData\Local\MiKT
-eX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbi1440.pk> <C:\Users\Soriano\AppData\Lo
-cal\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1440.pk> <C:\Users\Soriano\Ap
-pData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ectt1200.pk> <C:\Users\So
-riano\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecti1200.pk> <C:\
-Users\Soriano\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1200.
-pk> <C:\Users\Soriano\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\e
-cbx1728.pk> <C:\Users\Soriano\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/
-dpi600\ecrm1200.pk><C:/Users/Soriano/AppData/Local/Programs/MiKTeX/fonts/type1/
-public/amsfonts/cm/cmmi12.pfb><C:/Users/Soriano/AppData/Local/Programs/MiKTeX/f
-onts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Users/Soriano/AppData/Local/Program
-s/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/Soriano/AppData/Loc
-al/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
-Output written on MAIN.pdf (77 pages, 7050405 bytes).
+rm1095.pk> <C:\Users\Soriano\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/d
+pi600\ecbx1440.pk> <C:\Users\Soriano\AppData\Local\MiKTeX\fonts/pk/ljfour/jknap
+pen/ec/dpi600\ectt1200.pk> <C:\Users\Soriano\AppData\Local\MiKTeX\fonts/pk/ljfo
+ur/jknappen/ec/dpi600\ecti1200.pk> <C:\Users\Soriano\AppData\Local\MiKTeX\fonts
+/pk/ljfour/jknappen/ec/dpi600\ecbx1200.pk> <C:\Users\Soriano\AppData\Local\MiKT
+eX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1728.pk> <C:\Users\Soriano\AppData\Lo
+cal\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1200.pk>
+Output written on 11_adaptacion_reid_dominio.pdf (7 pages, 768517 bytes).
 PDF statistics:
- 1698 PDF objects out of 1728 (max. 8388607)
- 217 named destinations out of 1000 (max. 500000)
- 1149 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 391 PDF objects out of 1000 (max. 8388607)
+ 22 named destinations out of 1000 (max. 500000)
+ 223 words of extra memory for PDF output out of 10000 (max. 10000000)
 
