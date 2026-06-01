@@ -77,16 +77,18 @@
 		\centering
 		\caption{Comparación de configuraciones online de ReID en ByteTrack sobre SNMOT-060.}
 		\label{tab:cap9_recalibracion}
-		\begin{tabular}{lccccccc}
-			\toprule
-			\textbf{Config.} & \textbf{HOTA} & \textbf{MOTA} & \textbf{IDF1} & \textbf{ID Sw.} & \textbf{Frags.} & \textbf{IDs} & \textbf{IDSW/min} \\
-			\midrule
-			v0 -- Sin ReID              & 60.0\% & 80.7\% & 75.6\% & 45 & 119 & 62 & 90 \\
-			v1 -- ReID original         & 59.3\% & 79.4\% & 75.6\% & 36 & 133 & 30 & 72 \\
-			v2 -- ReID split            & 56.6\% & 79.4\% & 72.0\% & 72 & 160 & 31 & 144 \\
-			v3 -- ReID split + guardia  & 58.5\% & 80.8\% & 73.9\% & 41 & 135 & 49 & 82 \\
-			\bottomrule
-		\end{tabular}
+		\resizebox{\textwidth}{!}{%
+			\begin{tabular}{lccccccc}
+				\toprule
+				\textbf{Config.} & \textbf{HOTA} & \textbf{MOTA} & \textbf{IDF1} & \textbf{ID Sw.} & \textbf{Frags.} & \textbf{IDs} & \textbf{IDSW/min} \\
+				\midrule
+				v0 -- Sin ReID             & 60.0\% & 80.7\% & 75.6\% & 45 & 119 & 62 & 90 \\
+				v1 -- ReID original        & 59.3\% & 79.4\% & 75.6\% & 36 & 133 & 30 & 72 \\
+				v2 -- ReID split           & 56.6\% & 79.4\% & 72.0\% & 72 & 160 & 31 & 144 \\
+				v3 -- ReID split + guardia IoU & 58.5\% & 80.8\% & 73.9\% & 41 & 135 & 49 & 82 \\
+				\bottomrule
+			\end{tabular}%
+		}
 	\end{table}
 	
 	Los resultados permiten extraer varias observaciones claras. En primer lugar, \texttt{v1} es la configuración que más reduce los IDs totales y también la que más baja los \textit{ID switches}, lo que confirma que el ReID online sí puede contribuir a la continuidad de identidad. En segundo lugar, \texttt{v2} demuestra que no basta con ``mover'' el ReID a los tracks perdidos si se mantiene un peso demasiado alto: su comportamiento es claramente degradado, con 72 \textit{ID switches} y 160 fragmentaciones, muy por encima de cualquier otra configuración. En tercer lugar, \texttt{v3} recupera la estabilidad global del tracker: alcanza la mejor MOTA (80.8\%) y reduce los \textit{ID switches} a 41, aunque no compacta identidades tan agresivamente como \texttt{v1}.

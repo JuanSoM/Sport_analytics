@@ -181,6 +181,50 @@
     \field{year}{2023}
   \endentry
 
+  \entry{sportsmot_dataset}{misc}{}{}
+    \name{author}{1}{}{%
+      {{hash=D}{%
+         family={{DeeperAction}},
+         familyi={D\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{D1}
+    \strng{fullhash}{D1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{D}
+    \field{sortinithash}{D}
+    \field{howpublished}{Project website}
+    \field{note}{Página oficial del dataset SportsMOT. Consultado el 2 de
+  junio de 2026}
+    \field{title}{{SportsMOT Dataset}}
+    \verb{url}
+    \verb https://deeperaction.github.io/datasets/sportsmot.html
+    \endverb
+  \endentry
+
+  \entry{bytetrack_repo}{misc}{}{}
+    \name{author}{1}{}{%
+      {{hash=F}{%
+         family={{FoundationVision}},
+         familyi={F\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{F1}
+    \strng{fullhash}{F1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{F}
+    \field{sortinithash}{F}
+    \field{howpublished}{GitHub repository}
+    \field{note}{Repositorio oficial de ByteTrack. Consultado el 2 de junio de
+  2026}
+    \field{title}{{ByteTrack}: Official repository}
+    \verb{url}
+    \verb https://github.com/FoundationVision/ByteTrack
+    \endverb
+  \endentry
+
   \entry{motip2024}{article}{}{}
     \name{author}{3}{}{%
       {{hash=GR}{%
@@ -211,6 +255,73 @@
     \field{title}{Multiple Object Tracking as ID Prediction}
     \field{journaltitle}{arXiv preprint arXiv:2403.16848}
     \field{year}{2024}
+  \endentry
+
+  \entry{yolox_paper}{article}{}{}
+    \name{author}{5}{}{%
+      {{hash=GZ}{%
+         family={Ge},
+         familyi={G\bibinitperiod},
+         given={Zheng},
+         giveni={Z\bibinitperiod},
+      }}%
+      {{hash=LS}{%
+         family={Liu},
+         familyi={L\bibinitperiod},
+         given={Songtao},
+         giveni={S\bibinitperiod},
+      }}%
+      {{hash=WF}{%
+         family={Wang},
+         familyi={W\bibinitperiod},
+         given={Feng},
+         giveni={F\bibinitperiod},
+      }}%
+      {{hash=LZ}{%
+         family={Li},
+         familyi={L\bibinitperiod},
+         given={Zeming},
+         giveni={Z\bibinitperiod},
+      }}%
+      {{hash=SJ}{%
+         family={Sun},
+         familyi={S\bibinitperiod},
+         given={Jian},
+         giveni={J\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{GZ+1}
+    \strng{fullhash}{GZLSWFLZSJ1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{G}
+    \field{sortinithash}{G}
+    \field{title}{{YOLOX: Exceeding YOLO Series in 2021}}
+    \field{journaltitle}{arXiv preprint arXiv:2107.08430}
+    \field{year}{2021}
+  \endentry
+
+  \entry{gradio_repo}{misc}{}{}
+    \name{author}{1}{}{%
+      {{hash=g}{%
+         family={{gradio-app}},
+         familyi={g\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{g1}
+    \strng{fullhash}{g1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{G}
+    \field{sortinithash}{G}
+    \field{howpublished}{GitHub repository}
+    \field{note}{Repositorio oficial de Gradio. Consultado el 2 de junio de
+  2026}
+    \field{title}{{Gradio}: Build and share delightful machine learning apps,
+  all in Python}
+    \verb{url}
+    \verb https://github.com/gradio-app/gradio
+    \endverb
   \endentry
 
   \entry{hota2020}{article}{}{}
@@ -268,6 +379,94 @@
   Tracking}
     \field{journaltitle}{arXiv preprint arXiv:2009.07736}
     \field{year}{2020}
+  \endentry
+
+  \entry{sportsmot_repo}{misc}{}{}
+    \name{author}{1}{}{%
+      {{hash=M}{%
+         family={{MCG-NJU}},
+         familyi={M\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{M1}
+    \strng{fullhash}{M1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{M}
+    \field{sortinithash}{M}
+    \field{howpublished}{GitHub repository}
+    \field{note}{Repositorio oficial de SportsMOT. Consultado el 2 de junio de
+  2026}
+    \field{title}{{SportsMOT}: Official repository}
+    \verb{url}
+    \verb https://github.com/MCG-NJU/SportsMOT
+    \endverb
+  \endentry
+
+  \entry{yolox_repo}{misc}{}{}
+    \name{author}{1}{}{%
+      {{hash=M}{%
+         family={{Megvii-BaseDetection}},
+         familyi={M\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{M2}
+    \strng{fullhash}{M2}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{M}
+    \field{sortinithash}{M}
+    \field{howpublished}{GitHub repository}
+    \field{note}{Repositorio oficial de YOLOX. Consultado el 2 de junio de
+  2026}
+    \field{title}{{YOLOX}: Official PyTorch implementation}
+    \verb{url}
+    \verb https://github.com/Megvii-BaseDetection/YOLOX
+    \endverb
+  \endentry
+
+  \entry{pytorch_website}{misc}{}{}
+    \name{author}{1}{}{%
+      {{hash=P}{%
+         family={{PyTorch}},
+         familyi={P\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{P1}
+    \strng{fullhash}{P1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{P}
+    \field{sortinithash}{P}
+    \field{howpublished}{Official website}
+    \field{note}{Sitio oficial de PyTorch. Consultado el 2 de junio de 2026}
+    \field{title}{{PyTorch}}
+    \verb{url}
+    \verb https://pytorch.org/
+    \endverb
+  \endentry
+
+  \entry{soccernet_tracking_repo}{misc}{}{}
+    \name{author}{1}{}{%
+      {{hash=S}{%
+         family={{SoccerNet}},
+         familyi={S\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{S1}
+    \strng{fullhash}{S1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{S}
+    \field{sortinithash}{S}
+    \field{howpublished}{GitHub repository}
+    \field{note}{Repositorio oficial del task de tracking de SoccerNet.
+  Consultado el 2 de junio de 2026}
+    \field{title}{{sn-tracking}: Repository containing all necessary codes to
+  get started on the SoccerNet Tracking challenge}
+    \verb{url}
+    \verb https://github.com/SoccerNet/sn-tracking
+    \endverb
   \endentry
 
   \entry{wojke2017deepsort}{article}{}{}
@@ -370,6 +569,164 @@
   Detection Box}
     \field{journaltitle}{arXiv preprint arXiv:2110.06864}
     \field{year}{2021}
+  \endentry
+
+  \entry{bytetrack_paper}{article}{}{}
+    \name{author}{9}{}{%
+      {{hash=ZY}{%
+         family={Zhang},
+         familyi={Z\bibinitperiod},
+         given={Yifu},
+         giveni={Y\bibinitperiod},
+      }}%
+      {{hash=SP}{%
+         family={Sun},
+         familyi={S\bibinitperiod},
+         given={Peize},
+         giveni={P\bibinitperiod},
+      }}%
+      {{hash=JY}{%
+         family={Jiang},
+         familyi={J\bibinitperiod},
+         given={Yi},
+         giveni={Y\bibinitperiod},
+      }}%
+      {{hash=YD}{%
+         family={Yu},
+         familyi={Y\bibinitperiod},
+         given={Dongdong},
+         giveni={D\bibinitperiod},
+      }}%
+      {{hash=WF}{%
+         family={Weng},
+         familyi={W\bibinitperiod},
+         given={Fucheng},
+         giveni={F\bibinitperiod},
+      }}%
+      {{hash=YZ}{%
+         family={Yuan},
+         familyi={Y\bibinitperiod},
+         given={Zehuan},
+         giveni={Z\bibinitperiod},
+      }}%
+      {{hash=LP}{%
+         family={Luo},
+         familyi={L\bibinitperiod},
+         given={Ping},
+         giveni={P\bibinitperiod},
+      }}%
+      {{hash=LW}{%
+         family={Liu},
+         familyi={L\bibinitperiod},
+         given={Wenyu},
+         giveni={W\bibinitperiod},
+      }}%
+      {{hash=WX}{%
+         family={Wang},
+         familyi={W\bibinitperiod},
+         given={Xinggang},
+         giveni={X\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{ZY+1}
+    \strng{fullhash}{ZYSPJYYDWFYZLPLWWX1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{Z}
+    \field{sortinithash}{Z}
+    \field{title}{{ByteTrack: Multi-Object Tracking by Associating Every
+  Detection Box}}
+    \field{journaltitle}{arXiv preprint arXiv:2110.06864}
+    \field{year}{2021}
+  \endentry
+
+  \entry{torchreid_docs}{misc}{}{}
+    \name{author}{1}{}{%
+      {{hash=ZK}{%
+         family={Zhou},
+         familyi={Z\bibinitperiod},
+         given={Kaiyang},
+         giveni={K\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{ZK1}
+    \strng{fullhash}{ZK1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{Z}
+    \field{sortinithash}{Z}
+    \field{howpublished}{Project documentation}
+    \field{note}{Documentación oficial de Torchreid. Consultado el 2 de junio
+  de 2026}
+    \field{title}{{Torchreid} documentation}
+    \verb{url}
+    \verb https://kaiyangzhou.github.io/deep-person-reid/
+    \endverb
+  \endentry
+
+  \entry{torchreid_paper}{article}{}{}
+    \name{author}{2}{}{%
+      {{hash=ZK}{%
+         family={Zhou},
+         familyi={Z\bibinitperiod},
+         given={Kaiyang},
+         giveni={K\bibinitperiod},
+      }}%
+      {{hash=XT}{%
+         family={Xiang},
+         familyi={X\bibinitperiod},
+         given={Tao},
+         giveni={T\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{ZKXT1}
+    \strng{fullhash}{ZKXT1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{Z}
+    \field{sortinithash}{Z}
+    \field{title}{{Torchreid: A Library for Deep Learning Person
+  Re-Identification in PyTorch}}
+    \field{journaltitle}{arXiv preprint arXiv:1910.10093}
+    \field{year}{2019}
+  \endentry
+
+  \entry{osnet_paper}{article}{}{}
+    \name{author}{4}{}{%
+      {{hash=ZK}{%
+         family={Zhou},
+         familyi={Z\bibinitperiod},
+         given={Kaiyang},
+         giveni={K\bibinitperiod},
+      }}%
+      {{hash=YY}{%
+         family={Yang},
+         familyi={Y\bibinitperiod},
+         given={Yongxin},
+         giveni={Y\bibinitperiod},
+      }}%
+      {{hash=CA}{%
+         family={Cavallaro},
+         familyi={C\bibinitperiod},
+         given={Andrea},
+         giveni={A\bibinitperiod},
+      }}%
+      {{hash=XT}{%
+         family={Xiang},
+         familyi={X\bibinitperiod},
+         given={Tao},
+         giveni={T\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{ZK+1}
+    \strng{fullhash}{ZKYYCAXT1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{Z}
+    \field{sortinithash}{Z}
+    \field{title}{{Omni-Scale Feature Learning for Person Re-Identification}}
+    \field{journaltitle}{arXiv preprint arXiv:1905.00953}
+    \field{year}{2019}
   \endentry
 \enddatalist
 \endinput

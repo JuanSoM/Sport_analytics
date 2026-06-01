@@ -1,9 +1,9 @@
 This is BibTeX, Version 0.99d
 Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
-The top-level auxiliary file: MAIN.aux
+The top-level auxiliary file: 04_datos_materiales_entorno.aux
 Reallocating 'name_of_file' (item size: 1) to 9 items.
 The style file: biblatex.bst
-Reallocating 'name_of_file' (item size: 1) to 9 items.
+Reallocating 'name_of_file' (item size: 1) to 32 items.
 Reallocating 'name_of_file' (item size: 1) to 11 items.
 Reallocating 'glb_str_end' (item size: 4) to 20 items.
 Reallocating 'glb_str_ptr' (item size: 4) to 20 items.
@@ -20,49 +20,62 @@ Reallocating 'singl_function' (item size: 4) to 100 items.
 Reallocating 'singl_function' (item size: 4) to 100 items.
 Reallocating 'singl_function' (item size: 4) to 100 items.
 Reallocating 'singl_function' (item size: 4) to 100 items.
-Database file #1: MAIN-blx.bib
+Database file #1: 04_datos_materiales_entorno-blx.bib
 Database file #2: references.bib
+Warning--I didn't find a database entry for "soccernet_tracking_repo"
+Warning--I didn't find a database entry for "sportsmot_repo"
+Warning--I didn't find a database entry for "sportsmot_dataset"
+Warning--I didn't find a database entry for "pytorch_website"
+Warning--I didn't find a database entry for "yolox_paper"
+Warning--I didn't find a database entry for "yolox_repo"
+Warning--I didn't find a database entry for "bytetrack_paper"
+Warning--I didn't find a database entry for "bytetrack_repo"
+Warning--I didn't find a database entry for "osnet_paper"
+Warning--I didn't find a database entry for "gradio_repo"
+Warning--I didn't find a database entry for "torchreid_paper"
+Warning--I didn't find a database entry for "torchreid_docs"
 Biblatex version: 3.20
 Reallocating 'wiz_functions' (item size: 4) to 9000 items.
 Reallocating 'singl_function' (item size: 4) to 100 items.
-You've used 20 entries,
+You've used 1 entry,
             6402 wiz_defined-function locations,
-            1295 strings with 12562 characters,
-and the built_in function-call counts, 166901 in all, are:
-= -- 13806
-> -- 2113
-< -- 491
-+ -- 5707
-- -- 837
-* -- 11394
-:= -- 20759
+            1215 strings with 9216 characters,
+and the built_in function-call counts, 1534 in all, are:
+= -- 73
+> -- 70
+< -- 1
++ -- 49
+- -- 28
+* -- 32
+:= -- 370
 add.period$ -- 0
-call.type$ -- 20
-change.case$ -- 163
+call.type$ -- 1
+change.case$ -- 0
 chr.to.int$ -- 42
-cite$ -- 38
-duplicate$ -- 19364
-empty$ -- 13746
-format.name$ -- 1512
-if$ -- 32321
+cite$ -- 0
+duplicate$ -- 11
+empty$ -- 104
+format.name$ -- 0
+if$ -- 325
 int.to.chr$ -- 0
-int.to.str$ -- 42
+int.to.str$ -- 0
 missing$ -- 0
-newline$ -- 716
-num.names$ -- 791
-pop$ -- 7433
+newline$ -- 20
+num.names$ -- 0
+pop$ -- 47
 preamble$ -- 1
-purify$ -- 308
+purify$ -- 0
 quote$ -- 0
-skip$ -- 3292
+skip$ -- 78
 stack$ -- 0
-substring$ -- 24410
-swap$ -- 2875
-text.length$ -- 561
-text.prefix$ -- 19
+substring$ -- 154
+swap$ -- 1
+text.length$ -- 20
+text.prefix$ -- 0
 top$ -- 1
-type$ -- 668
+type$ -- 22
 warning$ -- 0
-while$ -- 2774
+while$ -- 64
 width$ -- 0
-write$ -- 697
+write$ -- 20
+(There were 12 warnings)

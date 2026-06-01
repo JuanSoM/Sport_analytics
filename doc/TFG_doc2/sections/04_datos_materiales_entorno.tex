@@ -1,31 +1,152 @@
 \documentclass[../MAIN.tex]{subfiles}
 
 \begin{document}
-
-% ============================================================================
-% DATOS, MATERIALES Y ENTORNO EXPERIMENTAL
-% ============================================================================
-
-\section{Datos, materiales y entorno experimental}
-
-% Materiales:
-% - Anteproyecto
-% - phase2_results_complete.html [definitivo]
-% - Scripts correctores
-% - App Gradio
-%
-% Estado del bloque: Mixto: estructura general + resultados definitivos como soporte
-%
-% Guía de redacción:
-% - Describe datasets, secuencias, ground truth o pseudo-ground-truth y entorno tecnológico.
-% - Debe cerrar la base reproducible sobre la que se apoyan los experimentos posteriores.
-
-\subsection{Datasets utilizados}
-\subsection{Secuencias profesionales y amateur}
-\subsection{Ground truth y pseudo-ground-truth}
-\subsection{Entorno tecnológico}
-\subsection{Organización reproducible de experimentos}
-
-\newpage
-
+	
+	% ============================================================================
+	% DATOS, MATERIALES Y ENTORNO EXPERIMENTAL
+	% ============================================================================
+	
+	\section{Datos, materiales y entorno experimental}
+	
+	% Materiales:
+	% - Anteproyecto
+	% - phase2_results_complete.html [definitivo]
+	% - Scripts correctores
+	% - App Gradio
+	%
+	% Estado del bloque: Mixto: estructura general + resultados definitivos como soporte
+	%
+	% Guía de redacción:
+	% - Describe datasets, secuencias, ground truth o pseudo-ground-truth y entorno tecnológico.
+	% - Debe cerrar la base reproducible sobre la que se apoyan los experimentos posteriores.
+	
+	\begin{chaptertemplatebox}
+		\textbf{Objetivo del capítulo}\\
+		Describir la base empírica y tecnológica sobre la que se apoyan los experimentos del TFG: los datasets empleados, las secuencias seleccionadas, las fuentes de anotación, el entorno software utilizado y la organización reproducible del trabajo experimental.\\[0.5em]
+		
+		\textbf{Material usado}\\
+		SoccerNet-Tracking como referencia principal en fútbol profesional, SportsMOT como fuente de modelo ReID genérico y referencia deportiva multiescena, vídeo amateur curado manualmente, scripts auxiliares de revisión y la infraestructura software desarrollada durante el proyecto.\\[0.5em]
+		
+		\textbf{Configuración}\\
+		Los experimentos se ejecutaron sobre una pila basada en Python, PyTorch, YOLOX, ByteTrack, OSNet, evaluación MOT y herramientas auxiliares de visualización, curación y automatización.\\[0.5em]
+		
+		\textbf{Resultados principales}\\
+		Este capítulo no presenta resultados algorítmicos, sino la base reproducible que permite interpretar correctamente los capítulos experimentales posteriores. En particular, fija el papel de SoccerNet-Tracking como dominio profesional, del vídeo amateur como dominio curado ad hoc y de SportsMOT como soporte para el modelo ReID genérico.\\[0.5em]
+		
+		\textbf{Interpretación}\\
+		La calidad de los resultados obtenidos en tracking y reidentificación depende no solo de las configuraciones evaluadas, sino también de la naturaleza de los datos, del tipo de anotación disponible y del entorno técnico en que se ejecutan los experimentos.\\[0.5em]
+		
+		\textbf{Limitaciones}\\
+		El dominio amateur no dispone de un benchmark estándar equivalente a SoccerNet-Tracking y requirió la construcción de un pseudo-\textit{ground truth} mediante revisión manual. Por tanto, la comparabilidad entre ambos dominios debe interpretarse con cautela.\\[0.5em]
+		
+		\textbf{Conclusión parcial}\\
+		El bloque experimental del TFG se apoya en una combinación de dataset benchmark, datos curados manualmente y herramientas propias, organizadas de forma suficientemente consistente como para sostener una evaluación reproducible.
+	\end{chaptertemplatebox}
+	
+	\subsection{Datasets y fuentes de datos}
+	
+	El trabajo se apoya en dos fuentes principales de datos estructurados: SoccerNet-Tracking para el dominio profesional y SportsMOT como referencia multideportiva para el modelo ReID genérico. Además, se incorporó un vídeo amateur propio, que no formaba parte de un benchmark público y que tuvo que ser curado manualmente para poder utilizarse en entrenamiento y evaluación.
+	
+	SoccerNet-Tracking constituye la fuente principal para los experimentos en fútbol profesional \cite{soccernet_tracking_repo}. El repositorio oficial del reto indica que este conjunto contiene 12 partidos completos desde la cámara principal, incluyendo 200 clips de 30 segundos con datos de tracking, un tiempo completo anotado y los vídeos completos de esos 12 partidos \cite{soccernet_tracking_repo}.
+	
+	SportsMOT, por su parte, se utilizó como fuente del modelo ReID genérico y como referencia de un dominio deportivo más amplio \cite{sportsmot_repo,sportsmot_dataset}. Su repositorio oficial lo presenta como el repositorio oficial del artículo de ICCV 2023, mientras que la página del dataset describe SportsMOT como un dataset de tracking multiobjeto en escenas deportivas compuesto por 240 clips de baloncesto, fútbol y voleibol \cite{sportsmot_repo,sportsmot_dataset}. La misma página especifica que los clips fueron seleccionados a 25 FPS y con longitud media cercana a 485 frames, lo que ayuda a entender por qué este dataset resulta especialmente útil para aprendizaje de apariencia en escenarios de movimiento rápido y oclusión frecuente \cite{sportsmot_dataset}.
+	
+	\begin{table}[H]
+		\centering
+		\caption{Resumen de datasets y fuentes de datos empleadas en el TFG.}
+		\label{tab:cap4_datasets}
+		\begin{tabular}{p{3.0cm}p{3.0cm}p{6.5cm}}
+			\toprule
+			\textbf{Fuente} & \textbf{Dominio} & \textbf{Papel en el TFG} \\
+			\midrule
+			SoccerNet-Tracking & Fútbol profesional & Dataset principal para tracking y evaluación en dominio profesional \\
+			SportsMOT & Multi-deporte (incluye fútbol) & Fuente del modelo ReID genérico y referencia deportiva multiescena \\
+			Video2 amateur curado & Fútbol amateur & Dominio específico para entrenamiento, análisis y evaluación en amateur \\
+			\bottomrule
+		\end{tabular}
+	\end{table}
+	
+	\subsection{Secuencias profesionales y amateur}
+	
+	Dentro del dominio profesional, la secuencia de trabajo más importante fue SNMOT-060, utilizada de forma recurrente como secuencia de desarrollo, comparación y análisis detallado. Esta secuencia se convirtió en el eje central del bloque experimental, ya que permitió estudiar con suficiente profundidad el comportamiento del tracker, del módulo ReID y de los distintos postprocesados sobre un caso representativo y controlado.
+	
+	Además de SNMOT-060, en fases posteriores se utilizaron otras secuencias de SoccerNet para comprobar la generalización del pipeline de linking y evitar que las conclusiones dependieran exclusivamente de un único clip. Por tanto, SoccerNet-Tracking no se utilizó solo como fuente de una secuencia concreta, sino como marco profesional general sobre el que contrastar la robustez de los métodos propuestos \cite{soccernet_tracking_repo}.
+	
+	En el dominio amateur, el trabajo se centró en un vídeo propio, referido internamente como Video2. A diferencia del caso profesional, aquí no existía una estructura benchmark previa ni un conjunto de clips ya preparados para el problema de tracking y reidentificación. Por ello, el uso de esta secuencia exigió una fase previa de curación, revisión y construcción de anotaciones aproximadas antes de poder integrarla en el bloque experimental.
+	
+	\begin{table}[H]
+		\centering
+		\caption{Secuencias principales utilizadas en el trabajo.}
+		\label{tab:cap4_secuencias}
+		\begin{tabular}{p{3.2cm}p{3.5cm}p{5.8cm}}
+			\toprule
+			\textbf{Secuencia / fuente} & \textbf{Dominio} & \textbf{Uso principal} \\
+			\midrule
+			SNMOT-060 & Profesional & Desarrollo principal, comparación de configuraciones y análisis cualitativo \\
+			Otras secuencias SoccerNet & Profesional & Validación de generalización del linking y contraste de robustez \\
+			Video2 & Amateur & Entrenamiento específico, pseudo-GT y evaluación en dominio amateur \\
+			\bottomrule
+		\end{tabular}
+	\end{table}
+	
+	\subsection{Ground truth y pseudo-ground-truth}
+	
+	En el dominio profesional, las evaluaciones se apoyan en las anotaciones de SoccerNet-Tracking, que siguen el formato MOT habitual y permiten calcular métricas estándar de tracking. El repositorio del task indica explícitamente que el \textit{ground truth} y las detecciones se almacenan en archivos CSV compatibles con el formato empleado en MOT, incluyendo identificador de frame, identificador de track, coordenadas de caja delimitadora y campos auxiliares de compatibilidad \cite{soccernet_tracking_repo}.
+	
+	En el dominio amateur, la situación es distinta. Al no existir un \textit{ground truth} oficial comparable al de SoccerNet-Tracking, fue necesario construir un pseudo-\textit{ground truth} mediante revisión manual. Este recurso no debe interpretarse como una anotación benchmark perfecta, sino como una referencia experimental suficientemente consistente para dos fines concretos: primero, evaluar cuantitativamente el comportamiento del pipeline en amateur; y segundo, generar recortes de identidad utilizables para entrenamiento y validación del modelo ReID específico.
+	
+	Esta diferencia entre \textit{ground truth} oficial y pseudo-\textit{ground truth} tiene consecuencias metodológicas importantes. En profesional, las comparaciones se apoyan en un benchmark establecido. En amateur, en cambio, los resultados deben interpretarse teniendo en cuenta que una parte de la infraestructura de anotación fue construida durante el propio TFG.
+	
+	\begin{table}[H]
+		\centering
+		\caption{Fuentes de anotación utilizadas en cada dominio.}
+		\label{tab:cap4_gt}
+		\begin{tabular}{p{3.0cm}p{3.8cm}p{5.7cm}}
+			\toprule
+			\textbf{Dominio} & \textbf{Tipo de referencia} & \textbf{Uso en el TFG} \\
+			\midrule
+			Profesional & Ground truth oficial (SoccerNet-Tracking) & Evaluación MOT y comparación directa de configuraciones \\
+			Amateur & Pseudo-ground-truth curado manualmente & Evaluación aproximada, revisión cualitativa y preparación de datos ReID \\
+			\bottomrule
+		\end{tabular}
+	\end{table}
+	
+	\subsection{Entorno tecnológico}
+	
+	Los experimentos se desarrollaron en un entorno Python con una pila orientada a visión por computador y tracking multiobjeto. El núcleo del sistema descansa sobre PyTorch como framework de aprendizaje profundo \cite{pytorch_website}, YOLOX como detector \cite{yolox_paper,yolox_repo}, ByteTrack como método de tracking-by-detection \cite{bytetrack_paper,bytetrack_repo} y OSNet como arquitectura de reidentificación \cite{osnet_paper}. Sobre esta base se añadieron utilidades de evaluación MOT, scripts de procesado en Python y una interfaz de ejecución en Gradio \cite{gradio_repo}.
+	
+	En el plano de la reidentificación se utilizó además Torchreid como infraestructura de entrenamiento y evaluación para modelos ReID, tanto en el uso de OSNet como en el reentrenamiento de modelos específicos de dominio \cite{torchreid_paper,torchreid_docs}. Esta capa resultó especialmente útil para mantener una estructura homogénea entre el modelo genérico y los modelos específicos profesional y amateur.
+	
+	A nivel práctico, el proyecto se ejecutó en entorno local de desarrollo, con gestión de dependencias mediante entorno virtual y automatización de tareas mediante scripts y llamadas por \textit{subprocess}. Esta elección no responde a una preferencia arbitraria, sino a la necesidad de mantener un flujo de trabajo flexible: entrenamiento, inferencia, evaluación, visualización y linking debían poder lanzarse de forma coordinada sin reescribir las herramientas base.
+	
+	\begin{table}[H]
+		\centering
+		\caption{Entorno tecnológico empleado en el desarrollo experimental.}
+		\label{tab:cap4_entorno}
+		\begin{tabular}{p{4.0cm}p{8.0cm}}
+			\toprule
+			\textbf{Componente} & \textbf{Uso principal} \\
+			\midrule
+			Python / entorno virtual & Ejecución general del proyecto y gestión de dependencias \\
+			PyTorch & Entrenamiento e inferencia de modelos de detección y ReID \\
+			YOLOX & Detección de personas / jugadores \\
+			ByteTrack & Tracking multiobjeto base \\
+			OSNet & Reidentificación de jugadores \\
+			Torchreid & Entrenamiento y evaluación de modelos ReID \\
+			Herramientas MOT / evaluación & Cálculo de métricas cuantitativas de tracking \\
+			Gradio & Interfaz experimental unificada para el pipeline final \\
+			\bottomrule
+		\end{tabular}
+	\end{table}
+	
+	\subsection{Organización reproducible de experimentos}
+	
+	El trabajo experimental se organizó de forma progresiva, combinando informes semanales, configuraciones versionadas y salidas guardadas de manera explícita. Esta organización fue importante no solo para documentar avances, sino también para evitar que las conclusiones dependieran de ejecuciones aisladas difíciles de reconstruir.
+	
+	En la práctica, cada bloque experimental quedó asociado a un conjunto identificable de materiales: datos de entrada, configuración empleada, salidas de tracking, métricas, visualizaciones e informe de resultados. Esta trazabilidad permitió comparar variantes online y offline, estudiar el efecto de modelos específicos de dominio y mantener una línea argumental clara entre capítulos.
+	
+	La aplicación final y los scripts auxiliares ayudan a cerrar esta reproducibilidad, pero el principio organizativo general ya aparece aquí: los experimentos del TFG no se apoyan en pruebas informales sin registro, sino en una estructura de trabajo donde datasets, configuraciones y resultados quedan suficientemente desacoplados y documentados como para sostener una memoria técnica rigurosa.
+	
+	\newpage
+	
 \end{document}

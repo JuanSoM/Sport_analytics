@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex 2025.5.14)  31 MAY 2026 21:06
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex 2025.5.14)  2 JUN 2026 01:33
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1469,83 +1469,86 @@ LaTeX Info: Redefining \% on input line 51.
 Package babel Info: 'spanish' activates 'spanish' shorthands.
 (babel)             Reported  on input line 51.
 [2]
-
-[3]
-Overfull \hbox (71.9495pt too wide) in paragraph at lines 70--80
- [][] 
- []
-
-
-
-LaTeX Info: Redefining \sptext on input line 91.
-LaTeX Info: Redefining \. on input line 91.
-LaTeX Info: Redefining \% on input line 91.
-[4]
-<../images/cap9/overview_f0000.jpg, id=101, 963.6pt x 542.025pt>
-File: ../images/cap9/overview_f0000.jpg Graphic file (type jpg)
-<use ../images/cap9/overview_f0000.jpg>
-Package pdftex.def Info: ../images/cap9/overview_f0000.jpg  used on input line 
-125.
-(pdftex.def)             Requested size: 132.30428pt x 74.41907pt.
-<../images/cap9/overview_f0400.jpg, id=102, 963.6pt x 542.025pt>
-File: ../images/cap9/overview_f0400.jpg Graphic file (type jpg)
-<use ../images/cap9/overview_f0400.jpg>
-Package pdftex.def Info: ../images/cap9/overview_f0400.jpg  used on input line 
-131.
-(pdftex.def)             Requested size: 132.30428pt x 74.41907pt.
-<../images/cap9/overview_f0749.jpg, id=103, 963.6pt x 542.025pt>
-File: ../images/cap9/overview_f0749.jpg Graphic file (type jpg)
-<use ../images/cap9/overview_f0749.jpg>
-Package pdftex.def Info: ../images/cap9/overview_f0749.jpg  used on input line 
-137.
-(pdftex.def)             Requested size: 132.30428pt x 74.41907pt.
-
-
-[5]
-<../images/cap9/teleport_id17_f0467_before.jpg, id=112, 963.6pt x 542.025pt>
-File: ../images/cap9/teleport_id17_f0467_before.jpg Graphic file (type jpg)
-<use ../images/cap9/teleport_id17_f0467_before.jpg>
-Package pdftex.def Info: ../images/cap9/teleport_id17_f0467_before.jpg  used on
- input line 154.
-(pdftex.def)             Requested size: 187.78923pt x 105.62415pt.
-<../images/cap9/teleport_id17_f0491_after.jpg, id=113, 963.6pt x 542.025pt>
-File: ../images/cap9/teleport_id17_f0491_after.jpg Graphic file (type jpg)
-<use ../images/cap9/teleport_id17_f0491_after.jpg>
-Package pdftex.def Info: ../images/cap9/teleport_id17_f0491_after.jpg  used on 
-input line 160.
-(pdftex.def)             Requested size: 187.78923pt x 105.62415pt.
-
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
 
-LaTeX Info: Redefining \sptext on input line 166.
-LaTeX Info: Redefining \. on input line 166.
-LaTeX Info: Redefining \% on input line 166.
-[6 <../images/cap9/overview_f0000.jpg> <../images/cap9/overview_f0400.jpg> <../
-images/cap9/overview_f0749.jpg>]
-<../images/cap9/gap_id14_f0537_end.jpg, id=121, 963.6pt x 542.025pt>
+[3]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+
+LaTeX Info: Redefining \sptext on input line 93.
+LaTeX Info: Redefining \. on input line 93.
+LaTeX Info: Redefining \% on input line 93.
+[4]
+
+[5]
+<../images/cap9/overview_f0000.jpg, id=109, 963.6pt x 542.025pt>
+File: ../images/cap9/overview_f0000.jpg Graphic file (type jpg)
+<use ../images/cap9/overview_f0000.jpg>
+Package pdftex.def Info: ../images/cap9/overview_f0000.jpg  used on input line 
+137.
+(pdftex.def)             Requested size: 132.30428pt x 74.41907pt.
+<../images/cap9/overview_f0400.jpg, id=110, 963.6pt x 542.025pt>
+File: ../images/cap9/overview_f0400.jpg Graphic file (type jpg)
+<use ../images/cap9/overview_f0400.jpg>
+Package pdftex.def Info: ../images/cap9/overview_f0400.jpg  used on input line 
+143.
+(pdftex.def)             Requested size: 132.30428pt x 74.41907pt.
+<../images/cap9/overview_f0749.jpg, id=111, 963.6pt x 542.025pt>
+File: ../images/cap9/overview_f0749.jpg Graphic file (type jpg)
+<use ../images/cap9/overview_f0749.jpg>
+Package pdftex.def Info: ../images/cap9/overview_f0749.jpg  used on input line 
+149.
+(pdftex.def)             Requested size: 132.30428pt x 74.41907pt.
+
+Underfull \vbox (badness 2126) has occurred while \output is active []
+
+
+
+LaTeX Info: Redefining \sptext on input line 155.
+LaTeX Info: Redefining \. on input line 155.
+LaTeX Info: Redefining \% on input line 155.
+[6]
+<../images/cap9/teleport_id17_f0467_before.jpg, id=120, 963.6pt x 542.025pt>
+File: ../images/cap9/teleport_id17_f0467_before.jpg Graphic file (type jpg)
+<use ../images/cap9/teleport_id17_f0467_before.jpg>
+Package pdftex.def Info: ../images/cap9/teleport_id17_f0467_before.jpg  used on
+ input line 166.
+(pdftex.def)             Requested size: 187.78923pt x 105.62415pt.
+<../images/cap9/teleport_id17_f0491_after.jpg, id=121, 963.6pt x 542.025pt>
+File: ../images/cap9/teleport_id17_f0491_after.jpg Graphic file (type jpg)
+<use ../images/cap9/teleport_id17_f0491_after.jpg>
+Package pdftex.def Info: ../images/cap9/teleport_id17_f0491_after.jpg  used on 
+input line 172.
+(pdftex.def)             Requested size: 187.78923pt x 105.62415pt.
+
+
+[7 <../images/cap9/overview_f0000.jpg> <../images/cap9/overview_f0400.jpg> <../
+images/cap9/overview_f0749.jpg> <../images/cap9/teleport_id17_f0467_before.jpg>
+ <../images/cap9/teleport_id17_f0491_after.jpg>]
+<../images/cap9/gap_id14_f0537_end.jpg, id=130, 963.6pt x 542.025pt>
 File: ../images/cap9/gap_id14_f0537_end.jpg Graphic file (type jpg)
 <use ../images/cap9/gap_id14_f0537_end.jpg>
 Package pdftex.def Info: ../images/cap9/gap_id14_f0537_end.jpg  used on input l
-ine 175.
+ine 187.
 (pdftex.def)             Requested size: 187.78923pt x 105.62415pt.
-<../images/cap9/gap_id14_f0605_return.jpg, id=122, 963.6pt x 542.025pt>
+<../images/cap9/gap_id14_f0605_return.jpg, id=131, 963.6pt x 542.025pt>
 File: ../images/cap9/gap_id14_f0605_return.jpg Graphic file (type jpg)
 <use ../images/cap9/gap_id14_f0605_return.jpg>
 Package pdftex.def Info: ../images/cap9/gap_id14_f0605_return.jpg  used on inpu
-t line 181.
+t line 193.
 (pdftex.def)             Requested size: 187.78923pt x 105.62415pt.
 
 
-[7 <../images/cap9/teleport_id17_f0467_before.jpg> <../images/cap9/teleport_id1
-7_f0491_after.jpg> <../images/cap9/gap_id14_f0537_end.jpg> <../images/cap9/gap_
-id14_f0605_return.jpg>]
+LaTeX Info: Redefining \sptext on input line 207.
+LaTeX Info: Redefining \. on input line 207.
+LaTeX Info: Redefining \% on input line 207.
+[8 <../images/cap9/gap_id14_f0537_end.jpg> <../images/cap9/gap_id14_f0605_retur
+n.jpg>]
 
-LaTeX Info: Redefining \sptext on input line 198.
-LaTeX Info: Redefining \. on input line 198.
-LaTeX Info: Redefining \% on input line 198.
-[8] (09_integracion_online_reid.aux
+[9] (09_integracion_online_reid.aux
 LaTeX Info: Redefining \sptext on input line 15.
 LaTeX Info: Redefining \. on input line 15.
 LaTeX Info: Redefining \% on input line 15.
@@ -1556,16 +1559,16 @@ L3 programming layer <2025-04-14>
  ***********
 Package rerunfilecheck Info: File `09_integracion_online_reid.out' has not chan
 ged.
-(rerunfilecheck)             Checksum: E1B8512FD5E5DC9758A65BB42814A107;2129.
+(rerunfilecheck)             Checksum: 962EBDA76683DCA75AD7E3CC051837E8;2558.
 Package logreq Info: Writing requests to '09_integracion_online_reid.run.xml'.
 \openout1 = `09_integracion_online_reid.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 39786 strings out of 469940
- 799631 string characters out of 5468441
- 1429468 words of memory out of 5000000
- 65997 multiletter control sequences out of 15000+600000
+ 39789 strings out of 469940
+ 799667 string characters out of 5468441
+ 1429467 words of memory out of 5000000
+ 65998 multiletter control sequences out of 15000+600000
  636629 words of font info for 61 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  118i,11n,118p,1951b,1810s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -1580,9 +1583,9 @@ cal\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1200.pk><C:/Users/Soriano/App
 Data/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Users/
 Soriano/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb
 >
-Output written on 09_integracion_online_reid.pdf (8 pages, 921016 bytes).
+Output written on 09_integracion_online_reid.pdf (9 pages, 928602 bytes).
 PDF statistics:
- 412 PDF objects out of 1000 (max. 8388607)
- 22 named destinations out of 1000 (max. 500000)
- 256 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 432 PDF objects out of 1000 (max. 8388607)
+ 24 named destinations out of 1000 (max. 500000)
+ 264 words of extra memory for PDF output out of 10000 (max. 10000000)
 

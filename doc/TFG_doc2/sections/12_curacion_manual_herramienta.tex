@@ -1,31 +1,295 @@
 \documentclass[../MAIN.tex]{subfiles}
 
 \begin{document}
-
-% ============================================================================
-% CURACIÓN MANUAL DE RESULTADOS Y HERRAMIENTA DE APOYO
-% ============================================================================
-
-\section{Curación manual de resultados y herramienta de apoyo}
-
-% Materiales:
-% - annotate_review.py
-% - annotate_review_precise.py
-% - App Gradio
-%
-% Estado del bloque: Apoyo metodológico / herramienta práctica
-%
-% Guía de redacción:
-% - Describe por qué fue necesaria la curación manual y qué aporta la herramienta de revisión.
-% - Debe cerrar su papel dentro del flujo experimental sin convertirla en el resultado principal.
-
-\subsection{Necesidad de corrección manual en salidas MOT}
-\subsection{Script \texttt{annotate\_review.py}}
-\subsection{Script \texttt{annotate\_review\_precise.py}}
-\subsection{Aplicación web Gradio del pipeline completo}
-\subsection{Utilidad práctica dentro del flujo experimental}
-\subsection{Limitaciones actuales de la herramienta}
-
-\newpage
-
+	
+	% ============================================================================
+	% PLATAFORMA EXPERIMENTAL FINAL Y HEURÍSTICAS DE COHERENCIA ESPACIAL
+	% ============================================================================
+	
+	\section{Plataforma experimental final y heurísticas de coherencia espacial}
+	
+	% Materiales:
+	% - PIPELINE_EXPLICADO.md
+	% - annotate_review.py
+	% - annotate_review_precise.py
+	% - aplicación final Gradio
+	%
+	% Estado del bloque: Definitivo
+	%
+	% Guía de redacción:
+	% - Este capítulo debe presentar la aplicación final como plataforma integradora.
+	% - Debe explicar el pipeline completo de 5 fases.
+	% - Debe justificar la configuración óptima elegida.
+	% - Debe introducir Zone Fix como heurística de coherencia espacial.
+	% - Debe dejar claro que Zone Fix puede aumentar el número de IDs,
+	%   pero no de forma arbitraria, sino corrigiendo reasignaciones geométricamente erróneas.
+	
+	\begin{chaptertemplatebox}
+		\textbf{Objetivo del capítulo}\\
+		Presentar la plataforma experimental final desarrollada durante el TFG, describiendo el pipeline completo de tracking, reidentificación, validación espacial, linking, visualización y evaluación, así como la heurística \textit{Zone Fix} incorporada para corregir reasignaciones geométricamente inverosímiles.\\[0.5em]
+		
+		\textbf{Material usado}\\
+		Aplicación web final implementada en Gradio, configuración experimental óptima del sistema, scripts auxiliares de revisión y validación, y documentación técnica interna del pipeline completo.\\[0.5em]
+		
+		\textbf{Configuración}\\
+		Configuración óptima final del sistema: detector \texttt{best\_ckpt + mix\_det} con resolución \(800\times1440\), modelo ReID \texttt{SportsMOT Generic}, configuración de tracking \texttt{v1 Legacy}, linking \texttt{Informe Legacy} (\texttt{gap=100}, \texttt{dist=400}, \texttt{thresh=0.40}), \texttt{track\_buffer=100}, y heurística \textit{Zone Fix} activada sobre un ancho de imagen de 1440 píxeles.\\[0.5em]
+		
+		\textbf{Resultados principales}\\
+		La plataforma final permitió unificar en una sola herramienta el pipeline completo del TFG. La configuración óptima seleccionada reproduce los mejores resultados experimentales y, además, incorpora un control explícito de coherencia espacial mediante \textit{Zone Fix}. Esta heurística incrementa el número de identidades intermedias, pero lo hace corrigiendo teletransportes o reasignaciones sin sentido geométrico, que posteriormente pueden ser compensados parcialmente mediante el linking offline.\\[0.5em]
+		
+		\textbf{Interpretación}\\
+		La aplicación final no debe entenderse únicamente como una interfaz de conveniencia, sino como una formalización operativa del sistema completo propuesto. Su valor metodológico reside en que integra todas las fases relevantes del pipeline y hace explícitas las decisiones de configuración, incluyendo el compromiso entre continuidad de identidad y coherencia espacial.\\[0.5em]
+		
+		\textbf{Limitaciones}\\
+		La plataforma está orientada a los experimentos de este TFG y no pretende ser una solución software generalista. Además, \textit{Zone Fix} es una heurística geométrica práctica, no un modelo físico completo del movimiento de los jugadores.\\[0.5em]
+		
+		\textbf{Conclusión parcial}\\
+		La plataforma final constituye una aportación metodológica relevante del trabajo, ya que integra en un único entorno el pipeline propuesto y permite aplicar, estudiar y visualizar de forma reproducible tanto el tracking base como las heurísticas de corrección espacial y postprocesado.
+	\end{chaptertemplatebox}
+	
+	\subsection{Motivación y papel de la plataforma final}
+	
+	A medida que el TFG avanzó desde pruebas aisladas hasta un sistema más completo y comparativo, se hizo cada vez más necesario disponer de una plataforma que integrase todas las piezas del pipeline en un único flujo de trabajo. No bastaba con tener scripts separados para tracking, linking o evaluación. Era necesario contar con una herramienta que permitiese configurar y ejecutar el sistema de forma consistente, reproducible y fácilmente interpretable.
+	
+	La aplicación final desarrollada cumple precisamente ese papel. Más que una simple interfaz, actúa como una formalización práctica del pipeline completo construido a lo largo del trabajo. En ella convergen las decisiones metodológicas fundamentales del TFG: el modelo detector, el modelo ReID, la configuración del tracker, la fase de linking, la evaluación mediante métricas MOT y, de forma especialmente importante, la incorporación de restricciones geométricas destinadas a corregir errores de identidad espacialmente absurdos.
+	
+	Desde el punto de vista de la memoria, esta herramienta representa el paso desde un conjunto de experimentos individuales hacia un sistema organizado y ejecutable de principio a fin. Por ello, este capítulo no se limita a describir una interfaz web, sino que documenta la forma final en que el sistema completo queda materializado.
+	
+	\subsection{Curación manual del dominio amateur}
+	
+	Aunque la plataforma final pone el foco en la ejecución integrada del pipeline, una parte importante de su base experimental procede del trabajo de curación manual realizado sobre el dominio amateur. A diferencia de SoccerNet, donde la estructura de datos y las referencias están más consolidadas, el vídeo amateur necesitó una fase previa de revisión para poder ser utilizado de forma útil en entrenamiento, evaluación y análisis.
+	
+	Esta curación no debe entenderse como una anotación exhaustiva perfecta en sentido benchmark, sino como la construcción progresiva de un recurso lo bastante consistente para dos fines concretos: por un lado, disponer de una referencia aproximada para evaluar el comportamiento del pipeline en el dominio amateur; y, por otro, generar recortes suficientemente limpios para entrenar un modelo ReID específico.
+	
+	En consecuencia, el dominio amateur del TFG no surge de un dataset preexistente completamente estructurado, sino de una combinación entre revisión manual, saneamiento de datos y consolidación experimental. Este punto es importante porque condiciona la interpretación del resto del bloque amateur desarrollado en capítulos previos.
+	
+	\subsection{Scripts correctores y generación del pseudo-ground truth}
+	
+	Dentro de esta fase de curación se utilizaron herramientas auxiliares específicas para la revisión manual de anotaciones y recortes. En particular, los scripts \texttt{annotate\_review.py} y \texttt{annotate\_review\_precise.py} se emplearon para inspeccionar visualmente trayectorias, corregir errores de asignación y refinar la consistencia espacial de las anotaciones en el dominio amateur.
+	
+	El script \texttt{annotate\_review.py} se utilizó como herramienta de revisión general, mientras que \texttt{annotate\_review\_precise.py} permitió una inspección más fina en casos donde era necesario ajustar con mayor precisión la correspondencia entre trayectorias, recortes y anotaciones. En conjunto, ambos scripts actuaron como soporte instrumental para depurar el dominio amateur antes de su uso en entrenamiento y evaluación.
+	
+	Su función no fue sustituir el proceso experimental principal, sino facilitar una revisión más controlada y precisa de los datos a partir de los cuales se construyó el pseudo-\textit{ground truth} y el conjunto de entrenamiento ReID. Gracias a esta etapa fue posible aproximar un fichero equivalente a un \texttt{gt.txt} útil para evaluación MOT y, al mismo tiempo, preparar una organización compatible con el esquema clásico \textit{gallery/query} empleado en ReID.
+	
+	\begin{table}[H]
+		\centering
+		\caption{Funciones principales de las herramientas auxiliares usadas en la curación del dominio amateur.}
+		\label{tab:cap12_correctores}
+		\begin{tabular}{p{4.4cm}p{8.6cm}}
+			\toprule
+			\textbf{Herramienta / función} & \textbf{Propósito experimental} \\
+			\midrule
+			\texttt{annotate\_review.py} & Revisión general de trayectorias, recortes e inconsistencias de anotación \\
+			\texttt{annotate\_review\_precise.py} & Ajuste más fino de correspondencias en casos ambiguos o conflictivos \\
+			Consolidación de identidades & Mantener agrupaciones suficientemente estables para entrenamiento ReID \\
+			Generación de pseudo-GT & Construir una referencia útil para evaluación MOT en amateur \\
+			Organización \textit{gallery/query} & Preparar los recortes para entrenamiento y validación del modelo amateur \\
+			\bottomrule
+		\end{tabular}
+	\end{table}
+	
+	\subsection{Configuración óptima seleccionada}
+	
+	Tras las distintas fases de análisis y experimentación, la configuración considerada óptima para el sistema final fue la siguiente:
+	
+	\begin{table}[H]
+		\centering
+		\caption{Configuración óptima final del pipeline experimental.}
+		\label{tab:cap12_config_optima}
+		\begin{tabular}{p{4.2cm}p{8.3cm}}
+			\toprule
+			\textbf{Componente} & \textbf{Configuración seleccionada} \\
+			\midrule
+			Detector & \texttt{best\_ckpt + mix\_det} \\
+			Resolución de inferencia & \(800 \times 1440\) \\
+			Modelo ReID & \texttt{SportsMOT Generic} \\
+			Configuración del tracker & \texttt{v1 Legacy - ReID Original} \\
+			Linking offline & \texttt{Informe Legacy} \\
+			Parámetros de linking & \texttt{max\_gap=100}, \texttt{max\_dist=400}, \texttt{thresh=0.40} \\
+			Track buffer & \texttt{100} frames \\
+			Zone Fix & Activado \\
+			Ancho de imagen para Zone Fix & \texttt{1440} px \\
+			FPS de referencia & \texttt{25} \\
+			\bottomrule
+		\end{tabular}
+	\end{table}
+	
+	Esta selección no es arbitraria. Resume el aprendizaje acumulado a lo largo de los capítulos experimentales previos. El detector y la resolución elegidos responden a la estructura visual del fútbol, donde el campo presenta una geometría eminentemente horizontal. El modelo SportsMOT se mantuvo como referencia generalista robusta. La configuración \texttt{v1 Legacy} se adoptó como la integración online de referencia, y el linking \texttt{Informe Legacy} se consolidó como el postprocesado más razonable dentro del enfoque geométrico. Finalmente, la activación de \textit{Zone Fix} introduce una capa explícita de coherencia espacial destinada a evitar ciertos errores de reasignación especialmente dañinos desde el punto de vista semántico.
+	
+	\subsection{Interfaz de la aplicación final}
+	
+	La aplicación fue implementada en Gradio como una interfaz web ligera capaz de centralizar la ejecución del pipeline. Desde el punto de vista del usuario, la herramienta expone de forma clara los principales bloques de configuración: selección del vídeo de entrada, posible carga del \textit{ground truth}, elección del modelo ReID, configuración del tracker, activación del linking, configuración del \texttt{track\_buffer} y control de la heurística \textit{Zone Fix}.
+	
+	Esta organización tiene una ventaja importante: hace visibles las decisiones del sistema. En vez de dejar la experimentación oculta en scripts o parámetros de consola, la aplicación convierte esas decisiones en elementos explícitos, legibles y reproducibles. Esto mejora no solo la ergonomía del trabajo experimental, sino también su trazabilidad.
+	
+	% \begin{figure}[H]
+		% 	\centering
+		% 	\includegraphics[width=0.92\textwidth]{cap12/app_final_config.png}
+		% 	\caption{Interfaz de la aplicación final con la configuración óptima seleccionada. Esta figura puede sustituirse posteriormente por una captura definitiva de la app.}
+		% 	\label{fig:cap12_app_final}
+		% \end{figure}
+	
+	La interfaz muestra además las salidas relevantes del proceso: el vídeo etiquetado, los archivos de tracking en formato MOT, el archivo postprocesado por linking y, cuando se dispone de anotaciones de referencia, una tabla con métricas de evaluación. De este modo, la aplicación actúa simultáneamente como herramienta de ejecución, inspección y análisis.
+	
+	\begin{table}[H]
+		\centering
+		\caption{Elementos configurables y salidas principales de la aplicación experimental.}
+		\label{tab:cap12_app}
+		\begin{tabular}{p{4.3cm}p{8.7cm}}
+			\toprule
+			\textbf{Componente} & \textbf{Opciones / salidas} \\
+			\midrule
+			Modelo ReID & SportsMOT genérico, SNMOT-060 específico, Amateur específico \\
+			Config. tracker & v0, v1 Legacy y variantes experimentales \\
+			Linking & Sin linking, linking sin split, linking con parámetros legacy \\
+			Parámetros expuestos & \texttt{track\_buffer}, FPS, ancho para Zone Fix \\
+			Salidas & vídeo etiquetado, \texttt{tracking.txt}, archivos postprocesados, tabla de métricas, logs \\
+			\bottomrule
+		\end{tabular}
+	\end{table}
+	
+	\subsection{Arquitectura general del pipeline}
+	
+	La plataforma final organiza el sistema en cinco fases diferenciadas. Esta separación ayuda a entender el comportamiento del método y, al mismo tiempo, facilita su depuración y extensión.
+	
+	\begin{enumerate}
+		\item \textbf{Tracking online con ByteTrack + ReID}: detección frame a frame y asociación de trayectorias usando información geométrica y de apariencia.
+		\item \textbf{Validación de coherencia espacial (\textit{Zone Fix})}: detección y corrección de transiciones espaciales incompatibles.
+		\item \textbf{Tracklet linking offline}: fusión posterior de tracklets compatibles desde un punto de vista temporal y espacial.
+		\item \textbf{Visualización}: renderizado del vídeo final con cajas e identidades.
+		\item \textbf{Evaluación}: cálculo opcional de métricas MOT cuando existe \textit{ground truth}.
+	\end{enumerate}
+	
+	% \begin{figure}[H]
+		% 	\centering
+		% 	\includegraphics[width=0.95\textwidth]{cap12/pipeline_cap12.png}
+		% 	\caption{Esquema general del pipeline final de cinco fases. Puede sustituirse posteriormente por una figura definitiva más elaborada si se considera oportuno.}
+		% 	\label{fig:cap12_pipeline}
+		% \end{figure}
+	
+	Esta estructuración en fases es conceptualmente útil porque deja claro que el sistema final no es solo un tracker online, sino una cadena completa de procesamiento donde cada etapa corrige o complementa a la anterior.
+	
+	\subsection{Fase 1: tracking online con ByteTrack + ReID}
+	
+	La primera fase del pipeline corresponde al tracking online propiamente dicho. En ella se combina el detector YOLOX con ByteTrack y el módulo de reidentificación ReID. La detección se realiza con el modelo \texttt{best\_ckpt} sobre la configuración \texttt{mix\_det} a una resolución de \(800 \times 1440\), adecuada para la geometría horizontal típica de los vídeos de fútbol.
+	
+	Dentro de esta fase, la configuración \texttt{v1 Legacy} incorpora el módulo ReID directamente en el proceso de asociación. La asociación de detecciones y trayectorias se apoya tanto en IoU como en similitud visual, con un peso equilibrado entre ambas señales. Además, el sistema mantiene un \texttt{track\_buffer} de 100 frames, que permite conservar temporalmente tracks perdidos y recuperarlos tras oclusiones cortas o breves ausencias de detección.
+	
+	La salida de esta fase es un archivo de tracking en formato MOT. Sin embargo, como se observó en capítulos anteriores, esta primera capa de asociación puede producir errores de coherencia espacial: una identidad puede mantenerse cuando en realidad la reasociación es geométricamente inverosímil. Precisamente por ello se introdujo una segunda fase correctora.
+	
+	\subsection{Fase 2: validación de coherencia espacial mediante Zone Fix}
+	
+	La heurística \textit{Zone Fix} constituye una de las aportaciones prácticas más interesantes de la plataforma final. Su motivación es sencilla: durante el análisis cualitativo se observaron casos en los que una misma identidad se reasignaba de manera absurda entre regiones lejanas del campo en fotogramas consecutivos o casi consecutivos. En términos visuales, esto equivale a una especie de teletransporte de identidad.
+	
+	Para detectar este tipo de situaciones, la imagen se divide horizontalmente en tres zonas: izquierda, centro y derecha. Dado un ancho de 1440 píxeles, cada zona ocupa aproximadamente un tercio de la imagen. La idea no es imponer un modelo físico exacto del movimiento, sino una restricción de plausibilidad elemental: una identidad no debería saltar directamente de la zona izquierda a la zona derecha, o viceversa, sin pasar por el centro.
+	
+	\begin{table}[H]
+		\centering
+		\caption{Zonas definidas para la validación espacial en \textit{Zone Fix}.}
+		\label{tab:cap12_zonas}
+		\begin{tabular}{ccc}
+			\toprule
+			\textbf{Zona} & \textbf{Intervalo horizontal} & \textbf{Interpretación} \\
+			\midrule
+			0 & \([0,480)\) px & Izquierda \\
+			1 & \([480,960)\) px & Centro \\
+			2 & \([960,1440]\) px & Derecha \\
+			\bottomrule
+		\end{tabular}
+	\end{table}
+	
+	Las transiciones permitidas son las locales: izquierda-izquierda, izquierda-centro, centro-centro, centro-derecha, etc. En cambio, se consideran incompatibles los saltos directos izquierda-derecha o derecha-izquierda. Cuando el sistema detecta una violación de este tipo, corta el track en ese punto y crea una nueva identidad para el segmento posterior.
+	
+	% \begin{figure}[H]
+		% 	\centering
+		% 	\includegraphics[width=0.9\textwidth]{cap12/zonefix_zonas_dummy.png}
+		% 	\caption{Figura ilustrativa de la división espacial utilizada por \textit{Zone Fix}. Puede sustituirse posteriormente por una imagen definitiva.}
+		% 	\label{fig:cap12_zonefix_zonas}
+		% \end{figure}
+	
+	Este punto es crucial para la interpretación del método. \textit{Zone Fix} puede aumentar el número de IDs, pero ese aumento no es arbitrario ni constituye un fallo sin más. Se trata de una fragmentación intencional destinada a impedir que el sistema mantenga identidades que ya eran incoherentes desde el punto de vista geométrico. En otras palabras, la heurística no crea IDs “porque sí”, sino que rompe asociaciones erróneas que el pipeline online había conservado indebidamente.
+	
+	\subsection{Justificación del aumento de IDs introducido por Zone Fix}
+	
+	Desde una perspectiva puramente métrica, la introducción de \textit{Zone Fix} puede parecer inicialmente desfavorable en algunos aspectos. Al cortar trayectorias problemáticas, aumenta el número de fragmentos y, en ocasiones, también el número de identidades intermedias. Sin embargo, esta lectura sería superficial si no se tiene en cuenta el significado semántico de esas correcciones.
+	
+	Una identidad que se teletransporta de un lateral del campo al opuesto no es una identidad válida, aunque el sistema la contabilice como continuidad. Mantener ese tipo de reasignaciones puede inflar artificialmente ciertas métricas de identidad, pero degrada la coherencia real del seguimiento. En cambio, introducir un nuevo ID en ese punto equivale a reconocer que la asociación previa era errónea y que no debe perpetuarse.
+	
+	Por tanto, el aumento de IDs inducido por \textit{Zone Fix} debe interpretarse como una corrección estructural, no como una degradación trivial. El coste inmediato en compactación se compensa parcialmente en la fase posterior de linking, donde los fragmentos válidos pueden volver a fusionarse si son compatibles espacial y temporalmente. Así, el sistema sustituye identidades largas pero incorrectas por una secuencia de fragmentos más coherentes, algunos de los cuales podrán reagruparse después de forma controlada.
+	
+	\begin{table}[H]
+		\centering
+		\caption{Interpretación del efecto de \textit{Zone Fix} sobre el número de identidades.}
+		\label{tab:cap12_zonefix_interpretacion}
+		\begin{tabular}{p{5.1cm}p{7.6cm}}
+			\toprule
+			\textbf{Situación} & \textbf{Interpretación correcta} \\
+			\midrule
+			Aumentan los IDs tras aplicar Zone Fix & Fragmentación intencional para cortar reasignaciones espacialmente absurdas \\
+			Disminuye una continuidad aparentemente buena & Corrección de una continuidad falsa o semánticamente inválida \\
+			El linking posterior vuelve a fusionar algunos fragmentos & Recuperación controlada de continuidad sobre tracklets válidos \\
+			\bottomrule
+		\end{tabular}
+	\end{table}
+	
+	\subsection{Preparación del capítulo para ilustrar Zone Fix con imágenes}
+	
+	Dado que \textit{Zone Fix} es una heurística visualmente muy intuitiva, conviene documentarla con figuras. La idea recomendada es mostrar al menos dos casos:
+	
+	\begin{enumerate}
+		\item un caso \textbf{antes de la corrección}, donde la misma identidad se reasigna de forma geométricamente absurda;
+		\item y el caso \textbf{después de la corrección}, donde esa transición se rompe y el nuevo segmento recibe un ID distinto.
+	\end{enumerate}
+	
+	Te dejo preparada la estructura para esas figuras, de modo que puedas insertarlas más adelante sin tocar el resto del capítulo.
+	
+	% \begin{figure}[H]
+		% 	\centering
+		% 	\begin{subfigure}[b]{0.48\textwidth}
+			% 		\centering
+			% 		\includegraphics[width=\textwidth]{cap12/zonefix_before_dummy.png}
+			% 		\caption{Ejemplo previo a la corrección: reasignación espacialmente incoherente.}
+			% 	\end{subfigure}
+		% 	\hfill
+		% 	\begin{subfigure}[b]{0.48\textwidth}
+			% 		\centering
+			% 		\includegraphics[width=\textwidth]{cap12/zonefix_after_dummy.png}
+			% 		\caption{Ejemplo posterior a la corrección: ruptura del track y creación de un nuevo ID.}
+			% 	\end{subfigure}
+		% 	\caption{Ejemplo ilustrativo del funcionamiento de \textit{Zone Fix}. Estas imágenes pueden sustituirse posteriormente por capturas reales del sistema.}
+		% 	\label{fig:cap12_zonefix_before_after}
+		% \end{figure}
+	
+	Si más adelante quieres explicarlo todavía mejor, puedes incluso añadir una segunda figura con varios fotogramas consecutivos donde se vea cómo el jugador abandona una región y el sistema impide una reasignación imposible en el extremo opuesto.
+	
+	\subsection{Fase 3: linking offline como recuperación de fragmentación válida}
+	
+	Una vez aplicada la corrección espacial, el pipeline entra en la fase de \textit{tracklet linking}. Esta etapa actúa como un postprocesado offline destinado a fusionar tracklets compatibles desde el punto de vista temporal y espacial. Su papel dentro de la plataforma final es especialmente importante porque compensa, al menos parcialmente, la fragmentación inducida tanto por oclusiones como por la propia heurística \textit{Zone Fix}.
+	
+	La configuración seleccionada para el linking es \texttt{Informe Legacy}, con un \texttt{max\_gap} de 100 frames, una distancia máxima de 400 píxeles y un umbral de linking de 0.40. En esta configuración, el linking se basa de forma conservadora en criterios geométricos y temporales, sin volver a introducir el ReID como criterio dominante. Esto refuerza la idea central del diseño final: la apariencia ya se ha utilizado en la fase online, mientras que el postprocesado debe actuar más bien como una corrección estructural guiada por coherencia de trayectorias.
+	
+	En este contexto, la relación entre \textit{Zone Fix} y linking es complementaria. \textit{Zone Fix} corta asociaciones inválidas; linking intenta recomponer continuidad solo allí donde la fragmentación resultante sea compatible con el comportamiento esperado del jugador en la escena.
+	
+	\subsection{Fases 4 y 5: visualización y evaluación}
+	
+	La cuarta fase del sistema corresponde a la visualización del tracking. En ella se genera un vídeo etiquetado en el que cada jugador aparece rodeado por su caja delimitadora e identificado con el ID asignado. Esta etapa es esencial para la validación cualitativa del sistema, ya que permite inspeccionar directamente errores de identidad, cambios de track o efectos de la heurística \textit{Zone Fix}.
+	
+	La quinta fase, opcional, corresponde a la evaluación cuantitativa frente a un \textit{ground truth}. Cuando se dispone de un archivo de referencia en formato MOT, la aplicación calcula métricas estándar como MOTA, IDF1 y HOTA, además de valores asociados como \textit{false positives}, \textit{false negatives}, \textit{ID switches} y fragmentaciones. Esta integración de la evaluación dentro de la propia plataforma refuerza la reproducibilidad del pipeline y conecta de forma natural el análisis visual con el análisis cuantitativo.
+	
+	\subsection{Valor metodológico de la plataforma final}
+	
+	La principal aportación de la plataforma final no reside únicamente en facilitar la ejecución del sistema, sino en haber consolidado en un solo entorno todas las decisiones metodológicas del TFG. La aplicación materializa la evolución completa del trabajo: desde el tracking online base hasta la incorporación de heurísticas de coherencia espacial y postprocesado offline.
+	
+	Además, la plataforma permite estudiar de manera mucho más transparente el compromiso entre continuidad de identidad y plausibilidad geométrica. En muchos sistemas de tracking, una continuidad aparentemente buena puede esconder asociaciones semánticamente absurdas. La introducción de \textit{Zone Fix} hace visible y controlable ese problema, y la combinación posterior con linking ofrece una solución más equilibrada que la mera aceptación pasiva de la salida del tracker online.
+	
+	Por ello, este capítulo no debe leerse como un bloque accesorio de interfaz, sino como la formalización final del sistema experimental propuesto.
+	
+	\subsection{Discusión final del capítulo}
+	
+	La integración de \textit{Zone Fix} dentro de la aplicación final permite expresar con claridad una de las ideas más importantes de este TFG: no toda reducción de IDs o todo aumento de continuidad es deseable si se obtiene a costa de mantener identidades incoherentes desde el punto de vista geométrico. En algunos casos, aceptar una mayor fragmentación intermedia resulta preferible si ello permite depurar asociaciones erróneas y dejar al postprocesado la tarea de recomponer únicamente aquellos fragmentos que realmente son compatibles.
+	
+	Esta lógica refleja una filosofía de diseño prudente. En vez de confiar ciegamente en que una señal de apariencia o una asociación online siempre serán correctas, el sistema final incorpora una capa adicional de validación espacial. Así, la plataforma no solo ejecuta un pipeline, sino que explicita una posición metodológica: la coherencia semántica del seguimiento importa tanto como las métricas agregadas.
+	
+	\newpage
+	
 \end{document}

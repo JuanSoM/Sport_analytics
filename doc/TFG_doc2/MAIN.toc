@@ -18,78 +18,86 @@
 \contentsline {subsection}{\numberline {3.4}Preguntas de investigación}{16}{subsection.3.4}%
 \contentsline {subsection}{\numberline {3.5}Hipótesis de trabajo}{17}{subsection.3.5}%
 \contentsline {section}{\numberline {4}Datos, materiales y entorno experimental}{18}{section.4}%
-\contentsline {subsection}{\numberline {4.1}Datasets utilizados}{18}{subsection.4.1}%
-\contentsline {subsection}{\numberline {4.2}Secuencias profesionales y amateur}{18}{subsection.4.2}%
-\contentsline {subsection}{\numberline {4.3}Ground truth y pseudo-ground-truth}{18}{subsection.4.3}%
-\contentsline {subsection}{\numberline {4.4}Entorno tecnológico}{18}{subsection.4.4}%
-\contentsline {subsection}{\numberline {4.5}Organización reproducible de experimentos}{18}{subsection.4.5}%
-\contentsline {section}{\numberline {5}Metodología general}{19}{section.5}%
-\contentsline {subsection}{\numberline {5.1}Diseño iterativo del trabajo}{19}{subsection.5.1}%
-\contentsline {subsection}{\numberline {5.2}Flujo general del pipeline}{19}{subsection.5.2}%
-\contentsline {subsection}{\numberline {5.3}Protocolo de evaluación cuantitativa}{21}{subsection.5.3}%
-\contentsline {subsection}{\numberline {5.4}Protocolo de evaluación cualitativa}{22}{subsection.5.4}%
-\contentsline {subsection}{\numberline {5.5}Jerarquía de resultados: definitivos frente a exploratorios}{22}{subsection.5.5}%
-\contentsline {section}{\numberline {6}Comparativa inicial de trackers}{24}{section.6}%
-\contentsline {subsection}{\numberline {6.1}Selección de trackers candidatos}{25}{subsection.6.1}%
-\contentsline {subsection}{\numberline {6.2}ByteTrack}{26}{subsection.6.2}%
-\contentsline {subsection}{\numberline {6.3}DeepEIoU}{27}{subsection.6.3}%
-\contentsline {subsection}{\numberline {6.4}MOTIP}{27}{subsection.6.4}%
-\contentsline {subsection}{\numberline {6.5}Resultados iniciales y selección del tracker base}{28}{subsection.6.5}%
-\contentsline {section}{\numberline {7}Diagnóstico del problema de identidad}{30}{section.7}%
-\contentsline {subsection}{\numberline {7.1}Análisis visual de fallos en ByteTrack}{31}{subsection.7.1}%
-\contentsline {subsection}{\numberline {7.2}Casos críticos: oclusiones, jugador caído y teletransportación}{33}{subsection.7.2}%
-\contentsline {subsection}{\numberline {7.3}Influencia del \texttt {track\_buffer}}{34}{subsection.7.3}%
-\contentsline {subsection}{\numberline {7.4}Heurísticas tempranas y sus limitaciones}{35}{subsection.7.4}%
-\contentsline {subsection}{\numberline {7.5}Conclusión del diagnóstico}{36}{subsection.7.5}%
-\contentsline {section}{\numberline {8}Análisis del módulo ReID}{38}{section.8}%
-\contentsline {subsection}{\numberline {8.1}Planteamiento del análisis}{39}{subsection.8.1}%
-\contentsline {subsection}{\numberline {8.2}Fase 0: auditoría y preparación del experimento}{39}{subsection.8.2}%
-\contentsline {subsection}{\numberline {8.3}Fase 1: validación del embedding puro}{41}{subsection.8.3}%
-\contentsline {subsection}{\numberline {8.4}Estructura del espacio de embeddings: t-SNE, PCA y similitud}{43}{subsection.8.4}%
-\contentsline {subsection}{\numberline {8.5}Estabilidad temporal del embedding}{45}{subsection.8.5}%
-\contentsline {subsection}{\numberline {8.6}Fase 2: ¿qué información visual usa el modelo?}{46}{subsection.8.6}%
-\contentsline {subsection}{\numberline {8.7}Fase 3: comparación entre embedding puro y tracker}{48}{subsection.8.7}%
-\contentsline {subsection}{\numberline {8.8}Discusión: qué demuestra realmente este estudio}{49}{subsection.8.8}%
-\contentsline {section}{\numberline {9}Integración online de ReID en ByteTrack}{50}{section.9}%
-\contentsline {subsection}{\numberline {9.1}Motivación de la recalibración online}{51}{subsection.9.1}%
-\contentsline {subsection}{\numberline {9.2}Diseño de las configuraciones v0, v1, v2 y v3}{52}{subsection.9.2}%
-\contentsline {subsection}{\numberline {9.3}Por qué la guardia IoU de v3 no duplica el IoU nativo de ByteTrack}{53}{subsection.9.3}%
-\contentsline {subsection}{\numberline {9.4}Resultados cuantitativos de la recalibración}{53}{subsection.9.4}%
-\contentsline {subsection}{\numberline {9.5}Lectura funcional del trade-off}{54}{subsection.9.5}%
-\contentsline {subsection}{\numberline {9.6}Evaluación cualitativa de v1}{55}{subsection.9.6}%
-\contentsline {subsection}{\numberline {9.7}Errores espaciales representativos}{56}{subsection.9.7}%
-\contentsline {subsection}{\numberline {9.8}Conclusión del enfoque online y transición al linking}{57}{subsection.9.8}%
-\contentsline {section}{\numberline {10}Postprocesado offline mediante tracklet linking}{59}{section.10}%
-\contentsline {subsection}{\numberline {10.1}Motivación del tracklet linking}{60}{subsection.10.1}%
-\contentsline {subsection}{\numberline {10.2}Construcción y análisis de tracklets}{60}{subsection.10.2}%
-\contentsline {subsection}{\numberline {10.3}Linking geométrico y criterios de fusión}{61}{subsection.10.3}%
-\contentsline {subsection}{\numberline {10.4}Experimentos principales sobre v0}{62}{subsection.10.4}%
-\contentsline {subsection}{\numberline {10.5}Aplicación sobre v1}{63}{subsection.10.5}%
-\contentsline {subsection}{\numberline {10.6}Generalización a múltiples secuencias}{64}{subsection.10.6}%
-\contentsline {subsection}{\numberline {10.7}Discusión: online frente a offline}{65}{subsection.10.7}%
-\contentsline {section}{\numberline {11}Adaptación del ReID al dominio}{66}{section.11}%
-\contentsline {subsection}{\numberline {11.1}Modelo baseline SportsMOT}{67}{subsection.11.1}%
-\contentsline {subsection}{\numberline {11.2}Curvas de aprendizaje y selección de checkpoints}{67}{subsection.11.2}%
-\contentsline {subsection}{\numberline {11.3}Entrenamiento específico en fútbol profesional}{69}{subsection.11.3}%
-\contentsline {subsection}{\numberline {11.4}Entrenamiento específico en fútbol amateur}{70}{subsection.11.4}%
-\contentsline {subsection}{\numberline {11.5}Comparación entre modelos genéricos y específicos}{71}{subsection.11.5}%
-\contentsline {subsection}{\numberline {11.6}Aplicación de tracklet linking sobre los mejores modelos}{71}{subsection.11.6}%
-\contentsline {section}{\numberline {12}Curación manual de resultados y herramienta de apoyo}{73}{section.12}%
-\contentsline {subsection}{\numberline {12.1}Necesidad de corrección manual en salidas MOT}{73}{subsection.12.1}%
-\contentsline {subsection}{\numberline {12.2}Script \texttt {annotate\_review.py}}{73}{subsection.12.2}%
-\contentsline {subsection}{\numberline {12.3}Script \texttt {annotate\_review\_precise.py}}{73}{subsection.12.3}%
-\contentsline {subsection}{\numberline {12.4}Aplicación web Gradio del pipeline completo}{73}{subsection.12.4}%
-\contentsline {subsection}{\numberline {12.5}Utilidad práctica dentro del flujo experimental}{73}{subsection.12.5}%
-\contentsline {subsection}{\numberline {12.6}Limitaciones actuales de la herramienta}{73}{subsection.12.6}%
-\contentsline {section}{\numberline {13}Resultados globales y selección del sistema final}{74}{section.13}%
-\contentsline {subsection}{\numberline {13.1}Megatabla de configuraciones}{74}{subsection.13.1}%
-\contentsline {subsection}{\numberline {13.2}Comparación global de enfoques}{74}{subsection.13.2}%
-\contentsline {subsection}{\numberline {13.3}Criterios de selección del sistema final}{74}{subsection.13.3}%
-\contentsline {subsection}{\numberline {13.4}Pipeline final elegido y justificación}{74}{subsection.13.4}%
-\contentsline {subsection}{\numberline {13.5}Discusión sobre trade-offs}{74}{subsection.13.5}%
-\contentsline {section}{\numberline {14}Conclusiones}{75}{section.14}%
-\contentsline {subsection}{\numberline {14.1}Respuesta a los objetivos del anteproyecto}{75}{subsection.14.1}%
-\contentsline {subsection}{\numberline {14.2}Principales hallazgos}{75}{subsection.14.2}%
-\contentsline {subsection}{\numberline {14.3}Aportaciones del trabajo}{75}{subsection.14.3}%
-\contentsline {subsection}{\numberline {14.4}Limitaciones}{75}{subsection.14.4}%
-\contentsline {subsection}{\numberline {14.5}Trabajo futuro}{75}{subsection.14.5}%
+\contentsline {subsection}{\numberline {4.1}Datasets y fuentes de datos}{19}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Secuencias profesionales y amateur}{20}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Ground truth y pseudo-ground-truth}{21}{subsection.4.3}%
+\contentsline {subsection}{\numberline {4.4}Entorno tecnológico}{22}{subsection.4.4}%
+\contentsline {subsection}{\numberline {4.5}Organización reproducible de experimentos}{23}{subsection.4.5}%
+\contentsline {section}{\numberline {5}Metodología general}{24}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Diseño iterativo del trabajo}{24}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Flujo general del pipeline}{24}{subsection.5.2}%
+\contentsline {subsection}{\numberline {5.3}Protocolo de evaluación cuantitativa}{26}{subsection.5.3}%
+\contentsline {subsection}{\numberline {5.4}Protocolo de evaluación cualitativa}{27}{subsection.5.4}%
+\contentsline {subsection}{\numberline {5.5}Jerarquía de resultados: definitivos frente a exploratorios}{27}{subsection.5.5}%
+\contentsline {section}{\numberline {6}Comparativa inicial de trackers}{29}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Selección de trackers candidatos}{30}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}ByteTrack}{31}{subsection.6.2}%
+\contentsline {subsection}{\numberline {6.3}DeepEIoU}{32}{subsection.6.3}%
+\contentsline {subsection}{\numberline {6.4}MOTIP}{32}{subsection.6.4}%
+\contentsline {subsection}{\numberline {6.5}Resultados iniciales y selección del tracker base}{33}{subsection.6.5}%
+\contentsline {section}{\numberline {7}Diagnóstico del problema de identidad}{35}{section.7}%
+\contentsline {subsection}{\numberline {7.1}Análisis visual de fallos en ByteTrack}{36}{subsection.7.1}%
+\contentsline {subsection}{\numberline {7.2}Casos críticos: oclusiones, jugador caído y teletransportación}{38}{subsection.7.2}%
+\contentsline {subsection}{\numberline {7.3}Influencia del \texttt {track\_buffer}}{39}{subsection.7.3}%
+\contentsline {subsection}{\numberline {7.4}Heurísticas tempranas y sus limitaciones}{40}{subsection.7.4}%
+\contentsline {subsection}{\numberline {7.5}Conclusión del diagnóstico}{41}{subsection.7.5}%
+\contentsline {section}{\numberline {8}Análisis del módulo ReID}{43}{section.8}%
+\contentsline {subsection}{\numberline {8.1}Planteamiento del análisis}{44}{subsection.8.1}%
+\contentsline {subsection}{\numberline {8.2}Fase 0: auditoría y preparación del experimento}{44}{subsection.8.2}%
+\contentsline {subsection}{\numberline {8.3}Fase 1: validación del embedding puro}{46}{subsection.8.3}%
+\contentsline {subsection}{\numberline {8.4}Estructura del espacio de embeddings: t-SNE, PCA y similitud}{48}{subsection.8.4}%
+\contentsline {subsection}{\numberline {8.5}Estabilidad temporal del embedding}{50}{subsection.8.5}%
+\contentsline {subsection}{\numberline {8.6}Fase 2: ¿qué información visual usa el modelo?}{51}{subsection.8.6}%
+\contentsline {subsection}{\numberline {8.7}Fase 3: comparación entre embedding puro y tracker}{53}{subsection.8.7}%
+\contentsline {subsection}{\numberline {8.8}Discusión: qué demuestra realmente este estudio}{54}{subsection.8.8}%
+\contentsline {section}{\numberline {9}Integración online de ReID en ByteTrack}{55}{section.9}%
+\contentsline {subsection}{\numberline {9.1}Motivación de la recalibración online}{56}{subsection.9.1}%
+\contentsline {subsection}{\numberline {9.2}Diseño de las configuraciones v0, v1, v2 y v3}{57}{subsection.9.2}%
+\contentsline {subsection}{\numberline {9.3}Por qué la guardia IoU de v3 no duplica el IoU nativo de ByteTrack}{58}{subsection.9.3}%
+\contentsline {subsection}{\numberline {9.4}Resultados cuantitativos de la recalibración}{58}{subsection.9.4}%
+\contentsline {subsection}{\numberline {9.5}Lectura funcional del trade-off}{59}{subsection.9.5}%
+\contentsline {subsection}{\numberline {9.6}Evaluación cualitativa de v1}{60}{subsection.9.6}%
+\contentsline {subsection}{\numberline {9.7}Errores espaciales representativos}{61}{subsection.9.7}%
+\contentsline {subsection}{\numberline {9.8}Conclusión del enfoque online y transición al linking}{62}{subsection.9.8}%
+\contentsline {section}{\numberline {10}Postprocesado offline mediante tracklet linking}{64}{section.10}%
+\contentsline {subsection}{\numberline {10.1}Motivación del tracklet linking}{65}{subsection.10.1}%
+\contentsline {subsection}{\numberline {10.2}Construcción y análisis de tracklets}{65}{subsection.10.2}%
+\contentsline {subsection}{\numberline {10.3}Linking geométrico y criterios de fusión}{66}{subsection.10.3}%
+\contentsline {subsection}{\numberline {10.4}Experimentos principales sobre v0}{67}{subsection.10.4}%
+\contentsline {subsection}{\numberline {10.5}Aplicación sobre v1}{68}{subsection.10.5}%
+\contentsline {subsection}{\numberline {10.6}Generalización a múltiples secuencias}{69}{subsection.10.6}%
+\contentsline {subsection}{\numberline {10.7}Discusión: online frente a offline}{70}{subsection.10.7}%
+\contentsline {section}{\numberline {11}Adaptación del ReID al dominio}{71}{section.11}%
+\contentsline {subsection}{\numberline {11.1}Modelo baseline SportsMOT}{72}{subsection.11.1}%
+\contentsline {subsection}{\numberline {11.2}Curvas de aprendizaje y selección de checkpoints}{72}{subsection.11.2}%
+\contentsline {subsection}{\numberline {11.3}Entrenamiento específico en fútbol profesional}{74}{subsection.11.3}%
+\contentsline {subsection}{\numberline {11.4}Entrenamiento específico en fútbol amateur}{75}{subsection.11.4}%
+\contentsline {subsection}{\numberline {11.5}Comparación entre modelos genéricos y específicos}{76}{subsection.11.5}%
+\contentsline {subsection}{\numberline {11.6}Aplicación de tracklet linking sobre los mejores modelos}{76}{subsection.11.6}%
+\contentsline {section}{\numberline {12}Plataforma experimental final y heurísticas de coherencia espacial}{78}{section.12}%
+\contentsline {subsection}{\numberline {12.1}Motivación y papel de la plataforma final}{79}{subsection.12.1}%
+\contentsline {subsection}{\numberline {12.2}Curación manual del dominio amateur}{80}{subsection.12.2}%
+\contentsline {subsection}{\numberline {12.3}Scripts correctores y generación del pseudo-ground truth}{80}{subsection.12.3}%
+\contentsline {subsection}{\numberline {12.4}Configuración óptima seleccionada}{81}{subsection.12.4}%
+\contentsline {subsection}{\numberline {12.5}Interfaz de la aplicación final}{82}{subsection.12.5}%
+\contentsline {subsection}{\numberline {12.6}Arquitectura general del pipeline}{83}{subsection.12.6}%
+\contentsline {subsection}{\numberline {12.7}Fase 1: tracking online con ByteTrack + ReID}{83}{subsection.12.7}%
+\contentsline {subsection}{\numberline {12.8}Fase 2: validación de coherencia espacial mediante Zone Fix}{84}{subsection.12.8}%
+\contentsline {subsection}{\numberline {12.9}Justificación del aumento de IDs introducido por Zone Fix}{84}{subsection.12.9}%
+\contentsline {subsection}{\numberline {12.10}Preparación del capítulo para ilustrar Zone Fix con imágenes}{85}{subsection.12.10}%
+\contentsline {subsection}{\numberline {12.11}Fase 3: linking offline como recuperación de fragmentación válida}{86}{subsection.12.11}%
+\contentsline {subsection}{\numberline {12.12}Fases 4 y 5: visualización y evaluación}{86}{subsection.12.12}%
+\contentsline {subsection}{\numberline {12.13}Valor metodológico de la plataforma final}{87}{subsection.12.13}%
+\contentsline {subsection}{\numberline {12.14}Discusión final del capítulo}{87}{subsection.12.14}%
+\contentsline {section}{\numberline {13}Resultados globales y selección del sistema final}{88}{section.13}%
+\contentsline {subsection}{\numberline {13.1}Megatabla de configuraciones}{88}{subsection.13.1}%
+\contentsline {subsection}{\numberline {13.2}Comparación global de enfoques}{88}{subsection.13.2}%
+\contentsline {subsection}{\numberline {13.3}Criterios de selección del sistema final}{88}{subsection.13.3}%
+\contentsline {subsection}{\numberline {13.4}Pipeline final elegido y justificación}{88}{subsection.13.4}%
+\contentsline {subsection}{\numberline {13.5}Discusión sobre trade-offs}{88}{subsection.13.5}%
+\contentsline {section}{\numberline {14}Conclusiones}{89}{section.14}%
+\contentsline {subsection}{\numberline {14.1}Respuesta a los objetivos del anteproyecto}{89}{subsection.14.1}%
+\contentsline {subsection}{\numberline {14.2}Principales hallazgos}{89}{subsection.14.2}%
+\contentsline {subsection}{\numberline {14.3}Aportaciones del trabajo}{89}{subsection.14.3}%
+\contentsline {subsection}{\numberline {14.4}Limitaciones}{89}{subsection.14.4}%
+\contentsline {subsection}{\numberline {14.5}Trabajo futuro}{89}{subsection.14.5}%
