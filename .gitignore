@@ -8,6 +8,7 @@ reid/
 
 # Large Files & Data
 *.jpg
+!doc/TFG_doc2/images/**/*.jpg
 *.npy
 *.pkl
 
