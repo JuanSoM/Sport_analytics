@@ -1,6 +1,6 @@
 This is BibTeX, Version 0.99d
 Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
-The top-level auxiliary file: 05_metodologia_general.aux
+The top-level auxiliary file: 13_resultados_globales.aux
 Reallocating 'name_of_file' (item size: 1) to 9 items.
 The style file: biblatex.bst
 Reallocating 'name_of_file' (item size: 1) to 27 items.
@@ -20,18 +20,14 @@ Reallocating 'singl_function' (item size: 4) to 100 items.
 Reallocating 'singl_function' (item size: 4) to 100 items.
 Reallocating 'singl_function' (item size: 4) to 100 items.
 Reallocating 'singl_function' (item size: 4) to 100 items.
-Database file #1: 05_metodologia_general-blx.bib
+Database file #1: 13_resultados_globales-blx.bib
 Database file #2: references.bib
-Warning--I didn't find a database entry for "csdn_yolo_intro"
-Warning--I didn't find a database entry for "ciaparrone2020survey"
-Warning--I didn't find a database entry for "zhang2022bytetrack"
-Warning--I didn't find a database entry for "cioppa2022soccernettracking"
 Biblatex version: 3.20
 Reallocating 'wiz_functions' (item size: 4) to 9000 items.
 Reallocating 'singl_function' (item size: 4) to 100 items.
 You've used 1 entry,
             6402 wiz_defined-function locations,
-            1207 strings with 9111 characters,
+            1203 strings with 9031 characters,
 and the built_in function-call counts, 1534 in all, are:
 = -- 73
 > -- 70
@@ -70,4 +66,3 @@ warning$ -- 0
 while$ -- 64
 width$ -- 0
 write$ -- 20
-(There were 4 warnings)

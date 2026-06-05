@@ -381,6 +381,26 @@
     \field{year}{2020}
   \endentry
 
+  \entry{csdn_yolo_intro}{misc}{}{}
+    \name{author}{1}{}{%
+      {{hash=MY}{%
+         family={Master},
+         familyi={M\bibinitperiod},
+         given={YOLO},
+         giveni={Y\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{MY1}
+    \strng{fullhash}{MY1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{M}
+    \field{sortinithash}{M}
+  \field{howpublished}{\url{https://download.csdn.net/blog/column/12303415/130399439}}
+    \field{note}{CSDN source for conceptual YOLO figures, accessed 2026-06-05}
+    \field{title}{YOLO object detection overview for beginners}
+  \endentry
+
   \entry{sportsmot_repo}{misc}{}{}
     \name{author}{1}{}{%
       {{hash=M}{%

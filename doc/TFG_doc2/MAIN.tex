@@ -134,7 +134,6 @@
 \author{Juan Ignacio Soriano Muñoz}
 \date{Curso 2025--2026}
 
-
 \begin{document}
 	
 	%% Cover
@@ -146,8 +145,37 @@
 	\includepdf[noautoscale=true, width=\paperwidth]{title.pdf}
 	
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%% RESUMEN Y ABSTRACT
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	\clearpage
+	\section*{Resumen}
+	\addcontentsline{toc}{section}{Resumen}
+	
+	Este trabajo aborda el problema del seguimiento multiobjeto de jugadores de fútbol en vídeo monocámara, con especial atención a la continuidad de identidad en escenarios profesionales y amateur. El estudio parte de una comparación inicial entre distintos trackers, a partir de la cual se selecciona ByteTrack como base del sistema por su equilibrio entre rendimiento, interpretabilidad y capacidad de modificación experimental.
+	
+	Sobre esta base, se analiza de forma específica el papel del módulo de reidentificación (ReID), tanto de manera aislada como integrado en el tracker. A continuación, se estudian distintas estrategias de integración online de la apariencia, se diseña un postprocesado offline basado en \textit{tracklet linking} y se evalúa el impacto de entrenar modelos ReID específicos para dominio profesional y amateur. Además, se desarrolla una plataforma experimental que integra el pipeline completo de detección, tracking, validación geométrica, linking, visualización y evaluación.
+	
+	Los resultados muestran que el principal cuello de botella del problema no reside únicamente en la detección, sino en la continuidad de identidad y en la coherencia geométrica de las trayectorias. El trabajo concluye con la selección de un sistema final modular, basado en ByteTrack, ReID, linking offline y una heurística de validación espacial, que ofrece un compromiso sólido entre continuidad, interpretabilidad y plausibilidad geométrica.
+	
+	\textbf{Palabras clave:} tracking multiobjeto, reidentificación, fútbol, ByteTrack, YOLOX, tracklet linking, visión por computador.
+	
+	\clearpage
+	\section*{Abstract}
+	\addcontentsline{toc}{section}{Abstract}
+	
+	This thesis addresses the problem of multi-object tracking of football players in monocular video, with special emphasis on identity continuity in both professional and amateur scenarios. The study starts with an initial comparison of several trackers, from which ByteTrack is selected as the system backbone due to its balance between performance, interpretability, and experimental flexibility.
+	
+	Building on this baseline, the role of the re-identification (ReID) module is analysed both in isolation and when integrated into the tracker. Different strategies for online appearance integration are then evaluated, an offline \textit{tracklet linking} post-processing stage is designed, and the impact of domain-specific ReID models for professional and amateur football is studied. In addition, an experimental platform is developed to integrate the full pipeline, including detection, tracking, geometric validation, linking, visualisation, and evaluation.
+	
+	The results show that the main bottleneck of the problem does not lie only in detection, but also in identity continuity and the geometric coherence of trajectories. The thesis concludes with the selection of a modular final system based on ByteTrack, ReID, offline linking, and a spatial validation heuristic, providing a robust compromise between continuity, interpretability, and geometric plausibility.
+	
+	\textbf{Keywords:} multi-object tracking, re-identification, football, ByteTrack, YOLOX, tracklet linking, computer vision.
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	
 	%% Índice automático
+	\clearpage
 	\tableofcontents
 	\newpage
 	
