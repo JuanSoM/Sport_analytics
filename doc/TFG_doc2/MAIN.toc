@@ -86,20 +86,20 @@
 \contentsline {subsection}{\numberline {12.7}Fase 1: tracking online con ByteTrack + ReID}{86}{subsection.12.7}%
 \contentsline {subsection}{\numberline {12.8}Fase 2: validación de coherencia espacial mediante Zone Fix}{87}{subsection.12.8}%
 \contentsline {subsection}{\numberline {12.9}Justificación del aumento de IDs introducido por Zone Fix}{87}{subsection.12.9}%
-\contentsline {subsection}{\numberline {12.10}Preparación del capítulo para ilustrar Zone Fix con imágenes}{88}{subsection.12.10}%
-\contentsline {subsection}{\numberline {12.11}Fase 3: linking offline como recuperación de fragmentación válida}{89}{subsection.12.11}%
-\contentsline {subsection}{\numberline {12.12}Fases 4 y 5: visualización y evaluación}{89}{subsection.12.12}%
-\contentsline {subsection}{\numberline {12.13}Valor metodológico de la plataforma final}{90}{subsection.12.13}%
-\contentsline {subsection}{\numberline {12.14}Discusión final del capítulo}{90}{subsection.12.14}%
-\contentsline {section}{\numberline {13}Resultados globales y selección del sistema final}{91}{section.13}%
-\contentsline {subsection}{\numberline {13.1}Megatabla de configuraciones}{92}{subsection.13.1}%
-\contentsline {subsection}{\numberline {13.2}Comparación global de enfoques}{92}{subsection.13.2}%
-\contentsline {subsection}{\numberline {13.3}Criterios de selección del sistema final}{93}{subsection.13.3}%
-\contentsline {subsection}{\numberline {13.4}Pipeline final elegido y justificación}{94}{subsection.13.4}%
-\contentsline {subsection}{\numberline {13.5}Discusión sobre trade-offs}{95}{subsection.13.5}%
-\contentsline {section}{\numberline {14}Conclusiones}{96}{section.14}%
-\contentsline {subsection}{\numberline {14.1}Respuesta a los objetivos del anteproyecto}{97}{subsection.14.1}%
-\contentsline {subsection}{\numberline {14.2}Principales hallazgos}{98}{subsection.14.2}%
-\contentsline {subsection}{\numberline {14.3}Aportaciones del trabajo}{99}{subsection.14.3}%
-\contentsline {subsection}{\numberline {14.4}Limitaciones}{100}{subsection.14.4}%
-\contentsline {subsection}{\numberline {14.5}Trabajo futuro}{100}{subsection.14.5}%
+\contentsline {subsection}{\numberline {12.10}Ejemplo cualitativo del efecto de Zone Fix}{88}{subsection.12.10}%
+\contentsline {subsection}{\numberline {12.11}Fase 3: linking offline como recuperación de fragmentación válida}{91}{subsection.12.11}%
+\contentsline {subsection}{\numberline {12.12}Fases 4 y 5: visualización y evaluación}{91}{subsection.12.12}%
+\contentsline {subsection}{\numberline {12.13}Valor metodológico de la plataforma final}{92}{subsection.12.13}%
+\contentsline {subsection}{\numberline {12.14}Discusión final del capítulo}{92}{subsection.12.14}%
+\contentsline {section}{\numberline {13}Resultados globales y selección del sistema final}{93}{section.13}%
+\contentsline {subsection}{\numberline {13.1}Megatabla de configuraciones}{94}{subsection.13.1}%
+\contentsline {subsection}{\numberline {13.2}Comparación global de enfoques}{96}{subsection.13.2}%
+\contentsline {subsection}{\numberline {13.3}Criterios de selección del sistema final}{96}{subsection.13.3}%
+\contentsline {subsection}{\numberline {13.4}Pipeline final elegido y justificación}{97}{subsection.13.4}%
+\contentsline {subsection}{\numberline {13.5}Discusión sobre trade-offs}{98}{subsection.13.5}%
+\contentsline {section}{\numberline {14}Conclusiones}{100}{section.14}%
+\contentsline {subsection}{\numberline {14.1}Respuesta a los objetivos del anteproyecto}{101}{subsection.14.1}%
+\contentsline {subsection}{\numberline {14.2}Principales hallazgos}{102}{subsection.14.2}%
+\contentsline {subsection}{\numberline {14.3}Aportaciones del trabajo}{103}{subsection.14.3}%
+\contentsline {subsection}{\numberline {14.4}Limitaciones}{104}{subsection.14.4}%
+\contentsline {subsection}{\numberline {14.5}Trabajo futuro}{104}{subsection.14.5}%

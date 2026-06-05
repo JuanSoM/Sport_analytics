@@ -232,35 +232,44 @@
 		\end{tabular}
 	\end{table}
 	
-	\subsection{Preparación del capítulo para ilustrar Zone Fix con imágenes}
+	\subsection{Ejemplo cualitativo del efecto de Zone Fix}
 	
-	Dado que \textit{Zone Fix} es una heurística visualmente muy intuitiva, conviene documentarla con figuras. La idea recomendada es mostrar al menos dos casos:
+	La utilidad de \textit{Zone Fix} se entiende especialmente bien al inspeccionar casos concretos. La Figura~\ref{fig:cap12_zonefix_before_after} muestra un ejemplo representativo en el que, sin esta heurística, una identidad se reutiliza de forma geométricamente incoherente. En la fila superior, correspondiente a la salida sin \textit{Zone Fix}, un jugador con ID 3 abandona la escena por la parte derecha del encuadre y, poco después, otro jugador situado en la parte izquierda reaparece con ese mismo identificador. Desde un punto de vista espacial, esta transición resulta inverosímil.
 	
-	\begin{enumerate}
-		\item un caso \textbf{antes de la corrección}, donde la misma identidad se reasigna de forma geométricamente absurda;
-		\item y el caso \textbf{después de la corrección}, donde esa transición se rompe y el nuevo segmento recibe un ID distinto.
-	\end{enumerate}
+	En la fila inferior se muestra el mismo caso tras activar \textit{Zone Fix}. En esta ocasión, la detección posterior ya no reutiliza el ID 3, sino que inicia una nueva identidad, ID 45. Aunque esta decisión incrementa el número total de IDs, evita una fusión errónea entre trayectorias incompatibles y preserva mejor la coherencia geométrica del seguimiento.
 	
-	Te dejo preparada la estructura para esas figuras, de modo que puedas insertarlas más adelante sin tocar el resto del capítulo.
+	\begin{figure}[H]
+		\centering
+		\begin{subfigure}[t]{0.47\textwidth}
+			\centering
+			\includegraphics[width=\textwidth]{cap12/reid_error_sin_zonefix_f98_1.png}
+			\caption{Sin \textit{Zone Fix}: el jugador con ID 3 abandona la escena por la derecha (frame 98).}
+		\end{subfigure}
+		\hfill
+		\begin{subfigure}[t]{0.47\textwidth}
+			\centering
+			\includegraphics[width=\textwidth]{cap12/reid_error_sin_zonefix_f168_2.png}
+			\caption{Sin \textit{Zone Fix}: una detección posterior reutiliza erróneamente el ID 3 en una región incompatible (frame 168).}
+		\end{subfigure}
+		
+		\vspace{0.5em}
+		
+		\begin{subfigure}[t]{0.47\textwidth}
+			\centering
+			\includegraphics[width=\textwidth]{cap12/reid_error_con_zonefix_f98_1.png}
+			\caption{Con \textit{Zone Fix}: se observa el mismo abandono inicial del jugador con ID 3 (frame 98).}
+		\end{subfigure}
+		\hfill
+		\begin{subfigure}[t]{0.47\textwidth}
+			\centering
+			\includegraphics[width=\textwidth]{cap12/reid_error_con_zonefix_f168_2.png}
+			\caption{Con \textit{Zone Fix}: la nueva detección no reutiliza el ID anterior y se crea el ID 45 (frame 168).}
+		\end{subfigure}
+		\caption{Ejemplo cualitativo del efecto de \textit{Zone Fix}. La heurística evita una reasignación espacialmente incoherente entre zonas incompatibles del encuadre.}
+		\label{fig:cap12_zonefix_before_after}
+	\end{figure}
 	
-	% \begin{figure}[H]
-		% 	\centering
-		% 	\begin{subfigure}[b]{0.48\textwidth}
-			% 		\centering
-			% 		\includegraphics[width=\textwidth]{cap12/zonefix_before_dummy.png}
-			% 		\caption{Ejemplo previo a la corrección: reasignación espacialmente incoherente.}
-			% 	\end{subfigure}
-		% 	\hfill
-		% 	\begin{subfigure}[b]{0.48\textwidth}
-			% 		\centering
-			% 		\includegraphics[width=\textwidth]{cap12/zonefix_after_dummy.png}
-			% 		\caption{Ejemplo posterior a la corrección: ruptura del track y creación de un nuevo ID.}
-			% 	\end{subfigure}
-		% 	\caption{Ejemplo ilustrativo del funcionamiento de \textit{Zone Fix}. Estas imágenes pueden sustituirse posteriormente por capturas reales del sistema.}
-		% 	\label{fig:cap12_zonefix_before_after}
-		% \end{figure}
-	
-	Si más adelante quieres explicarlo todavía mejor, puedes incluso añadir una segunda figura con varios fotogramas consecutivos donde se vea cómo el jugador abandona una región y el sistema impide una reasignación imposible en el extremo opuesto.
+	Este ejemplo ilustra una idea central del TFG: reducir el número total de identidades no siempre significa mejorar el sistema. Si esa reducción se consigue manteniendo asociaciones imposibles desde el punto de vista geométrico, el tracking pierde valor semántico. Bajo esta perspectiva, el aumento controlado de IDs introducido por \textit{Zone Fix} debe interpretarse como el precio necesario para evitar errores de identidad más graves.
 	
 	\subsection{Fase 3: linking offline como recuperación de fragmentación válida}
 	

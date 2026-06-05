@@ -53,26 +53,56 @@
 	
 	\begin{table}[H]
 		\centering
+		\small
 		\caption{Síntesis global de configuraciones relevantes del TFG.}
 		\label{tab:cap13_megatabla}
-		\resizebox{\textwidth}{!}{%
-			\begin{tabular}{llcccccc}
-				\toprule
-				\textbf{Bloque} & \textbf{Configuración} & \textbf{MOTA} & \textbf{IDF1} & \textbf{IDSW} & \textbf{Frags.} & \textbf{IDs} & \textbf{Lectura principal} \\
-				\midrule
-				Tracker base & ByteTrack sin ReID (v0) & 80.7\% & 75.6\% & 45 & 119 & 62 & Baseline sólida, pero fragmentada \\
-				Online original & ByteTrack + ReID original (v1) & 79.4\% & 75.6\% & 36 & 133 & 30 & Compacta identidad, pero degrada estabilidad global \\
-				Online recalibrado & v3 split + guardia IoU & 80.8\% & 73.9\% & 41 & 135 & 49 & Más equilibrado que v1, pero menos compacto \\
-				Offline linking & EXP-7 sobre v0 & 80.8\% & 74.2\% & 35 & 118 & 45 & Reduce fragmentación sin tocar detector/tracker online \\
-				Modelo específico pro & Epoch 40 (SNMOT-060) & 81.99\% & 78.11\% & 30 & 101 & 41 & Mejor rendimiento global en profesional \\
-				Modelo específico am. & Epoch 98 (Video2) & 44.72\% & 43.78\% & 80 & 138 & 42 & Mejora global, pero con sobreidentificación \\
-				Sistema final & SportsMOT + v1 Legacy + linking + Zone Fix & --- & --- & --- & --- & --- & Mejor compromiso práctico final \\
-				\bottomrule
-			\end{tabular}%
-		}
+		\setlength{\tabcolsep}{5pt}
+		\renewcommand{\arraystretch}{1.15}
+		\begin{tabular}{p{2.1cm} p{3.4cm} c c c c c p{3.6cm}}
+			\toprule
+			\textbf{Bloque} & \textbf{Configuración} & \textbf{MOTA} & \textbf{IDF1} & \textbf{IDSW} & \textbf{Frags.} & \textbf{IDs} & \textbf{Lectura principal} \\
+			\midrule
+			Tracker base 
+			& ByteTrack sin ReID (v0) 
+			& 80.7\% & 75.6\% & 45 & 119 & 62 
+			& Baseline sólida, pero fragmentada \\
+			
+			Online original 
+			& ByteTrack + ReID original (v1) 
+			& 79.4\% & 75.6\% & 36 & 133 & 30 
+			& Compacta identidad, pero degrada estabilidad global \\
+			
+			Online recalibrado 
+			& v3 split + guardia IoU 
+			& 80.8\% & 73.9\% & 41 & 135 & 49 
+			& Más equilibrado que v1, pero menos compacto \\
+			
+			Offline linking 
+			& EXP-7 sobre v0 
+			& 80.8\% & 74.2\% & 35 & 118 & 45 
+			& Reduce fragmentación sin tocar detector ni tracker online \\
+			
+			Modelo específico pro 
+			& Epoch 40 (SNMOT-060) 
+			& 81.99\% & 78.11\% & 30 & 101 & 41 
+			& Mejor rendimiento global en profesional \\
+			
+			Modelo específico am. 
+			& Epoch 98 (Video2) 
+			& 44.72\% & 43.78\% & 80 & 138 & 42 
+			& Mejora parcial, pero con sobreidentificación \\
+			
+			Sistema final 
+			& SportsMOT + v1 Legacy + linking + Zone Fix 
+			& 81.38\% & 75.53\% & 34 & 92 & 32 
+			& Mejor compromiso práctico final \\
+			\bottomrule
+		\end{tabular}
 	\end{table}
 	
 	La tabla deja ver con claridad que no existe una única línea monotónica de mejora. Algunas configuraciones reducen los cambios de identidad a costa de empeorar MOTA o fragmentación; otras conservan una buena estabilidad geométrica pero generan más IDs; y otras mejoran unas métricas mientras empeoran otras. Esta lectura justifica que la selección final no pueda resolverse únicamente escogiendo la mejor fila de una tabla.
+	
+	La última fila de la Tabla~\ref{tab:cap13_megatabla} corresponde a la configuración final operativa del sistema, es decir, la combinación formada por \texttt{SportsMOT Generic}, \texttt{v1 Legacy}, linking \texttt{Informe Legacy} y la heurística \textit{Zone Fix}. Evaluada bajo el protocolo MOT utilizado en el trabajo, esta configuración alcanza un 81.38\% de MOTA, 75.53\% de IDF1 y 58.26\% de HOTA, con 34 \textit{ID switches}, 92 fragmentaciones y 32 identidades generadas frente a 26 identidades reales del \textit{ground truth}. Estos valores refuerzan la idea central del capítulo: la solución final no se selecciona únicamente por maximizar una métrica aislada, sino por ofrecer un equilibrio sólido entre rendimiento global, continuidad de identidad y coherencia geométrica.
 	
 	\subsection{Comparación global de enfoques}
 	
@@ -126,6 +156,31 @@
 			\bottomrule
 		\end{tabular}
 	\end{table}
+	
+	\begin{table}[H]
+		\centering
+		\caption{Resultados de la configuración final seleccionada.}
+		\label{tab:cap13_resultados_finales}
+		\begin{tabular}{lc}
+			\toprule
+			\textbf{Métrica} & \textbf{Valor} \\
+			\midrule
+			HOTA & 58.26\% \\
+			MOTA & 81.38\% \\
+			IDF1 & 75.53\% \\
+			ID Switches & 34 \\
+			IDSW/min & 67.91 \\
+			Fragmentations & 92 \\
+			Total IDs (GT / Tracking) & 26 / 32 \\
+			Precision & 97.57\% \\
+			Recall & 83.71\% \\
+			False Positives & 282 \\
+			False Negatives & 2205 \\
+			\bottomrule
+		\end{tabular}
+	\end{table}
+	
+	Estos resultados resumen el comportamiento de la configuración final integrada en la plataforma experimental. Más allá de su valor cuantitativo, su interés principal reside en que corresponden a la versión operativa completa del sistema, incluyendo detector, asociación online, linking offline y validación espacial mediante \textit{Zone Fix}.
 	
 	\subsection{Discusión sobre trade-offs}
 	
