@@ -1,68 +1,17 @@
-This is BibTeX, Version 0.99d
-Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
-The top-level auxiliary file: MAIN.aux
-Reallocating 'name_of_file' (item size: 1) to 9 items.
-The style file: biblatex.bst
-Reallocating 'name_of_file' (item size: 1) to 9 items.
-Reallocating 'name_of_file' (item size: 1) to 11 items.
-Reallocating 'glb_str_end' (item size: 4) to 20 items.
-Reallocating 'glb_str_ptr' (item size: 4) to 20 items.
-Reallocating 'global_strs' (item size: 1) to 4000000 items.
-Reallocating 'singl_function' (item size: 4) to 100 items.
-Reallocating 'singl_function' (item size: 4) to 100 items.
-Reallocating 'singl_function' (item size: 4) to 100 items.
-Reallocating 'wiz_functions' (item size: 4) to 6000 items.
-Reallocating 'singl_function' (item size: 4) to 100 items.
-Reallocating 'singl_function' (item size: 4) to 100 items.
-Reallocating 'singl_function' (item size: 4) to 100 items.
-Reallocating 'singl_function' (item size: 4) to 100 items.
-Reallocating 'singl_function' (item size: 4) to 100 items.
-Reallocating 'singl_function' (item size: 4) to 100 items.
-Reallocating 'singl_function' (item size: 4) to 100 items.
-Reallocating 'singl_function' (item size: 4) to 100 items.
-Database file #1: MAIN-blx.bib
-Database file #2: references.bib
-Biblatex version: 3.20
-Reallocating 'wiz_functions' (item size: 4) to 9000 items.
-Reallocating 'singl_function' (item size: 4) to 100 items.
-You've used 21 entries,
-            6402 wiz_defined-function locations,
-            1300 strings with 12754 characters,
-and the built_in function-call counts, 170955 in all, are:
-= -- 14055
-> -- 2191
-< -- 515
-+ -- 5798
-- -- 861
-* -- 11650
-:= -- 21138
-add.period$ -- 0
-call.type$ -- 21
-change.case$ -- 171
-chr.to.int$ -- 42
-cite$ -- 40
-duplicate$ -- 19858
-empty$ -- 14144
-format.name$ -- 1559
-if$ -- 33173
-int.to.chr$ -- 0
-int.to.str$ -- 44
-missing$ -- 0
-newline$ -- 736
-num.names$ -- 832
-pop$ -- 7769
-preamble$ -- 1
-purify$ -- 318
-quote$ -- 0
-skip$ -- 3450
-stack$ -- 0
-substring$ -- 24752
-swap$ -- 2987
-text.length$ -- 585
-text.prefix$ -- 20
-top$ -- 1
-type$ -- 702
-warning$ -- 0
-while$ -- 2826
-width$ -- 0
-write$ -- 716
+[0] Config.pm:308> INFO - This is Biber 2.20
+[0] Config.pm:311> INFO - Logfile is 'MAIN.blg'
+[99] biber-MSWIN64:340> INFO - === 
+[132] Biber.pm:420> INFO - Reading 'MAIN.bcf'
+[247] Biber.pm:994> INFO - Found 21 citekeys in bib section 0
+[265] Biber.pm:4463> INFO - Processing section 0
+[275] Biber.pm:4654> INFO - Looking for bibtex file 'references.bib' for section 0
+[328] bibtex.pm:1713> INFO - LaTeX decoding ...
+[352] bibtex.pm:1519> INFO - Found BibTeX data source 'references.bib'
+[491] UCollate.pm:68> INFO - Overriding locale 'es-ES' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[491] UCollate.pm:68> INFO - Overriding locale 'es-ES' defaults 'variable = shifted' with 'variable = non-ignorable'
+[492] Biber.pm:4283> INFO - Sorting list 'nyt/apasortcite//global/global/global' of type 'entry' with template 'nyt' and locale 'es-ES'
+[533] UCollate.pm:68> INFO - Overriding locale 'es-ES' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[533] UCollate.pm:68> INFO - Overriding locale 'es-ES' defaults 'variable = shifted' with 'variable = non-ignorable'
+[533] Biber.pm:4283> INFO - Sorting list 'nyt/global//global/global/global' of type 'entry' with template 'nyt' and locale 'es-ES'
+[556] bbl.pm:676> INFO - Writing 'MAIN.bbl' with encoding 'UTF-8'
+[584] bbl.pm:779> INFO - Output to MAIN.bbl

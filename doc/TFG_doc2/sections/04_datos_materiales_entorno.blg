@@ -34,12 +34,14 @@ Warning--I didn't find a database entry for "osnet_paper"
 Warning--I didn't find a database entry for "gradio_repo"
 Warning--I didn't find a database entry for "torchreid_paper"
 Warning--I didn't find a database entry for "torchreid_docs"
+Warning--I didn't find a database entry for "deepeiou_repo"
+Warning--I didn't find a database entry for "deepeiou_paper"
 Biblatex version: 3.20
 Reallocating 'wiz_functions' (item size: 4) to 9000 items.
 Reallocating 'singl_function' (item size: 4) to 100 items.
 You've used 1 entry,
             6402 wiz_defined-function locations,
-            1215 strings with 9216 characters,
+            1217 strings with 9243 characters,
 and the built_in function-call counts, 1534 in all, are:
 = -- 73
 > -- 70
@@ -78,4 +80,4 @@ warning$ -- 0
 while$ -- 64
 width$ -- 0
 write$ -- 20
-(There were 12 warnings)
+(There were 14 warnings)

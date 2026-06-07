@@ -13,16 +13,18 @@
 	% - annotate_review.py
 	% - annotate_review_precise.py
 	% - aplicación final Gradio
+	% - configuración final con Zone Fix + linking offline asistido por ReID
 	%
 	% Estado del bloque: Definitivo
 	%
 	% Guía de redacción:
 	% - Este capítulo debe presentar la aplicación final como plataforma integradora.
-	% - Debe explicar el pipeline completo de 5 fases.
+	% - Debe explicar el pipeline completo.
 	% - Debe justificar la configuración óptima elegida.
 	% - Debe introducir Zone Fix como heurística de coherencia espacial.
 	% - Debe dejar claro que Zone Fix puede aumentar el número de IDs,
 	%   pero no de forma arbitraria, sino corrigiendo reasignaciones geométricamente erróneas.
+	% - Debe reflejar que el linking final incorpora también señal visual ReID.
 	
 	\begin{chaptertemplatebox}
 		\textbf{Objetivo del capítulo}\\
@@ -32,19 +34,19 @@
 		Aplicación web final implementada en Gradio, configuración experimental óptima del sistema, scripts auxiliares de revisión y validación, y documentación técnica interna del pipeline completo.\\[0.5em]
 		
 		\textbf{Configuración}\\
-		Configuración óptima final del sistema: detector \texttt{best\_ckpt + mix\_det} con resolución \(800\times1440\), modelo ReID \texttt{SportsMOT Generic}, configuración de tracking \texttt{v1 Legacy}, linking \texttt{Informe Legacy} (\texttt{gap=100}, \texttt{dist=400}, \texttt{thresh=0.40}), \texttt{track\_buffer=100}, y heurística \textit{Zone Fix} activada sobre un ancho de imagen de 1440 píxeles.\\[0.5em]
+		Configuración óptima final del sistema: detector \texttt{best\_ckpt + mix\_det} con resolución \(800\times1440\), modelo ReID \texttt{SportsMOT Generic}, configuración de tracking \texttt{v1 Legacy}, validación espacial mediante \textit{Zone Fix}, linking offline \texttt{Informe Legacy} con \texttt{max\_gap=200}, \texttt{max\_dist=400}, \texttt{thresh=0.40} y apoyo ReID mediante \texttt{sports\_model.pth.tar-60}, además de \texttt{track\_buffer=100}.\\[0.5em]
 		
 		\textbf{Resultados principales}\\
-		La plataforma final permitió unificar en una sola herramienta el pipeline completo del TFG. La configuración óptima seleccionada reproduce los mejores resultados experimentales y, además, incorpora un control explícito de coherencia espacial mediante \textit{Zone Fix}. Esta heurística incrementa el número de identidades intermedias, pero lo hace corrigiendo teletransportes o reasignaciones sin sentido geométrico, que posteriormente pueden ser compensados parcialmente mediante el linking offline.\\[0.5em]
+		La plataforma final permitió unificar en una sola herramienta el pipeline completo del TFG. La configuración óptima seleccionada reproduce la lógica metodológica final del sistema: tracking online con apariencia, saneamiento geométrico de trayectorias, recomposición offline mediante linking asistido por ReID y evaluación integrada.\\[0.5em]
 		
 		\textbf{Interpretación}\\
-		La aplicación final no debe entenderse únicamente como una interfaz de conveniencia, sino como una formalización operativa del sistema completo propuesto. Su valor metodológico reside en que integra todas las fases relevantes del pipeline y hace explícitas las decisiones de configuración, incluyendo el compromiso entre continuidad de identidad y coherencia espacial.\\[0.5em]
+		La aplicación final no debe entenderse únicamente como una interfaz de conveniencia, sino como una formalización operativa del sistema completo propuesto. Su valor metodológico reside en que integra todas las fases relevantes del pipeline y hace explícitas las decisiones de configuración, incluyendo el compromiso entre continuidad de identidad, coherencia espacial y recomposición posterior de tracklets.\\[0.5em]
 		
 		\textbf{Limitaciones}\\
-		La plataforma está orientada a los experimentos de este TFG y no pretende ser una solución software generalista. Además, \textit{Zone Fix} es una heurística geométrica práctica, no un modelo físico completo del movimiento de los jugadores.\\[0.5em]
+		La plataforma está orientada a los experimentos de este TFG y no pretende ser una solución software generalista. Además, \textit{Zone Fix} es una heurística geométrica práctica, no un modelo físico completo del movimiento de los jugadores, y el linking con ReID sigue dependiendo de una calibración cuidadosa de pesos y umbrales.\\[0.5em]
 		
 		\textbf{Conclusión parcial}\\
-		La plataforma final constituye una aportación metodológica relevante del trabajo, ya que integra en un único entorno el pipeline propuesto y permite aplicar, estudiar y visualizar de forma reproducible tanto el tracking base como las heurísticas de corrección espacial y postprocesado.
+		La plataforma final constituye una aportación metodológica relevante del trabajo, ya que integra en un único entorno el pipeline propuesto y permite aplicar, estudiar y visualizar de forma reproducible tanto el tracking base como las heurísticas de corrección espacial y postprocesado que conducen a la solución final del TFG.
 	\end{chaptertemplatebox}
 	
 	\subsection{Motivación y papel de la plataforma final}
@@ -102,10 +104,11 @@
 			\midrule
 			Detector & \texttt{best\_ckpt + mix\_det} \\
 			Resolución de inferencia & \(800 \times 1440\) \\
-			Modelo ReID & \texttt{SportsMOT Generic} \\
+			Modelo ReID online & \texttt{SportsMOT Generic} \\
 			Configuración del tracker & \texttt{v1 Legacy - ReID Original} \\
-			Linking offline & \texttt{Informe Legacy} \\
-			Parámetros de linking & \texttt{max\_gap=100}, \texttt{max\_dist=400}, \texttt{thresh=0.40} \\
+			Linking offline & \texttt{Informe Legacy + ReID offline} \\
+			Parámetros de linking & \texttt{max\_gap=200}, \texttt{max\_dist=400}, \texttt{thresh=0.40} \\
+			Modelo ReID del linking & \texttt{sports\_model.pth.tar-60} \\
 			Track buffer & \texttt{100} frames \\
 			Zone Fix & Activado \\
 			Ancho de imagen para Zone Fix & \texttt{1440} px \\
@@ -114,7 +117,7 @@
 		\end{tabular}
 	\end{table}
 	
-	Esta selección no es arbitraria. Resume el aprendizaje acumulado a lo largo de los capítulos experimentales previos. El detector y la resolución elegidos responden a la estructura visual del fútbol, donde el campo presenta una geometría eminentemente horizontal. El modelo SportsMOT se mantuvo como referencia generalista robusta. La configuración \texttt{v1 Legacy} se adoptó como la integración online de referencia, y el linking \texttt{Informe Legacy} se consolidó como el postprocesado más razonable dentro del enfoque geométrico. Finalmente, la activación de \textit{Zone Fix} introduce una capa explícita de coherencia espacial destinada a evitar ciertos errores de reasignación especialmente dañinos desde el punto de vista semántico.
+	Esta selección no es arbitraria. Resume el aprendizaje acumulado a lo largo de los capítulos experimentales previos. El detector y la resolución elegidos responden a la estructura visual del fútbol, donde el campo presenta una geometría eminentemente horizontal. El modelo \texttt{SportsMOT Generic} se mantuvo como referencia robusta para la fase online. La configuración \texttt{v1 Legacy} se adoptó como la integración online de referencia, mientras que el bloque offline quedó finalmente estructurado en dos tiempos: una validación espacial conservadora mediante \textit{Zone Fix} y una recomposición posterior de tracklets mediante linking con apoyo ReID. De este modo, la configuración final no se limita a compactar identidades, sino que busca preservar continuidad sin renunciar a la coherencia geométrica global de las trayectorias.
 	
 	\subsection{Interfaz de la aplicación final}
 	
@@ -139,10 +142,10 @@
 			\toprule
 			\textbf{Componente} & \textbf{Opciones / salidas} \\
 			\midrule
-			Modelo ReID & SportsMOT genérico, SNMOT-060 específico, Amateur específico \\
+			Modelo ReID online & SportsMOT genérico, SNMOT-060 específico, Amateur específico \\
 			Config. tracker & v0, v1 Legacy y variantes experimentales \\
-			Linking & Sin linking, linking sin split, linking con parámetros legacy \\
-			Parámetros expuestos & \texttt{track\_buffer}, FPS, ancho para Zone Fix \\
+			Linking & Sin linking, linking geométrico, linking con ReID offline \\
+			Parámetros expuestos & \texttt{track\_buffer}, FPS, ancho para Zone Fix, parámetros de linking \\
 			Salidas & vídeo etiquetado, \texttt{tracking.txt}, archivos postprocesados, tabla de métricas, logs \\
 			\bottomrule
 		\end{tabular}
@@ -155,7 +158,7 @@
 	\begin{enumerate}
 		\item \textbf{Tracking online con ByteTrack + ReID}: detección frame a frame y asociación de trayectorias usando información geométrica y de apariencia.
 		\item \textbf{Validación de coherencia espacial (\textit{Zone Fix})}: detección y corrección de transiciones espaciales incompatibles.
-		\item \textbf{Tracklet linking offline}: fusión posterior de tracklets compatibles desde un punto de vista temporal y espacial.
+		\item \textbf{Tracklet linking offline con apoyo ReID}: fusión posterior de tracklets compatibles desde un punto de vista temporal, espacial y visual.
 		\item \textbf{Visualización}: renderizado del vídeo final con cajas e identidades.
 		\item \textbf{Evaluación}: cálculo opcional de métricas MOT cuando existe \textit{ground truth}.
 	\end{enumerate}
@@ -179,7 +182,7 @@
 	
 	\subsection{Fase 2: validación de coherencia espacial mediante Zone Fix}
 	
-	La heurística \textit{Zone Fix} constituye una de las aportaciones prácticas más interesantes de la plataforma final. Su motivación es sencilla: durante el análisis cualitativo se observaron casos en los que una misma identidad se reasignaba de manera absurda entre regiones lejanas del campo en fotogramas consecutivos o casi consecutivos. En términos visuales, esto equivale a una especie de teletransporte de identidad.
+	La heurística \textit{Zone Fix} constituye una de las aportaciones prácticas más interesantes de la plataforma final. Su motivación es sencilla: durante el análisis cualitativo se observaron casos en los que una misma identidad se reasignaba de manera absurda entre regiones lejanas del campo. En términos visuales, esto equivale a una especie de teletransporte de identidad.
 	
 	Para detectar este tipo de situaciones, la imagen se divide horizontalmente en tres zonas: izquierda, centro y derecha. Dado un ancho de 1440 píxeles, cada zona ocupa aproximadamente un tercio de la imagen. La idea no es imponer un modelo físico exacto del movimiento, sino una restricción de plausibilidad elemental: una identidad no debería saltar directamente de la zona izquierda a la zona derecha, o viceversa, sin pasar por el centro.
 	
@@ -215,7 +218,7 @@
 	
 	Una identidad que se teletransporta de un lateral del campo al opuesto no es una identidad válida, aunque el sistema la contabilice como continuidad. Mantener ese tipo de reasignaciones puede inflar artificialmente ciertas métricas de identidad, pero degrada la coherencia real del seguimiento. En cambio, introducir un nuevo ID en ese punto equivale a reconocer que la asociación previa era errónea y que no debe perpetuarse.
 	
-	Por tanto, el aumento de IDs inducido por \textit{Zone Fix} debe interpretarse como una corrección estructural, no como una degradación trivial. El coste inmediato en compactación se compensa parcialmente en la fase posterior de linking, donde los fragmentos válidos pueden volver a fusionarse si son compatibles espacial y temporalmente. Así, el sistema sustituye identidades largas pero incorrectas por una secuencia de fragmentos más coherentes, algunos de los cuales podrán reagruparse después de forma controlada.
+	Por tanto, el aumento de IDs inducido por \textit{Zone Fix} debe interpretarse como una corrección estructural, no como una degradación trivial. El coste inmediato en compactación se compensa parcialmente en la fase posterior de linking, donde los fragmentos válidos pueden volver a fusionarse si siguen siendo compatibles desde un punto de vista temporal, espacial y visual. Así, el sistema sustituye identidades largas pero incorrectas por una secuencia de fragmentos más coherentes, algunos de los cuales podrán reagruparse después de forma controlada.
 	
 	\begin{table}[H]
 		\centering
@@ -273,11 +276,11 @@
 	
 	\subsection{Fase 3: linking offline como recuperación de fragmentación válida}
 	
-	Una vez aplicada la corrección espacial, el pipeline entra en la fase de \textit{tracklet linking}. Esta etapa actúa como un postprocesado offline destinado a fusionar tracklets compatibles desde el punto de vista temporal y espacial. Su papel dentro de la plataforma final es especialmente importante porque compensa, al menos parcialmente, la fragmentación inducida tanto por oclusiones como por la propia heurística \textit{Zone Fix}.
+	Una vez aplicada la corrección espacial, el pipeline entra en la fase de \textit{tracklet linking}. Esta etapa actúa como un postprocesado offline destinado a fusionar tracklets compatibles desde el punto de vista temporal, espacial y visual. Su papel dentro de la plataforma final es especialmente importante porque compensa, al menos parcialmente, la fragmentación inducida tanto por oclusiones como por la propia heurística \textit{Zone Fix}.
 	
-	La configuración seleccionada para el linking es \texttt{Informe Legacy}, con un \texttt{max\_gap} de 100 frames, una distancia máxima de 400 píxeles y un umbral de linking de 0.40. En esta configuración, el linking se basa de forma conservadora en criterios geométricos y temporales, sin volver a introducir el ReID como criterio dominante. Esto refuerza la idea central del diseño final: la apariencia ya se ha utilizado en la fase online, mientras que el postprocesado debe actuar más bien como una corrección estructural guiada por coherencia de trayectorias.
+	La configuración seleccionada para el linking es \texttt{Informe Legacy + ReID offline}, con un \texttt{max\_gap} de 200 frames, una distancia máxima de 400 píxeles, un umbral de linking de 0.40 y apoyo visual mediante el modelo \texttt{sports\_model.pth.tar-60}. En esta formulación, la señal visual no sustituye a los criterios geométricos y temporales, sino que actúa como evidencia complementaria para decidir entre candidatos ambiguos. Esto refuerza la lógica del diseño final: la apariencia ya se ha utilizado en la fase online, pero vuelve a emplearse aquí de forma controlada para recomponer tracklets previamente saneados desde el punto de vista geométrico.
 	
-	En este contexto, la relación entre \textit{Zone Fix} y linking es complementaria. \textit{Zone Fix} corta asociaciones inválidas; linking intenta recomponer continuidad solo allí donde la fragmentación resultante sea compatible con el comportamiento esperado del jugador en la escena.
+	En este contexto, la relación entre \textit{Zone Fix} y linking es claramente complementaria. \textit{Zone Fix} corta asociaciones inválidas; el linking intenta recomponer continuidad solo allí donde la fragmentación resultante sigue siendo compatible con el comportamiento esperado del jugador en la escena. De este modo, la fase offline final no debe entenderse como una simple compactación adicional, sino como una recomposición prudente de continuidad tras una corrección espacial deliberadamente conservadora.
 	
 	\subsection{Fases 4 y 5: visualización y evaluación}
 	
@@ -289,15 +292,15 @@
 	
 	La principal aportación de la plataforma final no reside únicamente en facilitar la ejecución del sistema, sino en haber consolidado en un solo entorno todas las decisiones metodológicas del TFG. La aplicación materializa la evolución completa del trabajo: desde el tracking online base hasta la incorporación de heurísticas de coherencia espacial y postprocesado offline.
 	
-	Además, la plataforma permite estudiar de manera mucho más transparente el compromiso entre continuidad de identidad y plausibilidad geométrica. En muchos sistemas de tracking, una continuidad aparentemente buena puede esconder asociaciones semánticamente absurdas. La introducción de \textit{Zone Fix} hace visible y controlable ese problema, y la combinación posterior con linking ofrece una solución más equilibrada que la mera aceptación pasiva de la salida del tracker online.
+	Además, la plataforma permite estudiar de manera mucho más transparente el compromiso entre continuidad de identidad y plausibilidad geométrica. En muchos sistemas de tracking, una continuidad aparentemente buena puede esconder asociaciones semánticamente absurdas. La introducción de \textit{Zone Fix} hace visible y controlable ese problema, y la combinación posterior con linking asistido por ReID ofrece una solución más rica que la mera aceptación pasiva de la salida del tracker online.
 	
 	Por ello, este capítulo no debe leerse como un bloque accesorio de interfaz, sino como la formalización final del sistema experimental propuesto.
 	
 	\subsection{Discusión final del capítulo}
 	
-	La integración de \textit{Zone Fix} dentro de la aplicación final permite expresar con claridad una de las ideas más importantes de este TFG: no toda reducción de IDs o todo aumento de continuidad es deseable si se obtiene a costa de mantener identidades incoherentes desde el punto de vista geométrico. En algunos casos, aceptar una mayor fragmentación intermedia resulta preferible si ello permite depurar asociaciones erróneas y dejar al postprocesado la tarea de recomponer únicamente aquellos fragmentos que realmente son compatibles.
+	La integración de \textit{Zone Fix} dentro de la aplicación final permite expresar con claridad una de las ideas más importantes de este TFG: no toda reducción de IDs o todo aumento de continuidad es deseable si se obtiene a costa de mantener identidades incoherentes desde el punto de vista geométrico. En algunos casos, aceptar una mayor fragmentación intermedia resulta preferible si ello permite depurar asociaciones erróneas y dejar al postprocesado la tarea de recomponer únicamente aquellos fragmentos que realmente siguen siendo compatibles.
 	
-	Esta lógica refleja una filosofía de diseño prudente. En vez de confiar ciegamente en que una señal de apariencia o una asociación online siempre serán correctas, el sistema final incorpora una capa adicional de validación espacial. Así, la plataforma no solo ejecuta un pipeline, sino que explicita una posición metodológica: la coherencia semántica del seguimiento importa tanto como las métricas agregadas.
+	Esta lógica refleja una filosofía de diseño prudente. En vez de confiar ciegamente en que una señal de apariencia o una asociación online siempre serán correctas, el sistema final incorpora una capa adicional de validación espacial y una fase posterior de recomposición controlada. Así, la plataforma no solo ejecuta un pipeline, sino que explicita una posición metodológica: la coherencia semántica del seguimiento importa tanto como las métricas agregadas.
 	
 	\newpage
 	

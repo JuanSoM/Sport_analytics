@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex 2025.5.14)  2 JUN 2026 01:25
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex 2025.5.14)  7 JUN 2026 21:36
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1635,7 +1635,27 @@ LaTeX Warning: Citation 'torchreid_docs' on page 5 undefined on input line 118.
 
 
 
-Underfull \hbox (badness 2680) in paragraph at lines 135--136
+LaTeX Warning: Citation 'deepeiou_repo' on page 5 undefined on input line 120.
+
+
+LaTeX Warning: Citation 'deepeiou_paper' on page 5 undefined on input line 120.
+
+
+
+LaTeX Warning: Citation 'deepeiou_paper' on page 5 undefined on input line 120.
+
+
+
+LaTeX Warning: Citation 'deepeiou_repo' on page 5 undefined on input line 120.
+
+
+LaTeX Warning: Citation 'deepeiou_paper' on page 5 undefined on input line 120.
+
+
+
+
+[5]
+Underfull \hbox (badness 2680) in paragraph at lines 139--140
 []|\T1/cmr/m/n/12 Entrenamiento y eva-lua-ción de mo-de-los
  []
 
@@ -1644,12 +1664,12 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
 
-[5]
-
 LaTeX Info: Redefining \sptext on input line 150.
 LaTeX Info: Redefining \. on input line 150.
 LaTeX Info: Redefining \% on input line 150.
-[6] (04_datos_materiales_entorno.aux
+[6]
+
+[7] (04_datos_materiales_entorno.aux
 LaTeX Info: Redefining \sptext on input line 15.
 LaTeX Info: Redefining \. on input line 15.
 LaTeX Info: Redefining \% on input line 15.
@@ -1676,22 +1696,23 @@ Package logreq Info: Writing requests to '04_datos_materiales_entorno.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 39875 strings out of 469940
- 800130 string characters out of 5468441
- 1429330 words of memory out of 5000000
- 66093 multiletter control sequences out of 15000+600000
- 635547 words of font info for 59 fonts, out of 8000000 for 9000
+ 39879 strings out of 469940
+ 800167 string characters out of 5468441
+ 1429389 words of memory out of 5000000
+ 66095 multiletter control sequences out of 15000+600000
+ 635860 words of font info for 60 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 118i,11n,118p,1952b,1810s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 118i,12n,118p,1952b,1810s stack positions out of 10000i,1000n,20000p,200000b,200000s
  <C:\Users\Soriano\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ec
-bx1440.pk> <C:\Users\Soriano\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/d
-pi600\ecti1200.pk> <C:\Users\Soriano\AppData\Local\MiKTeX\fonts/pk/ljfour/jknap
-pen/ec/dpi600\ecbx1200.pk> <C:\Users\Soriano\AppData\Local\MiKTeX\fonts/pk/ljfo
-ur/jknappen/ec/dpi600\ecbx1728.pk> <C:\Users\Soriano\AppData\Local\MiKTeX\fonts
-/pk/ljfour/jknappen/ec/dpi600\ecrm1200.pk>
-Output written on 04_datos_materiales_entorno.pdf (6 pages, 95540 bytes).
+tt1200.pk> <C:\Users\Soriano\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/d
+pi600\ecbx1440.pk> <C:\Users\Soriano\AppData\Local\MiKTeX\fonts/pk/ljfour/jknap
+pen/ec/dpi600\ecti1200.pk> <C:\Users\Soriano\AppData\Local\MiKTeX\fonts/pk/ljfo
+ur/jknappen/ec/dpi600\ecbx1200.pk> <C:\Users\Soriano\AppData\Local\MiKTeX\fonts
+/pk/ljfour/jknappen/ec/dpi600\ecbx1728.pk> <C:\Users\Soriano\AppData\Local\MiKT
+eX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1200.pk>
+Output written on 04_datos_materiales_entorno.pdf (7 pages, 108158 bytes).
 PDF statistics:
- 304 PDF objects out of 1000 (max. 8388607)
- 17 named destinations out of 1000 (max. 500000)
+ 342 PDF objects out of 1000 (max. 8388607)
+ 18 named destinations out of 1000 (max. 500000)
  205 words of extra memory for PDF output out of 10000 (max. 10000000)
 

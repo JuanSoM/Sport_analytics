@@ -13,6 +13,7 @@
 	% - linking_on_best_models.html
 	% - PIPELINE_EXPLICADO.md
 	% - capítulos 6--12 ya consolidados
+	% - formulación final con Zone Fix + linking offline asistido por ReID
 	%
 	% Estado del bloque: Definitivo
 	%
@@ -27,19 +28,19 @@
 		Integrar los resultados obtenidos en los capítulos anteriores para comparar globalmente los distintos enfoques estudiados y justificar la elección final del sistema propuesto en el TFG.\\[0.5em]
 		
 		\textbf{Material usado}\\
-		Resultados de comparación entre trackers, análisis del módulo ReID, recalibración online, linking offline, adaptación de dominio y plataforma final con \textit{Zone Fix}.\\[0.5em]
+		Resultados de comparación entre trackers, análisis del módulo ReID, recalibración online, linking offline, adaptación de dominio y plataforma final con \textit{Zone Fix} y recomposición offline asistida por ReID.\\[0.5em]
 		
 		\textbf{Configuración}\\
-		Se sintetizan los principales resultados obtenidos sobre las secuencias profesionales de SoccerNet y sobre el dominio amateur curado manualmente, utilizando como referencia los experimentos definitivos del trabajo.\\[0.5em]
+		Se sintetizan los principales resultados obtenidos sobre las secuencias profesionales de SoccerNet y sobre el dominio amateur curado manualmente, utilizando como referencia los experimentos definitivos del trabajo y la formulación final del pipeline operativo.\\[0.5em]
 		
 		\textbf{Resultados principales}\\
-		La evidencia acumulada muestra que ByteTrack constituye la mejor base del sistema, que el ReID aporta valor pero debe integrarse con cautela, que el linking offline corrige parte de la fragmentación residual y que la plataforma final con \textit{Zone Fix} ofrece el mejor equilibrio práctico entre continuidad de identidad y coherencia geométrica.\\[0.5em]
+		La evidencia acumulada muestra que ByteTrack constituye la mejor base del sistema, que el ReID aporta valor pero debe integrarse con cautela, que el linking offline corrige parte de la fragmentación residual y que la plataforma final, basada en validación espacial fuerte y linking offline asistido por ReID, ofrece el mejor compromiso práctico entre continuidad de identidad y coherencia geométrica.\\[0.5em]
 		
 		\textbf{Interpretación}\\
 		La selección final no se apoya en una única métrica, sino en una lectura conjunta de MOTA, IDF1, cambios de identidad, número total de IDs, plausibilidad geométrica y comportamiento del sistema en dominios profesional y amateur.\\[0.5em]
 		
 		\textbf{Limitaciones}\\
-		No existe una única configuración universalmente óptima para cualquier dominio o criterio de evaluación. En particular, los modelos específicos de dominio muestran comportamientos distintos en profesional y amateur, y la heurística \textit{Zone Fix} introduce un \textit{trade-off} deliberado entre compactación de identidades y coherencia espacial.\\[0.5em]
+		No existe una única configuración universalmente óptima para cualquier dominio o criterio de evaluación. En particular, los modelos específicos de dominio muestran comportamientos distintos en profesional y amateur, y la combinación entre validación espacial y linking visual introduce un \textit{trade-off} deliberado entre compactación de identidades y prudencia semántica.\\[0.5em]
 		
 		\textbf{Conclusión parcial}\\
 		El sistema final seleccionado no coincide necesariamente con la configuración que maximiza una sola métrica aislada, sino con la que ofrece el mejor compromiso global para el objetivo del TFG: seguimiento multiobjeto de futbolistas con identidades útiles y geométricamente plausibles.
@@ -62,57 +63,59 @@
 			\toprule
 			\textbf{Bloque} & \textbf{Configuración} & \textbf{MOTA} & \textbf{IDF1} & \textbf{IDSW} & \textbf{Frags.} & \textbf{IDs} & \textbf{Lectura principal} \\
 			\midrule
-			Tracker base 
-			& ByteTrack sin ReID (v0) 
-			& 80.7\% & 75.6\% & 45 & 119 & 62 
+			Tracker base
+			& ByteTrack sin ReID (v0)
+			& 80.7\% & 75.6\% & 45 & 119 & 62
 			& \textit{Baseline} sólida, pero fragmentada \\
 			
-			Integración online 
-			& ByteTrack + ReID original (v1) 
-			& 79.4\% & 75.6\% & 36 & 133 & 30 
+			Integración online
+			& ByteTrack + ReID original (v1)
+			& 79.4\% & 75.6\% & 36 & 133 & 30
 			& Compacta identidad, pero degrada estabilidad global \\
 			
-			Recalibración online 
-			& v3 split + guardia IoU 
-			& 80.8\% & 73.9\% & 41 & 135 & 49 
+			Recalibración online
+			& v3 split + guardia IoU
+			& 80.8\% & 73.9\% & 41 & 135 & 49
 			& Más equilibrado que v1, pero menos compacto \\
 			
-			Linking offline 
-			& EXP-7 sobre v0 
-			& 80.8\% & 74.2\% & 35 & 118 & 45 
+			Linking offline
+			& EXP-7 sobre v0
+			& 80.8\% & 74.2\% & 35 & 118 & 45
 			& Reduce fragmentación sin tocar detector ni tracker online \\
 			
-			Modelo específico pro 
-			& Epoch 40 (SNMOT-060) 
-			& 81.99\% & 78.11\% & 30 & 101 & 41 
+			Modelo específico pro
+			& Epoch 40 (SNMOT-060)
+			& 81.99\% & 78.11\% & 30 & 101 & 41
 			& Mejor rendimiento global en profesional \\
 			
-			Modelo específico am. 
-			& Epoch 98 (Video2) 
-			& 44.72\% & 43.78\% & 80 & 138 & 42 
+			Modelo específico am.
+			& Epoch 98 (Video2)
+			& 44.72\% & 43.78\% & 80 & 138 & 42
 			& Mejora parcial, pero con sobreidentificación \\
 			
-			Sistema final 
-			& SportsMOT + v1 Legacy + linking + Zone Fix 
-			& 81.38\% & 75.53\% & 34 & 92 & 32 
-			& Mejor compromiso práctico final \\
+			Sistema final
+			& SportsMOT + v1 Legacy + Zone Fix + linking ReID offline
+			& 81.18\% & 79.34\% & 31 & 91 & 35
+			& Mejor equilibrio final entre coherencia geométrica y continuidad \\
 			\bottomrule
 		\end{tabular}
 	\end{table}
 	
 	La tabla deja ver con claridad que no existe una única línea monotónica de mejora. Algunas configuraciones reducen los cambios de identidad a costa de empeorar MOTA o fragmentación; otras conservan una buena estabilidad geométrica pero generan más IDs; y otras mejoran unas métricas mientras empeoran otras. Esta lectura justifica que la selección final no pueda resolverse únicamente escogiendo la mejor fila de una tabla.
 	
-	La última fila de la Tabla~\ref{tab:cap13_megatabla} corresponde a la configuración final operativa del sistema, es decir, la combinación formada por \texttt{SportsMOT Generic}, \texttt{v1 Legacy}, linking \texttt{Informe Legacy} y la heurística \textit{Zone Fix}. Evaluada bajo el protocolo MOT utilizado en el trabajo, esta configuración alcanza un 81.38\% de MOTA, 75.53\% de IDF1 y 58.26\% de HOTA, con 34 \textit{ID switches}, 92 fragmentaciones y 32 identidades generadas frente a 26 identidades reales del \textit{ground truth}. Estos valores refuerzan la idea central del capítulo: la solución final no se selecciona por maximizar una métrica aislada, sino por ofrecer un equilibrio sólido entre rendimiento global, continuidad de identidad y coherencia geométrica.
+	La última fila de la Tabla~\ref{tab:cap13_megatabla} corresponde a la configuración final operativa del sistema, es decir, la combinación formada por \texttt{SportsMOT Generic}, \texttt{v1 Legacy}, validación espacial mediante \textit{Zone Fix} y linking offline asistido por ReID. Evaluada bajo el protocolo MOT utilizado en el trabajo, esta configuración alcanza un 81.18\% de MOTA, 79.34\% de IDF1 y 60.31\% de HOTA, con 31 \textit{ID switches}, 91 fragmentaciones y 35 identidades generadas frente a 26 identidades reales del \textit{ground truth}. Estos valores refuerzan la idea central del capítulo: la solución final no se selecciona por maximizar una métrica aislada, sino por ofrecer un equilibrio sólido entre rendimiento global, continuidad de identidad y coherencia geométrica.
 	
 	\subsection{Comparación global de enfoques}
 	
-	Desde una perspectiva global, el trabajo ha explorado tres grandes estrategias para mejorar la continuidad de identidad: reforzar la asociación online con ReID, corregir fragmentación a posteriori mediante linking offline y adaptar el embedding visual al dominio específico. Cada una de estas estrategias ha mostrado ventajas reales, pero también limitaciones claras.
+	Desde una perspectiva global, el trabajo ha explorado varias estrategias para mejorar la continuidad de identidad: reforzar la asociación online con ReID, corregir fragmentación a posteriori mediante linking offline, adaptar el embedding visual al dominio específico y, en la formulación final, introducir una validación espacial explícita antes de la recomposición posterior de trayectorias.
 	
 	La integración online del ReID demostró que la apariencia sí puede ayudar a compactar identidades. La configuración \texttt{v1} redujo de forma clara el número total de IDs y los cambios de identidad respecto a la \textit{baseline} sin ReID. Sin embargo, también introdujo errores espaciales graves y mostró que una integración demasiado directa de la apariencia puede degradar el comportamiento global del sistema. La recalibración posterior confirmó precisamente esta idea: no bastaba con usar ReID, sino que era necesario decidir cuidadosamente cuándo y cómo debía intervenir.
 	
 	El linking offline, en cambio, resolvió un problema distinto. No pretendía mejorar el detector ni rehacer el tracker online, sino recomponer fragmentos ya producidos por el sistema cuando la evidencia temporal y espacial lo permitía. Su principal valor fue reducir fragmentación residual de forma modular y explicable. El resultado más importante de esta línea no fue una gran mejora en MOTA, sino la demostración de que una parte del problema de identidad podía corregirse de forma fiable a posteriori.
 	
 	Por último, la adaptación del ReID al dominio mostró que el embedding visual sí mejora cuando se entrena específicamente para el contexto de uso, pero también reveló que esa mejora no se traduce siempre de manera limpia en tracking final. En profesional, el modelo específico resultó claramente superior. En amateur, la mejora en métricas globales vino acompañada de una sobreidentificación severa. Esta divergencia fue decisiva para la selección final, porque obligó a distinguir entre una solución teóricamente más especializada y una solución más robusta en conjunto.
+	
+	La formulación final del sistema integra precisamente este aprendizaje acumulado. En vez de confiar en una sola capa de asociación, el pipeline combina una etapa online con apariencia, una validación espacial fuerte sobre las trayectorias obtenidas y una recomposición posterior mediante linking asistido por ReID. Este esquema no busca solo compactar más, sino compactar mejor: aceptar cortes cuando son semánticamente necesarios y recomponer continuidad solo cuando la evidencia sigue siendo compatible.
 	
 	En consecuencia, este capítulo no enfrenta simplemente “modelos buenos” contra “modelos malos”, sino estrategias con perfiles de comportamiento distintos. El problema real no era encontrar una configuración que dominara en todo, sino decidir qué compromiso resultaba más consistente con los objetivos del TFG.
 	
@@ -122,25 +125,27 @@
 	
 	Bajo estos criterios, algunas configuraciones muy competitivas en términos de tabla no resultaban ideales como sistema final. Por ejemplo, ciertas variantes con modelos específicos podían mejorar métricas importantes, pero seguían mostrando una propensión significativa a la sobreidentificación. Del mismo modo, una configuración como \texttt{v1} era muy atractiva por compactación de identidad, pero seguía dejando abiertos errores espaciales demasiado agresivos como para ser aceptados sin más en el sistema final.
 	
-	Por el contrario, la solución finalmente adoptada en la plataforma integra de forma explícita este aprendizaje acumulado. En ella, la apariencia sigue utilizándose, pero se complementa con linking offline y con una restricción geométrica adicional ---\textit{Zone Fix}--- destinada a evitar reasignaciones absurdas entre zonas incompatibles del campo visual. Esta combinación no maximiza necesariamente una sola métrica aislada, pero sí mejora la calidad semántica global del seguimiento.
+	Por el contrario, la solución finalmente adoptada en la plataforma integra de forma explícita este aprendizaje acumulado. En ella, la apariencia sigue utilizándose, pero se complementa con una validación geométrica adicional ---\textit{Zone Fix}--- destinada a evitar reasignaciones absurdas entre zonas incompatibles del campo visual y con una fase posterior de linking offline asistido por ReID. Esta combinación no maximiza necesariamente una sola métrica aislada, pero sí mejora la calidad semántica global del seguimiento.
 	
-	Conviene subrayar además que el objetivo del TFG no era seleccionar el mejor sistema posible para una única secuencia profesional concreta, sino construir una solución final robusta, interpretable y operativa para el conjunto del trabajo, incluyendo la tensión entre dominio profesional y amateur. Bajo ese criterio, la estabilidad transversal del sistema pesa tanto como sus mejores resultados puntuales.
+	Conviene subrayar además que el objetivo del TFG no era seleccionar el mejor sistema posible para una única secuencia profesional concreta, sino construir una solución final robusta, interpretable y operativa para el conjunto del trabajo, incluyendo la tensión entre dominio profesional y amateur. Bajo ese criterio, la estabilidad transversal del sistema y la ausencia de incoherencias espaciales graves pesan tanto como sus mejores resultados puntuales.
 	
 	\subsection{Pipeline final elegido y justificación}
 	
 	El pipeline final elegido en este TFG es:
 	
 	\begin{quote}
-		\textbf{Detector \texttt{best\_ckpt + mix\_det} + SportsMOT Generic + ByteTrack \texttt{v1 Legacy} + linking \texttt{Informe Legacy} + Zone Fix.}
+		\textbf{Detector \texttt{best\_ckpt + mix\_det} + SportsMOT Generic + ByteTrack \texttt{v1 Legacy} + Zone Fix + linking offline asistido por ReID.}
 	\end{quote}
 	
-	Esta elección puede parecer, a primera vista, menos obvia que seleccionar directamente el mejor modelo específico de dominio. Sin embargo, responde a una lógica más profunda. El modelo SportsMOT genérico ofrece una base robusta y suficientemente estable para ambos contextos, la configuración \texttt{v1 Legacy} constituye la integración online mejor asentada del trabajo, el linking \texttt{Informe Legacy} aporta una corrección modular de fragmentación, y \textit{Zone Fix} introduce una salvaguarda explícita frente a teletransportes o reasociaciones geométricamente absurdas.
+	Esta elección puede parecer, a primera vista, menos obvia que seleccionar directamente el mejor modelo específico de dominio o la mejor variante aislada de una tabla. Sin embargo, responde a una lógica más profunda. El modelo SportsMOT genérico ofrece una base robusta y suficientemente estable para ambos contextos, la configuración \texttt{v1 Legacy} constituye la integración online mejor asentada del trabajo, \textit{Zone Fix} introduce una salvaguarda explícita frente a teletransportes o reasociaciones geométricamente absurdas, y el linking offline asistido por ReID aporta una capa final de recomposición prudente de continuidad.
 	
 	Desde una perspectiva de sistema, esta configuración es la que mejor materializa la filosofía metodológica del TFG. No apuesta por una confianza ciega en una única fuente de información, sino por una arquitectura en capas: asociación online con apariencia, validación geométrica, recomposición offline y evaluación integrada. Además, es la configuración que queda ya operativizada dentro de la plataforma final, lo que refuerza su valor práctico y reproducible.
 	
 	En este punto resulta importante aclarar por qué la selección final no recae, por ejemplo, en el modelo específico profesional de mejor rendimiento. Si el objetivo del trabajo hubiera sido maximizar exclusivamente el resultado sobre SNMOT-060 o sobre el dominio profesional, esa alternativa habría sido un candidato muy fuerte. Sin embargo, el TFG no concluye en una tabla de rendimiento aislado, sino en una plataforma experimental final que debe funcionar como solución coherente para el conjunto del pipeline. Bajo esa óptica, el modelo SportsMOT genérico ofrece una relación más sólida entre robustez, estabilidad interdominio, facilidad de integración y comportamiento global del sistema.
 	
-	Esto no significa que los modelos específicos de dominio queden invalidados. Muy al contrario: los resultados de los capítulos anteriores demuestran que aportan información valiosa y abren líneas claras de mejora futura. Pero, en el estado actual del sistema, la configuración seleccionada ofrece el equilibrio más sólido entre rendimiento, interpretabilidad, estabilidad y facilidad de uso.
+	Del mismo modo, la elección final tampoco se resuelve simplemente quedándose con la variante offline que obtiene la mejor combinación aislada de métricas geométricas. La formulación definitiva del sistema no se limita a compactar trayectorias ya razonables, sino que incorpora una política explícita de prudencia semántica: cortar donde la coherencia espacial lo exige y recomponer después allí donde la evidencia temporal, espacial y visual sigue siendo compatible. Ese matiz es importante, porque desplaza el criterio desde la optimización local de una tabla hacia la calidad interpretativa global del seguimiento.
+	
+	Esto no significa que los modelos específicos de dominio queden invalidados ni que las variantes offline anteriores pierdan interés. Muy al contrario: los resultados de los capítulos anteriores demuestran que aportan información valiosa y abren líneas claras de mejora futura. Pero, en el estado actual del sistema, la configuración seleccionada ofrece el equilibrio más sólido entre rendimiento, interpretabilidad, estabilidad y facilidad de uso.
 	
 	\begin{table}[H]
 		\centering
@@ -152,12 +157,13 @@
 			\midrule
 			Detector & \texttt{best\_ckpt + mix\_det} \\
 			Resolución & \(800\times1440\) \\
-			Modelo ReID & \texttt{SportsMOT Generic} \\
+			Modelo ReID online & \texttt{SportsMOT Generic} \\
 			Tracker online & \texttt{v1 Legacy - ReID Original} \\
 			Track buffer & 100 frames \\
 			Validación espacial & \textit{Zone Fix} activado \\
-			Linking offline & \texttt{Informe Legacy} \\
-			Parámetros de linking & \texttt{max\_gap=100}, \texttt{max\_dist=400}, \texttt{thresh=0.40} \\
+			Linking offline & \texttt{Informe Legacy + ReID offline} \\
+			Parámetros de linking & \texttt{max\_gap=200}, \texttt{max\_dist=400}, \texttt{thresh=0.40} \\
+			Modelo ReID del linking & \texttt{sports\_model.pth.tar-60} \\
 			FPS de referencia & 25 \\
 			\bottomrule
 		\end{tabular}
@@ -171,28 +177,24 @@
 			\toprule
 			\textbf{Métrica} & \textbf{Valor} \\
 			\midrule
-			HOTA & 58.26\% \\
-			MOTA & 81.38\% \\
-			IDF1 & 75.53\% \\
-			ID Switches & 34 \\
-			IDSW/min & 67.91 \\
-			Fragmentations & 92 \\
-			Total IDs (GT / Tracking) & 26 / 32 \\
-			Precision & 97.57\% \\
-			Recall & 83.71\% \\
-			False Positives & 282 \\
-			False Negatives & 2205 \\
+			HOTA & 60.31\% \\
+			MOTA & 81.18\% \\
+			IDF1 & 79.34\% \\
+			ID Switches & 31 \\
+			IDSW/min & 61.99 \\
+			Fragmentations & 91 \\
+			Total IDs (GT / Tracking) & 26 / 35 \\
 			\bottomrule
 		\end{tabular}
 	\end{table}
 	
-	Estos resultados resumen el comportamiento de la configuración final integrada en la plataforma experimental. Más allá de su valor cuantitativo, su interés principal reside en que corresponden a la versión operativa completa del sistema, incluyendo detector, asociación online, linking offline y validación espacial mediante \textit{Zone Fix}. Por ello, esta tabla no debe leerse como un resultado más entre muchos, sino como la materialización numérica del sistema finalmente adoptado.
+	Estos resultados resumen el comportamiento de la configuración final integrada en la plataforma experimental. Más allá de su valor cuantitativo, su interés principal reside en que corresponden a la versión operativa completa del sistema, incluyendo detector, asociación online, validación espacial, linking offline asistido por ReID y evaluación integrada. Por ello, esta tabla no debe leerse como un resultado más entre muchos, sino como la materialización numérica del sistema finalmente adoptado.
 	
-	\subsection{Discusión sobre trade-offs}
+	\subsection{Discusión sobre \textit{trade-offs}}
 	
 	La lección más importante de este capítulo es que el problema de tracking de futbolistas no admite una solución trivial ni una optimización unidimensional. Reducir IDs totales no siempre significa mejorar el sistema. Aumentar continuidad tampoco es necesariamente positivo si se logra a costa de mantener identidades espacialmente imposibles. Del mismo modo, un embedding más especializado no garantiza automáticamente un mejor sistema final si introduce fragmentación o sobreidentificación.
 	
-	En este trabajo, los \textit{trade-offs} han aparecido de forma recurrente. \texttt{v1} compacta identidades, pero arriesga incoherencias espaciales. \texttt{v3} es más prudente online, pero pierde parte de esa compactación. El linking offline corrige fragmentación, pero no recupera errores de detección. Los modelos específicos mejoran el embedding, pero su impacto depende del dominio. Finalmente, \textit{Zone Fix} puede aumentar el número de IDs, pero lo hace precisamente para impedir asociaciones falsas que degradarían el valor semántico del seguimiento.
+	En este trabajo, los \textit{trade-offs} han aparecido de forma recurrente. \texttt{v1} compacta identidades, pero arriesga incoherencias espaciales. \texttt{v3} es más prudente online, pero pierde parte de esa compactación. El linking offline corrige fragmentación, pero no recupera errores de detección. Los modelos específicos mejoran el embedding, pero su impacto depende del dominio. Finalmente, \textit{Zone Fix} puede aumentar el número de IDs, pero lo hace precisamente para impedir asociaciones falsas que degradarían el valor semántico del seguimiento; y el linking asistido por ReID intenta recuperar parte de esa fragmentación sin deshacer la prudencia espacial introducida previamente.
 	
 	Por ello, la contribución real del TFG no es solo proponer una configuración concreta, sino mostrar que la selección de un sistema de tracking útil en fútbol exige combinar criterios cuantitativos y cualitativos, integrar apariencia y geometría, y aceptar que la mejor solución práctica no siempre coincide con la mejor cifra en una tabla aislada.
 	

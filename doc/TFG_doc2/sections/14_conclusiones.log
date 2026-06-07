@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex 2025.5.14)  6 JUN 2026 01:47
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex 2025.5.14)  7 JUN 2026 20:53
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1453,32 +1453,26 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 [1{C:/Users/Soriano/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}
 
 ]
-Underfull \vbox (badness 3219) has occurred while \output is active []
 
-
-
-LaTeX Info: Redefining \sptext on input line 56.
-LaTeX Info: Redefining \. on input line 56.
-LaTeX Info: Redefining \% on input line 56.
+LaTeX Info: Redefining \sptext on input line 54.
+LaTeX Info: Redefining \. on input line 54.
+LaTeX Info: Redefining \% on input line 54.
 Package babel Info: 'spanish' activates 'spanish' shorthands.
-(babel)             Reported  on input line 56.
+(babel)             Reported  on input line 54.
 [2]
-Underfull \vbox (badness 1371) has occurred while \output is active []
-
-
 
 [3]
 
-LaTeX Info: Redefining \sptext on input line 84.
-LaTeX Info: Redefining \. on input line 84.
-LaTeX Info: Redefining \% on input line 84.
+LaTeX Info: Redefining \sptext on input line 82.
+LaTeX Info: Redefining \. on input line 82.
+LaTeX Info: Redefining \% on input line 82.
 [4]
 
 [5]
 
-LaTeX Info: Redefining \sptext on input line 116.
-LaTeX Info: Redefining \. on input line 116.
-LaTeX Info: Redefining \% on input line 116.
+LaTeX Info: Redefining \sptext on input line 112.
+LaTeX Info: Redefining \. on input line 112.
+LaTeX Info: Redefining \% on input line 112.
 [6]
 
 [7] (14_conclusiones.aux
@@ -1490,15 +1484,8 @@ LaTeX Info: Redefining \% on input line 15.
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-04-14>
  ***********
-
-
-Package rerunfilecheck Warning: File `14_conclusiones.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `14_conclusiones.out':
-(rerunfilecheck)             Before: DE34644B245ACEEAE7493BA78EF27234;986
-(rerunfilecheck)             After:  D3F291DB1141941C8012C262F86D6250;980.
+Package rerunfilecheck Info: File `14_conclusiones.out' has not changed.
+(rerunfilecheck)             Checksum: D3F291DB1141941C8012C262F86D6250;980.
 Package logreq Info: Writing requests to '14_conclusiones.run.xml'.
 \openout1 = `14_conclusiones.run.xml'.
 
@@ -1506,11 +1493,11 @@ Package logreq Info: Writing requests to '14_conclusiones.run.xml'.
 Here is how much of TeX's memory you used:
  39655 strings out of 469940
  795556 string characters out of 5468441
- 1428537 words of memory out of 5000000
+ 1428538 words of memory out of 5000000
  65884 multiletter control sequences out of 15000+600000
  632748 words of font info for 49 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 118i,12n,118p,1940b,1806s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 118i,11n,118p,1940b,1806s stack positions out of 10000i,1000n,20000p,200000b,200000s
  <C:\Users\Soriano\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ec
 tt1200.pk> <C:\Users\Soriano\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/d
 pi600\ecbx1440.pk> <C:\Users\Soriano\AppData\Local\MiKTeX\fonts/pk/ljfour/jknap
@@ -1518,7 +1505,7 @@ pen/ec/dpi600\ecti1200.pk> <C:\Users\Soriano\AppData\Local\MiKTeX\fonts/pk/ljfo
 ur/jknappen/ec/dpi600\ecbx1200.pk> <C:\Users\Soriano\AppData\Local\MiKTeX\fonts
 /pk/ljfour/jknappen/ec/dpi600\ecbx1728.pk> <C:\Users\Soriano\AppData\Local\MiKT
 eX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1200.pk>
-Output written on 14_conclusiones.pdf (7 pages, 91202 bytes).
+Output written on 14_conclusiones.pdf (7 pages, 91732 bytes).
 PDF statistics:
  289 PDF objects out of 1000 (max. 8388607)
  14 named destinations out of 1000 (max. 500000)

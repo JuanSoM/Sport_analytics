@@ -68,7 +68,7 @@
 			\includegraphics[width=\textwidth]{images/cap5/yolodec3.jpg}
 			\caption{Selección de celdas significativas.}
 		\end{subfigure}
-		\caption{Esquema conceptual del proceso de detección tipo YOLO. La secuencia ilustra la imagen de entrada, su discretización espacial en rejilla y la identificación de regiones relevantes para la predicción de objetos. Fuente: adaptación propia a partir de \cite{csdn_yolo_intro}.}
+		\caption{Esquema conceptual del proceso de detección tipo YOLO. La secuencia ilustra la imagen de entrada, su discretización espacial en rejilla y la identificación de regiones relevantes para la predicción de objetos. Fuente: adaptación propia a partir de \parencite{csdn_yolo_intro}.}
 		\label{fig:cap5_yolox_concepto}
 	\end{figure}
 	
@@ -85,7 +85,7 @@
 			\includegraphics[width=\textwidth]{images/cap5/yolodec5.jpg}
 			\caption{Selección de regiones candidatas mediante IoU.}
 		\end{subfigure}
-		\caption{Detalle conceptual de la estimación de cajas delimitadoras en detectores tipo YOLO. Estas figuras ayudan a interpretar cómo se ajusta la localización del objeto y cómo el solapamiento entre regiones candidatas influye en la selección final. Fuente: adaptación propia a partir de \cite{csdn_yolo_intro}.}
+		\caption{Detalle conceptual de la estimación de cajas delimitadoras en detectores tipo YOLO. Estas figuras ayudan a interpretar cómo se ajusta la localización del objeto y cómo el solapamiento entre regiones candidatas influye en la selección final. Fuente: adaptación propia a partir de \parencite{csdn_yolo_intro}.}
 		\label{fig:cap5_yolox_bbox}
 	\end{figure}
 	
@@ -99,7 +99,7 @@
 	
 	\subsection{Protocolo de evaluación cuantitativa}
 	
-	La evaluación cuantitativa se diseñó para comparar configuraciones de tracking y ReID de forma homogénea y reproducible. Para ello se utilizaron métricas estándar del campo MOT, en particular MOTA, IDF1, HOTA, número de \textit{ID switches}, fragmentaciones y número total de identidades generadas por el sistema. Estas métricas ofrecen perspectivas complementarias: MOTA resume errores globales de detección y asociación; IDF1 mide consistencia de identidad; HOTA intenta equilibrar calidad de detección y asociación; mientras que \textit{ID switches}, fragmentaciones y Total IDs resultan especialmente útiles para analizar la estabilidad de las trayectorias en vídeo deportivo \cite{ciaparrone2020survey,zhang2022bytetrack,cioppa2022soccernettracking}.
+	La evaluación cuantitativa se diseñó para comparar configuraciones de tracking y ReID de forma homogénea y reproducible. Para ello se utilizaron métricas estándar del campo MOT, en particular MOTA, IDF1, HOTA, número de \textit{ID switches}, fragmentaciones y número total de identidades generadas por el sistema. Estas métricas ofrecen perspectivas complementarias: MOTA resume errores globales de detección y asociación; IDF1 mide consistencia de identidad; HOTA intenta equilibrar calidad de detección y asociación; mientras que \textit{ID switches}, fragmentaciones y Total IDs resultan especialmente útiles para analizar la estabilidad de las trayectorias en vídeo deportivo \parencite{ciaparrone2020survey,zhang2022bytetrack,cioppa2022soccernettracking}.
 	
 	A nivel de implementación, el protocolo se apoyó en dos motores principales: \texttt{motmetrics} y \texttt{trackeval}. Durante el desarrollo fue necesario revisar el evaluador para corregir problemas de alineación temporal entre el formato del \textit{ground truth} y la salida del tracker, especialmente en relación con el indexado de frames. Esta revisión fue importante porque pequeñas inconsistencias en la correspondencia temporal pueden alterar sensiblemente las métricas de asociación y generar comparaciones engañosas entre configuraciones.
 	

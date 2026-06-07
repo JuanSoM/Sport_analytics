@@ -15,8 +15,6 @@
 \usepackage{verbatim}
 \usepackage{float}
 \usepackage{amsmath}
-\usepackage[backend=bibtex,style=numeric]{biblatex} % Para citas numéricas
-\addbibresource{references.bib} % Cargar archivo .bib
 \usepackage{url}
 \usepackage{xcolor}
 \usepackage{geometry}           % Para ajustar márgenes
@@ -35,6 +33,14 @@
 \usepackage{titlesec}
 \usepackage{enumitem}
 \usepackage[most]{tcolorbox}
+
+\usepackage[
+backend=biber,
+style=apa,
+sorting=nyt
+]{biblatex}
+\DeclareLanguageMapping{spanish}{spanish-apa}
+\addbibresource{references.bib}
 
 %% =========================
 %% CONFIGURACIÓN GENERAL
@@ -202,7 +208,7 @@
 	%% BIBLIOGRAFÍA
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	
-	\printbibliography
+	\printbibliography[heading=bibintoc,title={Referencias}]
 	
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	%% BACK COVER

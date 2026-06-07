@@ -44,33 +44,32 @@
   <internal package="biblatex" priority="9" active="0">
     <generic>latex</generic>
     <provides type="dynamic">
-      <file>MAIN.aux</file>
-      <file>MAIN-blx.bib</file>
+      <file>MAIN.bcf</file>
     </provides>
     <requires type="dynamic">
       <file>MAIN.bbl</file>
     </requires>
     <requires type="static">
       <file>blx-dm.def</file>
+      <file>apa.dbx</file>
       <file>blx-compat.def</file>
-      <file>blx-bibtex.def</file>
       <file>biblatex.def</file>
       <file>standard.bbx</file>
-      <file>numeric.bbx</file>
-      <file>numeric.cbx</file>
+      <file>apa.bbx</file>
+      <file>apa.cbx</file>
       <file>biblatex.cfg</file>
       <file>spanish.lbx</file>
+      <file>spanish-apa.lbx</file>
     </requires>
   </internal>
   <external package="biblatex" priority="5" active="0">
-    <generic>bibtex</generic>
+    <generic>biber</generic>
     <cmdline>
-      <binary>bibtex</binary>
-      <option>-min-crossrefs 2</option>
+      <binary>biber</binary>
       <infile>MAIN</infile>
     </cmdline>
     <input>
-      <file>MAIN.aux</file>
+      <file>MAIN.bcf</file>
     </input>
     <output>
       <file>MAIN.bbl</file>
@@ -79,14 +78,10 @@
       <file>MAIN.bbl</file>
     </provides>
     <requires type="dynamic">
-      <file>MAIN.aux</file>
-      <file>MAIN-blx.bib</file>
+      <file>MAIN.bcf</file>
     </requires>
     <requires type="editable">
       <file>references.bib</file>
-    </requires>
-    <requires type="static">
-      <file>biblatex.bst</file>
     </requires>
   </external>
 </requests>

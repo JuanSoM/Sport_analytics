@@ -30,7 +30,7 @@
 		Este capítulo no introduce nuevos experimentos. Su función es integrar, interpretar y cerrar el bloque empírico ya desarrollado.\\[0.5em]
 		
 		\textbf{Resultados principales}\\
-		El trabajo confirma que ByteTrack constituye una base sólida para el seguimiento de futbolistas, que la continuidad de identidad es el cuello de botella principal del problema, que el ReID aporta valor pero debe integrarse con cautela, y que la combinación de validación geométrica y linking offline permite obtener un sistema final más útil que la simple optimización de una métrica aislada.\\[0.5em]
+		El trabajo confirma que ByteTrack constituye una base sólida para el seguimiento de futbolistas, que la continuidad de identidad es el cuello de botella principal del problema, que el ReID aporta valor pero debe integrarse con cautela, y que la combinación de validación geométrica fuerte y recomposición offline asistida por ReID permite obtener un sistema final más útil que la simple optimización de una métrica aislada.\\[0.5em]
 		
 		\textbf{Interpretación}\\
 		La principal lección del TFG es que, en fútbol, el problema no consiste solo en detectar jugadores, sino en mantener identidades consistentes y geométricamente plausibles a lo largo del tiempo. Por ello, la solución final más razonable no es la que maximiza una única métrica, sino la que mejor equilibra continuidad, fragmentación, coherencia espacial y reproducibilidad.\\[0.5em]
@@ -39,7 +39,7 @@
 		El trabajo se apoya en una parte amateur construida mediante pseudo-\textit{ground truth}, en una plataforma experimental orientada al contexto concreto del TFG y en un conjunto de secuencias representativas, pero no exhaustivas.\\[0.5em]
 		
 		\textbf{Conclusión final}\\
-		El TFG culmina en un sistema de tracking y reidentificación de futbolistas que, aun siendo perfectible, demuestra de forma sólida que una arquitectura modular, analizada críticamente y reforzada con validación geométrica y postprocesado, constituye una solución viable y útil para el dominio estudiado.
+		El TFG culmina en un sistema de tracking y reidentificación de futbolistas que, aun siendo perfectible, demuestra de forma sólida que una arquitectura modular, analizada críticamente y reforzada con validación geométrica y recomposición offline, constituye una solución viable y útil para el dominio estudiado.
 	\end{chaptertemplatebox}
 	
 	\subsection{Respuesta a los objetivos del anteproyecto}
@@ -50,7 +50,7 @@
 	
 	El tercer objetivo era estudiar distintas estrategias de integración online de ReID dentro de ByteTrack. Este objetivo se desarrolló de forma explícita mediante las configuraciones \texttt{v0}, \texttt{v1}, \texttt{v2} y \texttt{v3}. Los resultados mostraron que la apariencia sí puede mejorar la continuidad de identidad, pero también que una integración demasiado agresiva o mal calibrada puede introducir errores espaciales y degradar otras propiedades del sistema.
 	
-	El cuarto objetivo planteaba diseñar y validar un postprocesado offline basado en \textit{tracklet linking}. Este objetivo también se ha cumplido. El linking mostró capacidad real para reducir fragmentación residual y recomponer trayectorias cuando existía evidencia temporal y espacial suficiente. Aunque su efecto sobre métricas globales como MOTA es necesariamente limitado, su valor quedó justificado en términos de continuidad de identidad y coherencia estructural de trayectorias.
+	El cuarto objetivo planteaba diseñar y validar un postprocesado offline basado en \textit{tracklet linking}. Este objetivo también se ha cumplido. El linking mostró capacidad real para reducir fragmentación residual y recomponer trayectorias cuando existía evidencia temporal y espacial suficiente. En la formulación final del sistema, además, el bloque offline dejó de actuar únicamente como compactador geométrico y pasó a integrarse como una segunda capa de recomposición prudente tras una validación espacial conservadora, incorporando apoyo ReID cuando la evidencia visual resultaba útil.
 	
 	El quinto objetivo era investigar el impacto del dominio mediante la comparación entre un modelo genérico de ReID y modelos específicos para fútbol profesional y amateur. Este bloque fue uno de los más informativos del trabajo. En profesional, el modelo específico mejoró varias métricas relevantes. En amateur, en cambio, el beneficio fue más ambiguo, ya que las mejoras de asociación y cobertura se acompañaron de una sobreidentificación severa. Por tanto, el objetivo no solo se cumplió, sino que además produjo una conclusión metodológicamente importante: una mayor especialización del embedding no implica automáticamente un mejor sistema final.
 	
@@ -66,7 +66,7 @@
 	
 	El tercer hallazgo es que la geometría y la apariencia deben combinarse de forma prudente. Parte de la evolución del trabajo consistió precisamente en abandonar la idea de que la apariencia debía imponerse como criterio principal de continuidad y aceptar, en cambio, una arquitectura más equilibrada, donde la plausibilidad espacial conserva un papel central.
 	
-	Un cuarto hallazgo es que el postprocesado offline resulta especialmente útil cuando se lo entiende como una capa complementaria y no como un sustituto del tracker online. El linking no arregla todo, no recupera errores de detección y no resuelve mágicamente todos los problemas de identidad, pero sí permite recomponer de forma controlada una parte significativa de la fragmentación residual.
+	Un cuarto hallazgo es que el postprocesado offline resulta especialmente útil cuando se lo entiende como una capa complementaria y no como un sustituto del tracker online. El linking no arregla todo, no recupera errores de detección y no resuelve mágicamente todos los problemas de identidad, pero sí permite recomponer de forma controlada una parte significativa de la fragmentación residual. En la formulación final del sistema, este bloque adquirió además una función más rica: no solo compactar trayectorias, sino recomponer parte de la fragmentación introducida deliberadamente por una política espacial prudente.
 	
 	Por último, uno de los hallazgos más relevantes del TFG es que la calidad de un sistema de tracking no debe juzgarse únicamente por una métrica agregada. La experiencia experimental confirmó que métricas como MOTA, IDF1 o HOTA son necesarias, pero no suficientes. En fútbol, la coherencia geométrica de las trayectorias y la plausibilidad semántica de las identidades importan tanto como los resultados cuantitativos globales.
 	
@@ -78,7 +78,7 @@
 	
 	La segunda aportación es el análisis detallado del papel del ReID en el dominio del fútbol. En lugar de tratar la reidentificación como una caja negra, el trabajo estudió qué información contiene realmente el embedding, cómo se distribuye en el espacio de características y qué relación guarda con los errores observados en tracking. Esta parte aporta valor porque permite explicar no solo qué funciona o deja de funcionar, sino también por qué.
 	
-	La tercera aportación es el diseño y evaluación de un enfoque combinado de mejora, basado en integración online de apariencia, linking offline y control de coherencia espacial. La incorporación de una heurística como \textit{Zone Fix} no pretende ser una teoría general del movimiento, pero sí representa una contribución práctica importante: introduce una salvaguarda explícita frente a uno de los modos de fallo más dañinos detectados durante el proyecto.
+	La tercera aportación es el diseño y evaluación de un enfoque combinado de mejora, basado en integración online de apariencia, validación geométrica y recomposición offline asistida por ReID. La incorporación de una heurística como \textit{Zone Fix} no pretende ser una teoría general del movimiento, pero sí representa una contribución práctica importante: introduce una salvaguarda explícita frente a uno de los modos de fallo más dañinos detectados durante el proyecto. A su vez, el linking posterior aporta una segunda etapa de recomposición controlada que completa la lógica del sistema final.
 	
 	La cuarta aportación es la adaptación del análisis al dominio amateur. En ausencia de un benchmark listo para usar, fue necesario construir una parte relevante de la infraestructura experimental, incluyendo pseudo-\textit{ground truth}, scripts de revisión y preparación de datos para entrenamiento ReID. Esto convierte al TFG no solo en un estudio sobre algoritmos, sino también en un trabajo de construcción metodológica de entorno experimental.
 	
@@ -106,7 +106,7 @@
 	
 	Otra línea clara de trabajo futuro es refinar el tratamiento de la coherencia geométrica. La heurística \textit{Zone Fix} ha demostrado utilidad práctica, pero podría evolucionar hacia mecanismos más ricos, por ejemplo incorporando restricciones temporales dependientes de velocidad, zonas dinámicas o modelos más explícitos del movimiento plausible sobre el campo.
 	
-	También resulta prometedor profundizar en la interacción entre linking offline y validación geométrica. En este trabajo ambas capas han mostrado ser complementarias, pero todavía existe margen para estudiar políticas más finas de cuándo cortar, cuándo preservar y cuándo recomponer trayectorias.
+	También resulta prometedor profundizar en la interacción entre linking offline, validación geométrica y uso de embeddings visuales en la fase de recomposición. En este trabajo estas capas han mostrado ser complementarias, pero todavía existe margen para estudiar políticas más finas de cuándo cortar, cuándo preservar y cuándo recomponer trayectorias, así como mejores formas de ponderar la señal visual para evitar fusiones espurias.
 	
 	Desde una perspectiva más amplia, sería interesante ampliar la evaluación a más secuencias, más contextos de cámara y, si fuera posible, más dominios deportivos. Esto permitiría separar mejor qué conclusiones del trabajo son específicas del fútbol amateur analizado y cuáles pueden generalizarse a otros escenarios.
 	
